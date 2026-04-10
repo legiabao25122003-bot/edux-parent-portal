@@ -584,12 +584,10 @@
               </div>
             </div>
 
-            <div class="field">
-              <label>Mã truy cập</label>
-              <div class="input-wrap">
-                <div class="input-icon">🔒</div>
-                <input id="accessCode" type="password" placeholder="Nhập mã truy cập">
-              </div>
+            <input id="accessCode" type="hidden" value="123">
+
+            <div class="login-note">
+              Phụ huynh chỉ cần nhập <b>Mã học viên</b>. Hệ thống hiện đang dùng mã truy cập mặc định nội bộ để đăng nhập.
             </div>
 
             <button class="btn btn-login" onclick="handleLogin()">Xem việc học của con</button>
@@ -598,8 +596,7 @@
             <div id="loginError" class="login-error"></div>
 
             <div class="login-note">
-              Thông tin chỉ hiển thị với tài khoản đã được cấp quyền.
-              Phụ huynh vui lòng giữ kín mã truy cập để bảo đảm an toàn cho thông tin học tập của con.
+              Thông tin chỉ hiển thị với học viên đã có hồ sơ trong hệ thống. Phụ huynh chỉ cần nhập đúng <b>Mã học viên</b> để xem dữ liệu học tập của con.
             </div>
           </div>
         </div>
@@ -651,12 +648,13 @@
     <script>
       let DASHBOARD_DATA = null;
       let CURRENT_STUDENT_ID = '';
-      let CURRENT_ACCESS_CODE = '';
+      const DEFAULT_ACCESS_CODE = '123';
+      let CURRENT_ACCESS_CODE = DEFAULT_ACCESS_CODE;
       let AUTO_REFRESH_TIMER = null;
       let AUTO_REFRESH_MS = 60000;
 
-      // DÁN URL WEB APP /exec của Apps Script vào đây
-      const API_URL = 'https://script.google.com/macros/s/AKfycbxN189Dqg65CxnaSyy9-tLaBdVRPoOftPlal-tQ8KL0oWMZMCvsL1DMK_AUkutS6xtK/exec?mode=api';
+      // URL WEB APP /exec đã gắn sẵn
+      const API_URL = 'https://script.google.com/macros/s/AKfycbxlrVgTqE2k1jiF8cue6vlG8FO0NSEPHjJ3cYd95Chjz_FrhHywVBZHxLxO-q9Ph-VY/exec?mode=api';
 
       const TAB_CONFIG = [
         { id:'overview', title:'Tổng quan', sub:'Thông tin chung của học sinh', icon:'🏫' },
@@ -698,7 +696,8 @@
 
       async function handleLogin() {
         const studentId = document.getElementById('studentId').value.trim();
-        const accessCode = document.getElementById('accessCode').value.trim();
+        const accessCodeEl = document.getElementById('accessCode');
+        const accessCode = (accessCodeEl && accessCodeEl.value.trim()) || DEFAULT_ACCESS_CODE;
 
         setLoginState('<span class="loading-inline"><span class="spinner"></span>Đang mở thông tin để phụ huynh theo dõi...</span>');
         setLoginError('');
@@ -722,6 +721,7 @@
 
           document.getElementById('loginView').classList.add('hidden');
           document.getElementById('dashboardView').classList.remove('hidden');
+
           const mobileTabbar = document.getElementById('mobileTabbar');
           if (mobileTabbar) mobileTabbar.classList.remove('hidden');
 
@@ -739,13 +739,16 @@
 
         DASHBOARD_DATA = null;
         CURRENT_STUDENT_ID = '';
-        CURRENT_ACCESS_CODE = '';
+        CURRENT_ACCESS_CODE = DEFAULT_ACCESS_CODE;
 
         document.getElementById('dashboardView').classList.add('hidden');
         const mobileTabbar = document.getElementById('mobileTabbar');
         if (mobileTabbar) mobileTabbar.classList.add('hidden');
         document.getElementById('loginView').classList.remove('hidden');
-        document.getElementById('accessCode').value = '';
+
+        const accessCodeEl = document.getElementById('accessCode');
+        if (accessCodeEl) accessCodeEl.value = DEFAULT_ACCESS_CODE;
+
         setLoginState('');
         setLoginError('');
       }
@@ -782,14 +785,15 @@
       }
 
       async function refreshPortalData_() {
-        if (!CURRENT_STUDENT_ID || !CURRENT_ACCESS_CODE) return;
+        if (!CURRENT_STUDENT_ID) return;
 
         const activeTabId = getActiveTabId_();
+        const accessCode = CURRENT_ACCESS_CODE || DEFAULT_ACCESS_CODE;
 
         try {
           const res = await callApi_('refresh', {
             studentId: CURRENT_STUDENT_ID,
-            accessCode: CURRENT_ACCESS_CODE
+            accessCode: accessCode
           });
 
           if (!res || !res.ok || !res.data) return;
