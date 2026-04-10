@@ -656,7 +656,7 @@
       let AUTO_REFRESH_MS = 60000;
 
       // DÁN URL WEB APP /exec của Apps Script vào đây
-      const API_URL = 'PASTE_YOUR_APPS_SCRIPT_EXEC_URL_HERE?mode=api';
+      const API_URL = 'https://script.google.com/macros/s/AKfycbxN189Dqg65CxnaSyy9-tLaBdVRPoOftPlal-tQ8KL0oWMZMCvsL1DMK_AUkutS6xtK/exec?mode=api';
 
       const TAB_CONFIG = [
         { id:'overview', title:'Tổng quan', sub:'Thông tin chung của học sinh', icon:'🏫' },
@@ -668,14 +668,15 @@
       ];
 
       async function callApi_(action, payload) {
-        const body = new URLSearchParams({
+        const params = new URLSearchParams({
           action: action,
           ...(payload || {})
         });
 
-        const res = await fetch(API_URL, {
-          method: 'POST',
-          body: body,
+        const url = API_URL + '&' + params.toString();
+
+        const res = await fetch(url, {
+          method: 'GET',
           redirect: 'follow'
         });
 
