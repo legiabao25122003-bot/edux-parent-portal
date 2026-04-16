@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -33,11 +33,13 @@
       margin: 0;
       opacity: 0.95;
     }
+
     .login-card, .panel, .metric, .lesson-card, .hw-card {
       background: #fff;
       border-radius: 18px;
       box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
     }
+
     .login-wrap {
       display: grid;
       grid-template-columns: 1fr;
@@ -52,6 +54,7 @@
       margin-top: 0;
       font-size: 22px;
     }
+
     .field {
       margin-bottom: 14px;
     }
@@ -66,7 +69,13 @@
       border: 1px solid #d1d5db;
       border-radius: 12px;
       font-size: 15px;
+      outline: none;
     }
+    .field input:focus {
+      border-color: #0E4BA9;
+      box-shadow: 0 0 0 3px rgba(14,75,169,0.10);
+    }
+
     .btn {
       border: none;
       border-radius: 12px;
@@ -74,7 +83,15 @@
       font-size: 15px;
       font-weight: 700;
       cursor: pointer;
+      transition: .18s ease;
     }
+    .btn:hover { transform: translateY(-1px); }
+    .btn:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+      transform: none;
+    }
+
     .btn-primary {
       background: #0E4BA9;
       color: white;
@@ -91,6 +108,7 @@
       background: #dc2626;
       color: white;
     }
+
     .muted {
       color: #6b7280;
       font-size: 14px;
@@ -98,8 +116,9 @@
     .error {
       color: #b91c1c;
       font-size: 14px;
-      margin-top: 8px;
+      margin-top: 10px;
       white-space: pre-wrap;
+      line-height: 1.5;
     }
     .hidden { display: none !important; }
 
@@ -198,14 +217,15 @@
     }
     .lesson-block {
       margin-bottom: 10px;
-      line-height: 1.6;
+      line-height: 1.7;
       white-space: pre-wrap;
     }
     .hw-task, .hw-submission {
       margin-bottom: 8px;
       white-space: pre-wrap;
-      line-height: 1.6;
+      line-height: 1.7;
     }
+
     .badge {
       display: inline-block;
       border-radius: 999px;
@@ -267,6 +287,27 @@
       font-style: italic;
     }
 
+    .loading-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(255,255,255,0.55);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+    .loading-overlay.show {
+      display: flex;
+    }
+    .loading-box {
+      background: #fff;
+      padding: 16px 22px;
+      border-radius: 14px;
+      box-shadow: 0 8px 24px rgba(15,23,42,0.12);
+      font-weight: 700;
+      color: #0E4BA9;
+    }
+
     @media (max-width: 768px) {
       .hero h1 { font-size: 22px; }
       .metric .value { font-size: 24px; }
@@ -275,6 +316,10 @@
   </style>
 </head>
 <body>
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-box" id="loadingText">Đang xử lý...</div>
+  </div>
+
   <div class="app">
     <div class="hero">
       <h1>EDUX - Góc học tập của con</h1>
@@ -284,15 +329,18 @@
     <div id="loginView" class="login-wrap">
       <div class="login-card">
         <h2>Đăng nhập phụ huynh</h2>
+
         <div class="field">
           <label>Mã học viên</label>
           <input id="studentIdInput" type="text" placeholder="Ví dụ: EduX-HV-0001">
         </div>
+
         <div class="field">
           <label>Mã truy cập</label>
           <input id="accessCodeInput" type="password" value="123">
         </div>
-        <button class="btn btn-primary" onclick="login()">Đăng nhập</button>
+
+        <button id="loginBtn" class="btn btn-primary" onclick="login()">Đăng nhập</button>
         <div id="loginError" class="error hidden"></div>
         <p class="muted">Mã truy cập mặc định nội bộ hiện tại là 123.</p>
       </div>
@@ -372,7 +420,7 @@
   </div>
 
   <script>
-    const API_URL = 'https://script.google.com/macros/s/AKfycbxC79BhJvRgzGm2tGc8SIPK0-BzW3BF8ySnN3BXox8JYfX4jd_m4Qb-iWKjDpeziaSD/exec?mode=api';
+    const API_URL = 'https://script.google.com/macros/s/AKfycbxC79BhJvRgzGm2tGc8SIPK0-BzW3BF8ySnN3BXox8JYfX4jd_m4Qb-iWKjDpeziaSD/exec';
 
     let currentStudentId = '';
     let currentAccessCode = '123';
@@ -391,66 +439,138 @@
         .replace(/'/g, '&#39;');
     }
 
-    function jsSafe(str) {
-      return clean(str).replace(/'/g, "\\'");
+    function enc(str) {
+      return encodeURIComponent(clean(str));
+    }
+
+    function dec(str) {
+      try {
+        return decodeURIComponent(str || '');
+      } catch (e) {
+        return clean(str);
+      }
+    }
+
+    function setLoading(show, text) {
+      const overlay = document.getElementById('loadingOverlay');
+      const label = document.getElementById('loadingText');
+      label.textContent = text || 'Đang xử lý...';
+      overlay.classList.toggle('show', !!show);
     }
 
     async function callApi(payload) {
-      const res = await fetch(API_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
+      const form = new URLSearchParams();
+
+      Object.keys(payload || {}).forEach(key => {
+        form.append(key, payload[key] == null ? '' : String(payload[key]));
       });
-      return res.json();
+
+      let res;
+      let text;
+
+      try {
+        res = await fetch(API_URL, {
+          method: 'POST',
+          body: form
+        });
+        text = await res.text();
+      } catch (err) {
+        throw new Error(
+          'Không gọi được API.\n' +
+          'Kiểm tra lại deploy web app và quyền truy cập "Anyone".\n\n' +
+          (err.message || err)
+        );
+      }
+
+      let json;
+      try {
+        json = JSON.parse(text);
+      } catch (err) {
+        console.error('Raw API response:', text);
+        throw new Error(
+          'API không trả về JSON hợp lệ.\n\nRaw response:\n' +
+          String(text).slice(0, 700)
+        );
+      }
+
+      return json;
     }
 
     async function login() {
       const studentId = clean(document.getElementById('studentIdInput').value);
       const accessCode = clean(document.getElementById('accessCodeInput').value || '123');
       const errorBox = document.getElementById('loginError');
+      const loginBtn = document.getElementById('loginBtn');
 
       errorBox.classList.add('hidden');
       errorBox.textContent = '';
 
-      const json = await callApi({
-        action: 'login',
-        studentId,
-        accessCode
-      });
-
-      if (!json.ok) {
-        errorBox.textContent = json.message || 'Đăng nhập thất bại.';
+      if (!studentId) {
+        errorBox.textContent = 'Vui lòng nhập Mã học viên.';
         errorBox.classList.remove('hidden');
         return;
       }
 
-      currentStudentId = studentId;
-      currentAccessCode = accessCode;
-      currentData = json.data;
+      loginBtn.disabled = true;
+      setLoading(true, 'Đang đăng nhập...');
 
-      document.getElementById('loginView').classList.add('hidden');
-      document.getElementById('dashboardView').classList.remove('hidden');
+      try {
+        const json = await callApi({
+          action: 'login',
+          studentId,
+          accessCode
+        });
 
-      renderDashboard(json.data);
+        if (!json.ok) {
+          errorBox.textContent = json.message || 'Đăng nhập thất bại.';
+          errorBox.classList.remove('hidden');
+          return;
+        }
+
+        currentStudentId = studentId;
+        currentAccessCode = accessCode;
+        currentData = json.data;
+
+        document.getElementById('loginView').classList.add('hidden');
+        document.getElementById('dashboardView').classList.remove('hidden');
+
+        renderDashboard(json.data);
+      } catch (err) {
+        errorBox.textContent = err.message || String(err);
+        errorBox.classList.remove('hidden');
+        console.error(err);
+      } finally {
+        loginBtn.disabled = false;
+        setLoading(false);
+      }
     }
 
     async function refreshDashboard(studentId) {
       const sid = studentId || currentStudentId;
       if (!sid) return;
 
-      const json = await callApi({
-        action: 'refresh',
-        studentId: sid,
-        accessCode: currentAccessCode
-      });
+      setLoading(true, 'Đang làm mới dữ liệu...');
 
-      if (!json.ok) {
-        alert(json.message || 'Không thể làm mới dữ liệu.');
-        return;
+      try {
+        const json = await callApi({
+          action: 'refresh',
+          studentId: sid,
+          accessCode: currentAccessCode
+        });
+
+        if (!json.ok) {
+          alert(json.message || 'Không thể làm mới dữ liệu.');
+          return;
+        }
+
+        currentData = json.data;
+        renderDashboard(json.data);
+      } catch (err) {
+        alert(err.message || 'Không thể làm mới dữ liệu.');
+        console.error(err);
+      } finally {
+        setLoading(false);
       }
-
-      currentData = json.data;
-      renderDashboard(json.data);
     }
 
     function logout() {
@@ -461,24 +581,24 @@
     }
 
     function renderDashboard(data) {
-      document.getElementById('studentName').textContent = clean(data.student.name);
-      document.getElementById('studentId').textContent = clean(data.student.id);
-      document.getElementById('studentClass').textContent = clean(data.student.className);
-      document.getElementById('studentTeacher').textContent = clean(data.student.teacher);
-      document.getElementById('studentDob').textContent = clean(data.student.dob);
-      document.getElementById('feeStatus').textContent = clean(data.feeInfo.feeStatus);
+      document.getElementById('studentName').textContent = clean(data.student?.name);
+      document.getElementById('studentId').textContent = clean(data.student?.id);
+      document.getElementById('studentClass').textContent = clean(data.student?.className);
+      document.getElementById('studentTeacher').textContent = clean(data.student?.teacher);
+      document.getElementById('studentDob').textContent = clean(data.student?.dob);
+      document.getElementById('feeStatus').textContent = clean(data.feeInfo?.feeStatus);
       document.getElementById('updatedAt').textContent = clean(data.updatedAt);
 
-      document.getElementById('mAttend').textContent = clean(data.metrics.attendancePresent || 0);
+      document.getElementById('mAttend').textContent = clean(data.metrics?.attendancePresent || 0);
       document.getElementById('mAbsent').textContent =
-        `${clean(data.metrics.attendanceAbsent || 0)} / ${clean(data.metrics.attendanceExcused || 0)}`;
+        `${clean(data.metrics?.attendanceAbsent || 0)} / ${clean(data.metrics?.attendanceExcused || 0)}`;
       document.getElementById('mHomework').textContent =
-        `${clean(data.metrics.homeworkDone || 0)}/${clean(data.metrics.homeworkTotal || 0)}`;
+        `${clean(data.metrics?.homeworkDone || 0)}/${clean(data.metrics?.homeworkTotal || 0)}`;
       document.getElementById('mAvg').textContent =
-        data.metrics.avgScore == null ? '-' : clean(data.metrics.avgScore);
+        data.metrics?.avgScore == null ? '-' : clean(data.metrics.avgScore);
 
       document.getElementById('baoBaiList').innerHTML = renderBaoBaiList(data.baoBai || []);
-      document.getElementById('homeworkList').innerHTML = renderHomeworkList(data.homework || [], data.student.id);
+      document.getElementById('homeworkList').innerHTML = renderHomeworkList(data.homework || [], data.student?.id || '');
       document.getElementById('attendanceTableWrap').innerHTML = renderAttendanceTable(data.attendance || []);
       document.getElementById('scoresWrap').innerHTML = renderScores(data);
       document.getElementById('reportBox').textContent = clean(data.reportText) || 'Chưa có báo cáo cá nhân.';
@@ -523,29 +643,42 @@
           ${item.submission ? `<div class="hw-submission"><strong>Bài làm:</strong> ${escapeHtml(item.submission)}</div>` : ''}
           <div>${homeworkBadge(item.status)}</div>
           <div class="hw-actions">
-            <button class="btn btn-success" onclick="confirmHomework('${escapeHtml(studentId)}','${escapeHtml(item.date)}','${escapeHtml(jsSafe(item.task))}','Đã làm')">Đã làm</button>
-            <button class="btn btn-danger" onclick="confirmHomework('${escapeHtml(studentId)}','${escapeHtml(item.date)}','${escapeHtml(jsSafe(item.task))}','Chưa làm')">Chưa làm</button>
+            <button class="btn btn-success" onclick="confirmHomework('${enc(studentId)}','${enc(item.date)}','${enc(item.task)}','Đã làm')">Đã làm</button>
+            <button class="btn btn-danger" onclick="confirmHomework('${enc(studentId)}','${enc(item.date)}','${enc(item.task)}','Chưa làm')">Chưa làm</button>
           </div>
         </div>
       `).join('');
     }
 
-    async function confirmHomework(studentId, date, task, status) {
-      const json = await callApi({
-        action: 'confirm_homework',
-        studentId,
-        accessCode: currentAccessCode,
-        date,
-        task,
-        status
-      });
+    async function confirmHomework(encodedStudentId, encodedDate, encodedTask, status) {
+      const studentId = dec(encodedStudentId);
+      const date = dec(encodedDate);
+      const task = dec(encodedTask);
 
-      if (!json.ok) {
-        alert(json.message || 'Không thể cập nhật trạng thái BTVN.');
-        return;
+      setLoading(true, 'Đang cập nhật trạng thái bài tập...');
+
+      try {
+        const json = await callApi({
+          action: 'confirm_homework',
+          studentId,
+          accessCode: currentAccessCode,
+          date,
+          task,
+          status
+        });
+
+        if (!json.ok) {
+          alert(json.message || 'Không thể cập nhật trạng thái BTVN.');
+          return;
+        }
+
+        await refreshDashboard(studentId);
+      } catch (err) {
+        alert(err.message || 'Không thể cập nhật trạng thái BTVN.');
+        console.error(err);
+      } finally {
+        setLoading(false);
       }
-
-      await refreshDashboard(studentId);
     }
 
     function renderAttendanceTable(items) {
@@ -576,7 +709,6 @@
     function renderScores(data) {
       const daily = data.dailyScores || [];
       const mock = data.mocktests || [];
-
       let html = '';
 
       if (daily.length) {
