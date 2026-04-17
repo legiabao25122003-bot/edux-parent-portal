@@ -4,314 +4,642 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>EDUX - Góc học tập của con</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: Montserrat, Arial, sans-serif;
-      background: #f6f8fc;
-      color: #1f2937;
+    :root{
+      --primary:#0E4BA9;
+      --primary-2:#1E5DC0;
+      --accent:#E4C28E;
+      --bg:#f4f7fc;
+      --card:#ffffff;
+      --text:#172033;
+      --muted:#667085;
+      --line:#e9eef5;
+      --success:#16a34a;
+      --success-bg:#dcfce7;
+      --danger:#dc2626;
+      --danger-bg:#fee2e2;
+      --warning:#92400e;
+      --warning-bg:#fef3c7;
+      --shadow:0 12px 32px rgba(14,75,169,.08);
+      --radius:22px;
     }
-    .app {
-      max-width: 1180px;
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: "Montserrat", Arial, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(14,75,169,.08), transparent 30%),
+        radial-gradient(circle at top right, rgba(228,194,142,.16), transparent 28%),
+        var(--bg);
+      color: var(--text);
+    }
+
+    body {
+      min-height: 100vh;
+    }
+
+    .page {
+      max-width: 1220px;
       margin: 0 auto;
       padding: 20px;
     }
+
     .hero {
-      background: linear-gradient(135deg, #0E4BA9, #154ea7);
-      color: white;
-      border-radius: 20px;
-      padding: 24px;
-      margin-bottom: 20px;
-      box-shadow: 0 10px 30px rgba(14,75,169,0.18);
-    }
-    .hero h1 {
-      margin: 0 0 8px 0;
-      font-size: 28px;
-    }
-    .hero p {
-      margin: 0;
-      opacity: 0.95;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #0c3f91 0%, #0E4BA9 55%, #1c62d1 100%);
+      color: #fff;
+      border-radius: 28px;
+      padding: 28px;
+      box-shadow: 0 18px 50px rgba(14,75,169,.20);
+      margin-bottom: 18px;
     }
 
-    .login-card, .panel, .metric, .lesson-card, .hw-card {
-      background: #fff;
-      border-radius: 18px;
-      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+    .hero::before,
+    .hero::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      background: rgba(255,255,255,.10);
+      filter: blur(2px);
+    }
+
+    .hero::before {
+      width: 240px;
+      height: 240px;
+      top: -80px;
+      right: -40px;
+    }
+
+    .hero::after {
+      width: 140px;
+      height: 140px;
+      bottom: -30px;
+      left: -20px;
+    }
+
+    .hero-top {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+
+    .hero h1 {
+      margin: 0 0 10px;
+      font-size: 30px;
+      font-weight: 800;
+      letter-spacing: -.02em;
+    }
+
+    .hero p {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.7;
+      max-width: 700px;
+      opacity: .97;
+    }
+
+    .hero-chip-group {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .hero-chip {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.16);
+      backdrop-filter: blur(10px);
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+      border: 1px solid rgba(255,255,255,.12);
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(14,75,169,.05);
     }
 
     .login-wrap {
+      min-height: calc(100vh - 180px);
       display: grid;
-      grid-template-columns: 1fr;
-      gap: 20px;
+      place-items: center;
     }
+
     .login-card {
-      padding: 22px;
-      max-width: 520px;
-      margin: 0 auto;
+      width: min(100%, 520px);
+      padding: 26px;
     }
-    .login-card h2 {
-      margin-top: 0;
-      font-size: 22px;
+
+    .login-head {
+      margin-bottom: 18px;
+    }
+
+    .login-title {
+      margin: 0 0 8px;
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .login-sub {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 14px;
     }
 
     .field {
       margin-bottom: 14px;
     }
+
     .field label {
       display: block;
-      font-weight: 600;
       margin-bottom: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #24324b;
     }
+
     .field input {
       width: 100%;
-      padding: 12px 14px;
-      border: 1px solid #d1d5db;
-      border-radius: 12px;
+      border: 1px solid #d7dfec;
+      background: #fff;
+      border-radius: 16px;
+      padding: 14px 16px;
       font-size: 15px;
+      font-family: inherit;
+      color: var(--text);
       outline: none;
+      transition: .18s ease;
     }
+
     .field input:focus {
-      border-color: #0E4BA9;
-      box-shadow: 0 0 0 3px rgba(14,75,169,0.10);
+      border-color: rgba(14,75,169,.65);
+      box-shadow: 0 0 0 4px rgba(14,75,169,.10);
     }
 
     .btn {
       border: none;
-      border-radius: 12px;
-      padding: 12px 18px;
-      font-size: 15px;
-      font-weight: 700;
+      border-radius: 16px;
+      padding: 13px 18px;
+      font-size: 14px;
+      font-weight: 800;
+      font-family: inherit;
       cursor: pointer;
       transition: .18s ease;
     }
-    .btn:hover { transform: translateY(-1px); }
+
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+
     .btn:disabled {
-      opacity: 0.65;
+      opacity: .65;
       cursor: not-allowed;
       transform: none;
     }
 
     .btn-primary {
-      background: #0E4BA9;
-      color: white;
+      background: linear-gradient(135deg, var(--primary), var(--primary-2));
+      color: #fff;
+      box-shadow: 0 10px 24px rgba(14,75,169,.18);
     }
+
     .btn-secondary {
-      background: #eef2ff;
-      color: #0E4BA9;
+      background: #edf3ff;
+      color: var(--primary);
     }
+
     .btn-success {
-      background: #16a34a;
-      color: white;
+      background: var(--success);
+      color: #fff;
     }
+
     .btn-danger {
-      background: #dc2626;
-      color: white;
+      background: var(--danger);
+      color: #fff;
+    }
+
+    .full {
+      width: 100%;
     }
 
     .muted {
-      color: #6b7280;
-      font-size: 14px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
     }
+
     .error {
-      color: #b91c1c;
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: #fff2f2;
+      color: #b42318;
+      border: 1px solid #fecaca;
       font-size: 14px;
-      margin-top: 10px;
+      line-height: 1.6;
       white-space: pre-wrap;
-      line-height: 1.5;
     }
+
     .hidden { display: none !important; }
 
-    .topbar {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      align-items: center;
-      margin-bottom: 18px;
-      flex-wrap: wrap;
-    }
-    .student-box {
-      background: #fff;
-      border-radius: 16px;
-      padding: 16px 18px;
-      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
-      flex: 1;
-      min-width: 260px;
-    }
-    .student-box h2 {
-      margin: 0 0 8px 0;
-      font-size: 22px;
-    }
-    .student-meta {
+    .dashboard {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-      gap: 8px 14px;
+      gap: 18px;
+    }
+
+    .topbar {
+      padding: 18px;
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 16px;
+    }
+
+    .student-main {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .student-avatar {
+      width: 62px;
+      height: 62px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(14,75,169,.12), rgba(228,194,142,.30));
+      color: var(--primary);
+      display: grid;
+      place-items: center;
+      font-size: 24px;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .student-title {
+      margin: 0 0 8px;
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -.02em;
+    }
+
+    .student-sub {
+      margin: 0;
+      color: var(--muted);
       font-size: 14px;
-      color: #374151;
+      line-height: 1.7;
+    }
+
+    .meta-grid {
+      margin-top: 14px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 10px;
+    }
+
+    .meta-item {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 12px;
+      background: #fafcff;
+    }
+
+    .meta-item .k {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--muted);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: .03em;
+    }
+
+    .meta-item .v {
+      font-size: 14px;
+      font-weight: 700;
+      color: #1d2c45;
+      line-height: 1.5;
+      word-break: break-word;
+    }
+
+    .topbar-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      justify-content: space-between;
+    }
+
+    .fee-box {
+      padding: 16px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(14,75,169,.06), rgba(228,194,142,.18));
+      border: 1px solid rgba(14,75,169,.08);
+    }
+
+    .fee-box h3 {
+      margin: 0 0 10px;
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .fee-box p {
+      margin: 0;
+      font-size: 14px;
+      color: #334155;
+      line-height: 1.8;
+    }
+
+    .action-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
     }
 
     .metrics {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 16px;
-      margin-bottom: 18px;
     }
+
     .metric {
       padding: 18px;
+      position: relative;
+      overflow: hidden;
     }
+
+    .metric::after {
+      content: "";
+      position: absolute;
+      right: -18px;
+      top: -18px;
+      width: 78px;
+      height: 78px;
+      border-radius: 999px;
+      background: rgba(14,75,169,.05);
+    }
+
     .metric .label {
-      font-size: 14px;
-      color: #6b7280;
+      position: relative;
+      z-index: 1;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--muted);
       margin-bottom: 8px;
     }
+
     .metric .value {
-      font-size: 28px;
+      position: relative;
+      z-index: 1;
+      font-size: 30px;
       font-weight: 800;
-      color: #0E4BA9;
+      color: var(--primary);
+      letter-spacing: -.03em;
     }
 
     .tabs {
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
-      margin-bottom: 16px;
     }
+
     .tab-btn {
       background: #fff;
-      border: 1px solid #dbe4f0;
+      border: 1px solid #d8e2f0;
       border-radius: 999px;
-      padding: 10px 14px;
-      font-weight: 700;
+      padding: 11px 16px;
+      font-size: 13px;
+      font-weight: 800;
+      font-family: inherit;
+      color: var(--primary);
       cursor: pointer;
-      color: #0E4BA9;
+      transition: .18s ease;
     }
+
     .tab-btn.active {
-      background: #0E4BA9;
+      background: linear-gradient(135deg, var(--primary), var(--primary-2));
       color: #fff;
-      border-color: #0E4BA9;
+      border-color: transparent;
+      box-shadow: 0 10px 20px rgba(14,75,169,.16);
     }
 
     .panel {
-      padding: 18px;
-      margin-bottom: 18px;
+      padding: 20px;
     }
+
     .panel h3 {
-      margin-top: 0;
-      margin-bottom: 14px;
+      margin: 0 0 14px;
       font-size: 20px;
+      font-weight: 800;
+      color: #20304b;
     }
 
     .list {
       display: grid;
-      gap: 12px;
+      gap: 14px;
     }
-    .lesson-card, .hw-card {
-      padding: 16px;
-      border: 1px solid #edf2f7;
+
+    .lesson-card,
+    .hw-card {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: linear-gradient(180deg, #fff 0%, #fcfdff 100%);
     }
-    .lesson-date, .hw-date {
+
+    .lesson-date,
+    .hw-date {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 10px;
+      letter-spacing: .02em;
+      text-transform: uppercase;
+    }
+
+    .lesson-card.locked {
+      border: 1px dashed #f59e0b;
+      background: #fffdf7;
+    }
+
+    .lesson-block,
+    .hw-task,
+    .hw-submission {
+      line-height: 1.8;
       font-size: 14px;
-      font-weight: 700;
-      color: #0E4BA9;
-      margin-bottom: 10px;
-    }
-    .lesson-block {
-      margin-bottom: 10px;
-      line-height: 1.7;
+      color: #27364f;
       white-space: pre-wrap;
     }
-    .hw-task, .hw-submission {
-      margin-bottom: 8px;
-      white-space: pre-wrap;
-      line-height: 1.7;
+
+    .lesson-block + .lesson-block,
+    .hw-submission {
+      margin-top: 12px;
     }
 
     .badge {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
       border-radius: 999px;
-      padding: 6px 10px;
-      font-size: 13px;
-      font-weight: 700;
-      margin-top: 6px;
+      padding: 7px 12px;
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 10px;
     }
+
     .badge-done {
-      background: #dcfce7;
+      background: var(--success-bg);
       color: #166534;
     }
+
     .badge-todo {
-      background: #fee2e2;
+      background: var(--danger-bg);
       color: #991b1b;
     }
+
     .badge-neutral {
       background: #eef2ff;
       color: #4338ca;
+    }
+
+    .badge-locked {
+      background: var(--warning-bg);
+      color: var(--warning);
     }
 
     .hw-actions {
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
-      margin-top: 12px;
+      margin-top: 14px;
+    }
+
+    .table-wrap {
+      overflow: auto;
+      border-radius: 18px;
+      border: 1px solid var(--line);
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      background: white;
-      border-radius: 14px;
-      overflow: hidden;
+      min-width: 520px;
+      background: #fff;
     }
+
     th, td {
-      padding: 12px;
-      border-bottom: 1px solid #eef2f7;
+      padding: 13px 14px;
+      border-bottom: 1px solid var(--line);
       text-align: left;
       vertical-align: top;
-    }
-    th {
-      background: #f8fafc;
-      color: #0E4BA9;
       font-size: 14px;
     }
 
+    th {
+      background: #f8fbff;
+      color: var(--primary);
+      font-weight: 800;
+      position: sticky;
+      top: 0;
+    }
+
     .report-box {
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: linear-gradient(180deg, #fff, #fcfdff);
+      padding: 18px;
       white-space: pre-wrap;
-      line-height: 1.7;
-      background: #fafbff;
-      border: 1px solid #e7ecf5;
-      border-radius: 14px;
-      padding: 16px;
+      line-height: 1.9;
+      font-size: 14px;
+      color: #24324b;
     }
 
     .empty {
-      color: #6b7280;
+      color: var(--muted);
       font-style: italic;
+      line-height: 1.8;
     }
 
     .loading-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(255,255,255,0.55);
+      background: rgba(255,255,255,.58);
       display: none;
       align-items: center;
       justify-content: center;
       z-index: 9999;
+      backdrop-filter: blur(4px);
     }
+
     .loading-overlay.show {
       display: flex;
     }
+
     .loading-box {
       background: #fff;
       padding: 16px 22px;
-      border-radius: 14px;
-      box-shadow: 0 8px 24px rgba(15,23,42,0.12);
-      font-weight: 700;
-      color: #0E4BA9;
+      border-radius: 18px;
+      box-shadow: 0 18px 40px rgba(15,23,42,.12);
+      font-weight: 800;
+      color: var(--primary);
+      font-size: 14px;
     }
 
-    @media (max-width: 768px) {
-      .hero h1 { font-size: 22px; }
-      .metric .value { font-size: 24px; }
-      th, td { font-size: 14px; }
+    @media (max-width: 992px) {
+      .topbar {
+        grid-template-columns: 1fr;
+      }
+      .metrics {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page {
+        padding: 14px;
+      }
+      .hero {
+        padding: 22px 18px;
+      }
+      .hero h1 {
+        font-size: 24px;
+      }
+      .student-main {
+        flex-direction: column;
+      }
+      .metrics {
+        grid-template-columns: 1fr;
+      }
+      .metric .value {
+        font-size: 26px;
+      }
+      .action-row {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+      .btn {
+        width: 100%;
+      }
+      .hw-actions {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+      table {
+        min-width: 100%;
+      }
     }
   </style>
 </head>
@@ -320,15 +648,32 @@
     <div class="loading-box" id="loadingText">Đang xử lý...</div>
   </div>
 
-  <div class="app">
-    <div class="hero">
-      <h1>EDUX - Góc học tập của con</h1>
-      <p>Theo dõi hành trình học tập của con theo phong cách dashboard hiện đại.</p>
-    </div>
+  <div class="page">
+    <section class="hero">
+      <div class="hero-top">
+        <div>
+          <h1>EDUX - Góc học tập của con</h1>
+          <p>
+            Phụ huynh có thể theo dõi quá trình học tập, điểm danh, bài tập về nhà,
+            báo bài và báo cáo cá nhân của con trong một giao diện trực quan, dễ theo dõi.
+          </p>
+        </div>
+        <div class="hero-chip-group">
+          <div class="hero-chip">Theo dõi tiến độ</div>
+          <div class="hero-chip">Cập nhật theo thời gian thực</div>
+          <div class="hero-chip">Thiết kế cho phụ huynh</div>
+        </div>
+      </div>
+    </section>
 
     <div id="loginView" class="login-wrap">
-      <div class="login-card">
-        <h2>Đăng nhập phụ huynh</h2>
+      <div class="login-card card">
+        <div class="login-head">
+          <h2 class="login-title">Đăng nhập phụ huynh</h2>
+          <p class="login-sub">
+            Vui lòng nhập mã học viên để truy cập hồ sơ học tập của con.
+          </p>
+        </div>
 
         <div class="field">
           <label>Mã học viên</label>
@@ -340,82 +685,110 @@
           <input id="accessCodeInput" type="password" value="123">
         </div>
 
-        <button id="loginBtn" class="btn btn-primary" onclick="login()">Đăng nhập</button>
+        <button id="loginBtn" class="btn btn-primary full" onclick="login()">Đăng nhập</button>
         <div id="loginError" class="error hidden"></div>
         <p class="muted">Mã truy cập mặc định nội bộ hiện tại là 123.</p>
       </div>
     </div>
 
-    <div id="dashboardView" class="hidden">
-      <div class="topbar">
-        <div class="student-box">
-          <h2 id="studentName">Học viên</h2>
-          <div class="student-meta">
-            <div><strong>Mã HV:</strong> <span id="studentId"></span></div>
-            <div><strong>Lớp:</strong> <span id="studentClass"></span></div>
-            <div><strong>Giáo viên:</strong> <span id="studentTeacher"></span></div>
-            <div><strong>Ngày sinh:</strong> <span id="studentDob"></span></div>
-            <div><strong>Báo phí:</strong> <span id="feeStatus"></span></div>
-            <div><strong>Cập nhật:</strong> <span id="updatedAt"></span></div>
+    <div id="dashboardView" class="dashboard hidden">
+      <section class="topbar card">
+        <div>
+          <div class="student-main">
+            <div class="student-avatar" id="studentAvatar">HV</div>
+            <div>
+              <h2 class="student-title" id="studentName">Học viên</h2>
+              <p class="student-sub">
+                Cập nhật đầy đủ thông tin học tập, báo bài, bài tập và tiến độ của con.
+              </p>
+            </div>
+          </div>
+
+          <div class="meta-grid">
+            <div class="meta-item">
+              <span class="k">Mã học viên</span>
+              <span class="v" id="studentId"></span>
+            </div>
+            <div class="meta-item">
+              <span class="k">Lớp</span>
+              <span class="v" id="studentClass"></span>
+            </div>
+            <div class="meta-item">
+              <span class="k">Giáo viên</span>
+              <span class="v" id="studentTeacher"></span>
+            </div>
+            <div class="meta-item">
+              <span class="k">Ngày sinh</span>
+              <span class="v" id="studentDob"></span>
+            </div>
           </div>
         </div>
-        <div>
-          <button class="btn btn-secondary" onclick="refreshDashboard()">Làm mới</button>
-          <button class="btn btn-secondary" onclick="logout()">Thoát</button>
-        </div>
-      </div>
 
-      <div class="metrics">
-        <div class="metric">
+        <div class="topbar-actions">
+          <div class="fee-box">
+            <h3>Thông tin học phí</h3>
+            <p><strong>Trạng thái:</strong> <span id="feeStatus"></span></p>
+            <p><strong>Cập nhật:</strong> <span id="updatedAt"></span></p>
+          </div>
+
+          <div class="action-row">
+            <button class="btn btn-secondary" onclick="refreshDashboard()">Làm mới</button>
+            <button class="btn btn-secondary" onclick="logout()">Thoát</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="metrics">
+        <div class="metric card">
           <div class="label">Đi học</div>
           <div class="value" id="mAttend">0</div>
         </div>
-        <div class="metric">
+        <div class="metric card">
           <div class="label">Vắng / Có phép</div>
           <div class="value" id="mAbsent">0</div>
         </div>
-        <div class="metric">
+        <div class="metric card">
           <div class="label">BTVN đã làm</div>
           <div class="value" id="mHomework">0/0</div>
         </div>
-        <div class="metric">
+        <div class="metric card">
           <div class="label">Điểm trung bình</div>
           <div class="value" id="mAvg">-</div>
         </div>
-      </div>
+      </section>
 
-      <div class="tabs">
+      <section class="tabs">
         <button class="tab-btn active" data-tab="baoBai" onclick="switchTab('baoBai', this)">Báo bài</button>
         <button class="tab-btn" data-tab="homework" onclick="switchTab('homework', this)">Bài tập về nhà</button>
         <button class="tab-btn" data-tab="attendance" onclick="switchTab('attendance', this)">Điểm danh</button>
         <button class="tab-btn" data-tab="scores" onclick="switchTab('scores', this)">Điểm số</button>
         <button class="tab-btn" data-tab="report" onclick="switchTab('report', this)">Báo cáo cá nhân</button>
-      </div>
+      </section>
 
-      <div id="tab-baoBai" class="panel">
+      <section id="tab-baoBai" class="panel card">
         <h3>Báo bài</h3>
         <div id="baoBaiList" class="list"></div>
-      </div>
+      </section>
 
-      <div id="tab-homework" class="panel hidden">
+      <section id="tab-homework" class="panel card hidden">
         <h3>Bài tập về nhà</h3>
         <div id="homeworkList" class="list"></div>
-      </div>
+      </section>
 
-      <div id="tab-attendance" class="panel hidden">
+      <section id="tab-attendance" class="panel card hidden">
         <h3>Điểm danh</h3>
         <div id="attendanceTableWrap"></div>
-      </div>
+      </section>
 
-      <div id="tab-scores" class="panel hidden">
+      <section id="tab-scores" class="panel card hidden">
         <h3>Điểm số</h3>
         <div id="scoresWrap"></div>
-      </div>
+      </section>
 
-      <div id="tab-report" class="panel hidden">
+      <section id="tab-report" class="panel card hidden">
         <h3>Báo cáo cá nhân</h3>
         <div id="reportBox" class="report-box"></div>
-      </div>
+      </section>
     </div>
   </div>
 
@@ -581,13 +954,19 @@
     }
 
     function renderDashboard(data) {
-      document.getElementById('studentName').textContent = clean(data.student?.name);
+      const studentName = clean(data.student?.name);
+      document.getElementById('studentName').textContent = studentName || 'Học viên';
       document.getElementById('studentId').textContent = clean(data.student?.id);
       document.getElementById('studentClass').textContent = clean(data.student?.className);
       document.getElementById('studentTeacher').textContent = clean(data.student?.teacher);
       document.getElementById('studentDob').textContent = clean(data.student?.dob);
       document.getElementById('feeStatus').textContent = clean(data.feeInfo?.feeStatus);
       document.getElementById('updatedAt').textContent = clean(data.updatedAt);
+
+      const initials = studentName
+        ? studentName.split(' ').slice(-2).map(x => x.charAt(0).toUpperCase()).join('').slice(0,2)
+        : 'HV';
+      document.getElementById('studentAvatar').textContent = initials;
 
       document.getElementById('mAttend').textContent = clean(data.metrics?.attendancePresent || 0);
       document.getElementById('mAbsent').textContent =
@@ -609,19 +988,38 @@
         return '<div class="empty">Chưa có dữ liệu báo bài.</div>';
       }
 
-      return items.map(item => `
-        <div class="lesson-card">
-          <div class="lesson-date">${escapeHtml(item.date)}</div>
-          <div class="lesson-block">
-            <strong>Bài học:</strong>
-            <div>${escapeHtml(item.lesson)}</div>
+      return items.map(item => {
+        if (item.locked) {
+          return `
+            <div class="lesson-card locked">
+              <div class="lesson-date">${escapeHtml(item.date)}</div>
+              <div><span class="badge badge-locked">Chưa mở</span></div>
+              <div class="lesson-block">
+                <strong>Bài học:</strong>
+                <div>Nội dung sẽ hiển thị vào đúng ngày học.</div>
+              </div>
+              <div class="lesson-block">
+                <strong>Bài tập về nhà:</strong>
+                <div>Nội dung sẽ hiển thị khi đến ngày tương ứng.</div>
+              </div>
+            </div>
+          `;
+        }
+
+        return `
+          <div class="lesson-card">
+            <div class="lesson-date">${escapeHtml(item.date)}</div>
+            <div class="lesson-block">
+              <strong>Bài học:</strong>
+              <div>${escapeHtml(item.lesson)}</div>
+            </div>
+            <div class="lesson-block">
+              <strong>Bài tập về nhà:</strong>
+              <div>${escapeHtml(item.homework)}</div>
+            </div>
           </div>
-          <div class="lesson-block">
-            <strong>Bài tập về nhà:</strong>
-            <div>${escapeHtml(item.homework)}</div>
-          </div>
-        </div>
-      `).join('');
+        `;
+      }).join('');
     }
 
     function homeworkBadge(status) {
@@ -687,22 +1085,24 @@
       }
 
       return `
-        <table>
-          <thead>
-            <tr>
-              <th>Ngày</th>
-              <th>Trạng thái</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${items.map(item => `
+        <div class="table-wrap">
+          <table>
+            <thead>
               <tr>
-                <td>${escapeHtml(item.date)}</td>
-                <td>${escapeHtml(item.status)}</td>
+                <th>Ngày</th>
+                <th>Trạng thái</th>
               </tr>
-            `).join('')}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              ${items.map(item => `
+                <tr>
+                  <td>${escapeHtml(item.date)}</td>
+                  <td>${escapeHtml(item.status)}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
       `;
     }
 
@@ -714,39 +1114,43 @@
       if (daily.length) {
         html += `
           <h4>Daily data</h4>
-          <table>
-            <thead>
-              <tr><th>Ngày</th><th>Điểm</th></tr>
-            </thead>
-            <tbody>
-              ${daily.map(item => `
-                <tr>
-                  <td>${escapeHtml(item.date)}</td>
-                  <td>${escapeHtml(item.rawScore)}</td>
-                </tr>
-              `).join('')}
-            </tbody>
-          </table>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>Ngày</th><th>Điểm</th></tr>
+              </thead>
+              <tbody>
+                ${daily.map(item => `
+                  <tr>
+                    <td>${escapeHtml(item.date)}</td>
+                    <td>${escapeHtml(item.rawScore)}</td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
         `;
       }
 
       if (mock.length) {
         html += `
-          <h4 style="margin-top:16px;">Mocktest / Minitest</h4>
-          <table>
-            <thead>
-              <tr><th>Bài test</th><th>Điểm</th><th>TB</th></tr>
-            </thead>
-            <tbody>
-              ${mock.map(item => `
-                <tr>
-                  <td>${escapeHtml(item.testName)}</td>
-                  <td>${escapeHtml((item.scores || []).join(' | '))}</td>
-                  <td>${item.average == null ? '-' : escapeHtml(item.average)}</td>
-                </tr>
-              `).join('')}
-            </tbody>
-          </table>
+          <h4 style="margin-top:18px;">Mocktest / Minitest</h4>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>Bài test</th><th>Điểm</th><th>TB</th></tr>
+              </thead>
+              <tbody>
+                ${mock.map(item => `
+                  <tr>
+                    <td>${escapeHtml(item.testName)}</td>
+                    <td>${escapeHtml((item.scores || []).join(' | '))}</td>
+                    <td>${item.average == null ? '-' : escapeHtml(item.average)}</td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
         `;
       }
 
