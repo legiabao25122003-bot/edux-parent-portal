@@ -11,7 +11,7 @@
     :root{
       --primary:#0E4BA9;
       --primary-2:#2C6FE0;
-      --primary-3:#77A7FF;
+      --primary-3:#7EAFFF;
       --accent:#E4C28E;
       --bg:#EEF4FF;
       --bg-soft:#F8FBFF;
@@ -19,14 +19,12 @@
       --text:#1E2E45;
       --muted:#73839A;
       --border:rgba(14,75,169,.12);
-      --border-strong:rgba(14,75,169,.18);
       --success:#198754;
       --danger:#D93025;
-      --warning:#B7791F;
-      --shadow-sm:0 10px 20px rgba(14,75,169,.06);
-      --shadow-md:0 18px 40px rgba(14,75,169,.10);
-      --shadow-lg:0 28px 64px rgba(14,75,169,.16);
-      --radius-xl:32px;
+      --shadow-sm:0 10px 24px rgba(14,75,169,.08);
+      --shadow-md:0 18px 42px rgba(14,75,169,.12);
+      --shadow-lg:0 28px 70px rgba(14,75,169,.18);
+      --radius-xl:34px;
       --radius-lg:24px;
       --radius-md:18px;
     }
@@ -38,11 +36,11 @@
     body{
       font-family:'Montserrat',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
       color:var(--text);
-      background:
-        radial-gradient(circle at top left, rgba(119,167,255,.20), transparent 22%),
-        radial-gradient(circle at top right, rgba(228,194,142,.14), transparent 20%),
-        linear-gradient(180deg,#F8FBFF 0%, #EEF4FF 100%);
       min-height:100vh;
+      background:
+        radial-gradient(circle at top left, rgba(126,175,255,.20), transparent 22%),
+        radial-gradient(circle at top right, rgba(228,194,142,.14), transparent 18%),
+        linear-gradient(180deg,#F8FBFF 0%, #EEF4FF 100%);
     }
 
     .app-shell{
@@ -56,7 +54,7 @@
       justify-content:space-between;
       align-items:center;
       gap:18px;
-      margin-bottom:22px;
+      margin-bottom:26px;
     }
 
     .brand{
@@ -67,17 +65,16 @@
     }
 
     .brand-badge{
-      width:62px;
-      height:62px;
-      border-radius:20px;
-      background:
-        linear-gradient(145deg,var(--primary) 0%, var(--primary-2) 70%, #5b96ff 100%);
+      width:64px;
+      height:64px;
+      border-radius:22px;
+      background:linear-gradient(145deg,var(--primary) 0%, var(--primary-2) 70%, #5D97FF 100%);
       color:#fff;
       display:grid;
       place-items:center;
-      font-size:28px;
+      font-size:29px;
       font-weight:800;
-      box-shadow:0 16px 30px rgba(14,75,169,.20);
+      box-shadow:0 18px 34px rgba(14,75,169,.22);
       position:relative;
       overflow:hidden;
       flex:0 0 auto;
@@ -98,14 +95,14 @@
       margin:0;
       font-size:30px;
       font-weight:800;
-      line-height:1.14;
+      line-height:1.12;
       letter-spacing:-.02em;
       color:var(--primary);
     }
 
     .brand-text p{
       margin:6px 0 0;
-      color:#5f728d;
+      color:#60738E;
       font-size:14px;
       font-weight:500;
       line-height:1.6;
@@ -138,7 +135,7 @@
     .btn-primary{
       background:linear-gradient(135deg,var(--primary),var(--primary-2));
       color:#fff;
-      box-shadow:0 12px 26px rgba(14,75,169,.18);
+      box-shadow:0 12px 28px rgba(14,75,169,.20);
     }
 
     .btn-soft{
@@ -182,195 +179,13 @@
 
     .main-stage{
       display:grid;
-      grid-template-columns:420px 1fr;
+      grid-template-columns:1fr;
       gap:24px;
       align-items:start;
     }
 
     .main-stage.logged-in{
       grid-template-columns:1fr;
-    }
-
-    .card{
-      background:rgba(255,255,255,.94);
-      backdrop-filter:blur(10px);
-      border:1px solid rgba(255,255,255,.65);
-      border-radius:var(--radius-xl);
-      box-shadow:var(--shadow-md);
-      overflow:hidden;
-    }
-
-    .login-wrap{
-      display:flex;
-      flex-direction:column;
-      gap:18px;
-    }
-
-    .login-card{
-      position:sticky;
-      top:18px;
-    }
-
-    .login-side-showcase{
-      min-height:220px;
-      padding:24px;
-      border-radius:var(--radius-xl);
-      background:
-        radial-gradient(circle at top right, rgba(255,255,255,.16), transparent 28%),
-        linear-gradient(135deg,#0E4BA9 0%, #1C62CE 58%, #2459AE 100%);
-      color:#fff;
-      box-shadow:var(--shadow-lg);
-      display:flex;
-      flex-direction:column;
-      justify-content:space-between;
-      position:relative;
-      overflow:hidden;
-    }
-
-    .login-side-showcase::after{
-      content:'';
-      position:absolute;
-      width:220px;
-      height:220px;
-      border-radius:50%;
-      right:-70px;
-      bottom:-70px;
-      background:rgba(255,255,255,.08);
-    }
-
-    .login-side-showcase h3{
-      margin:0;
-      font-size:28px;
-      font-weight:800;
-      line-height:1.18;
-      letter-spacing:-.02em;
-      position:relative;
-      z-index:1;
-    }
-
-    .login-side-showcase p{
-      margin:12px 0 0;
-      line-height:1.9;
-      font-size:14px;
-      color:rgba(255,255,255,.92);
-      position:relative;
-      z-index:1;
-    }
-
-    .showcase-pills{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-top:18px;
-      position:relative;
-      z-index:1;
-    }
-
-    .showcase-pill{
-      padding:10px 12px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.16);
-      background:rgba(255,255,255,.10);
-      font-size:12px;
-      font-weight:700;
-    }
-
-    .login-head{
-      background:
-        radial-gradient(circle at top right, rgba(255,255,255,.16), transparent 26%),
-        linear-gradient(135deg,var(--primary) 0%, var(--primary-2) 72%, #1d59c0 100%);
-      color:#fff;
-      padding:30px 28px 24px;
-      position:relative;
-      overflow:hidden;
-    }
-
-    .login-head::after{
-      content:'';
-      position:absolute;
-      right:-48px;
-      bottom:-54px;
-      width:180px;
-      height:180px;
-      border-radius:50%;
-      background:rgba(255,255,255,.10);
-    }
-
-    .login-head::before{
-      content:'';
-      position:absolute;
-      right:42px;
-      top:28px;
-      width:72px;
-      height:72px;
-      border-radius:50%;
-      background:rgba(255,255,255,.08);
-    }
-
-    .login-title{
-      margin:0;
-      font-size:30px;
-      font-weight:800;
-      line-height:1.14;
-      letter-spacing:-.02em;
-      max-width:280px;
-      position:relative;
-      z-index:1;
-    }
-
-    .login-subtitle{
-      margin:14px 0 0;
-      font-size:15px;
-      line-height:1.85;
-      color:rgba(255,255,255,.92);
-      max-width:330px;
-      position:relative;
-      z-index:1;
-    }
-
-    .login-body{
-      padding:24px 26px 28px;
-      background:linear-gradient(180deg,rgba(255,255,255,.99) 0%, rgba(248,251,255,.99) 100%);
-    }
-
-    .field{
-      margin-bottom:16px;
-    }
-
-    .field label{
-      display:block;
-      margin-bottom:10px;
-      font-size:12px;
-      font-weight:800;
-      color:var(--primary);
-      text-transform:uppercase;
-      letter-spacing:.35px;
-    }
-
-    .field input{
-      width:100%;
-      border:1px solid rgba(14,75,169,.12);
-      background:linear-gradient(180deg,#F4F8FF 0%, #EDF4FF 100%);
-      border-radius:18px;
-      padding:15px 16px;
-      font-family:inherit;
-      font-size:15px;
-      color:var(--text);
-      outline:none;
-      transition:border-color .18s ease, box-shadow .18s ease, transform .18s ease;
-    }
-
-    .field input:focus{
-      border-color:rgba(14,75,169,.34);
-      box-shadow:0 0 0 4px rgba(14,75,169,.08);
-      transform:translateY(-1px);
-    }
-
-    .login-note{
-      margin-top:18px;
-      color:var(--muted);
-      font-size:13px;
-      line-height:1.85;
     }
 
     .dashboard-panel{
@@ -383,6 +198,268 @@
       width:100%;
     }
 
+    /* ===== AUTH HERO ===== */
+    .login-wrap{
+      display:block;
+    }
+
+    .auth-shell{
+      position:relative;
+      overflow:hidden;
+      border-radius:36px;
+      background:
+        radial-gradient(circle at top right, rgba(255,255,255,.12), transparent 22%),
+        linear-gradient(135deg,#10284D 0%, #143D78 45%, #2B6FE0 100%);
+      box-shadow:var(--shadow-lg);
+      min-height:680px;
+      display:grid;
+      grid-template-columns:1.08fr .92fr;
+      align-items:stretch;
+    }
+
+    .auth-shell::before{
+      content:'';
+      position:absolute;
+      width:340px;
+      height:340px;
+      border-radius:50%;
+      right:-110px;
+      top:-110px;
+      background:rgba(255,255,255,.08);
+    }
+
+    .auth-shell::after{
+      content:'';
+      position:absolute;
+      width:260px;
+      height:260px;
+      border-radius:50%;
+      left:-80px;
+      bottom:-90px;
+      background:rgba(255,255,255,.05);
+    }
+
+    .auth-visual{
+      position:relative;
+      padding:52px 48px;
+      color:#fff;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      z-index:1;
+    }
+
+    .auth-kicker{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      width:max-content;
+      padding:10px 14px;
+      border-radius:999px;
+      background:rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.14);
+      font-size:12px;
+      font-weight:700;
+      letter-spacing:.02em;
+    }
+
+    .auth-title{
+      margin:22px 0 0;
+      font-size:58px;
+      line-height:1.02;
+      font-weight:800;
+      letter-spacing:-.045em;
+      max-width:560px;
+    }
+
+    .auth-desc{
+      margin:22px 0 0;
+      font-size:16px;
+      line-height:1.95;
+      color:rgba(255,255,255,.88);
+      max-width:520px;
+      font-weight:500;
+    }
+
+    .auth-pills{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-top:28px;
+    }
+
+    .auth-pill{
+      padding:12px 14px;
+      border-radius:999px;
+      background:rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.14);
+      font-size:13px;
+      font-weight:700;
+      color:#fff;
+      backdrop-filter:blur(8px);
+    }
+
+    .auth-bottom{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:14px;
+      margin-top:28px;
+      max-width:640px;
+    }
+
+    .auth-stat{
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:22px;
+      padding:18px 16px;
+      backdrop-filter:blur(8px);
+    }
+
+    .auth-stat-number{
+      font-size:26px;
+      font-weight:800;
+      line-height:1;
+      margin-bottom:8px;
+    }
+
+    .auth-stat-label{
+      font-size:12px;
+      line-height:1.6;
+      color:rgba(255,255,255,.82);
+      font-weight:600;
+    }
+
+    .auth-form-wrap{
+      position:relative;
+      z-index:1;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:36px;
+    }
+
+    .login-card{
+      width:100%;
+      max-width:500px;
+      background:rgba(255,255,255,.92);
+      border:1px solid rgba(255,255,255,.55);
+      border-radius:30px;
+      box-shadow:0 24px 60px rgba(12,29,74,.24);
+      backdrop-filter:blur(18px);
+      overflow:hidden;
+    }
+
+    .login-card-top{
+      padding:30px 30px 18px;
+      background:
+        linear-gradient(180deg,rgba(255,255,255,.82) 0%, rgba(255,255,255,.66) 100%);
+      border-bottom:1px solid rgba(14,75,169,.08);
+    }
+
+    .login-card-badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:9px 13px;
+      border-radius:999px;
+      background:#EEF4FF;
+      color:var(--primary);
+      font-size:12px;
+      font-weight:800;
+      margin-bottom:14px;
+    }
+
+    .login-title{
+      margin:0;
+      font-size:34px;
+      font-weight:800;
+      line-height:1.08;
+      letter-spacing:-.03em;
+      color:#17325D;
+    }
+
+    .login-subtitle{
+      margin:12px 0 0;
+      font-size:14px;
+      line-height:1.85;
+      color:#66748D;
+      font-weight:500;
+    }
+
+    .login-body{
+      padding:24px 30px 30px;
+      background:linear-gradient(180deg,rgba(255,255,255,.92) 0%, rgba(248,251,255,.98) 100%);
+    }
+
+    .field{
+      margin-bottom:18px;
+    }
+
+    .field label{
+      display:block;
+      margin-bottom:10px;
+      font-size:12px;
+      font-weight:800;
+      color:var(--primary);
+      text-transform:uppercase;
+      letter-spacing:.38px;
+    }
+
+    .input-shell{
+      position:relative;
+    }
+
+    .input-shell input{
+      width:100%;
+      border:1px solid rgba(14,75,169,.12);
+      background:linear-gradient(180deg,#F5F8FF 0%, #EDF4FF 100%);
+      border-radius:18px;
+      padding:16px 16px 16px 50px;
+      font-family:inherit;
+      font-size:15px;
+      color:var(--text);
+      outline:none;
+      transition:.18s ease;
+    }
+
+    .input-shell input:focus{
+      border-color:rgba(14,75,169,.34);
+      box-shadow:0 0 0 4px rgba(14,75,169,.08);
+      transform:translateY(-1px);
+      background:#fff;
+    }
+
+    .input-icon{
+      position:absolute;
+      left:16px;
+      top:50%;
+      transform:translateY(-50%);
+      font-size:16px;
+      color:#5E77A5;
+      pointer-events:none;
+    }
+
+    .login-btn{
+      width:100%;
+      padding:15px 18px;
+      font-size:15px;
+      margin-top:4px;
+    }
+
+    .login-footer{
+      margin-top:18px;
+      padding-top:18px;
+      border-top:1px solid rgba(14,75,169,.08);
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.85;
+    }
+
+    .login-footer strong{
+      color:#425A87;
+    }
+
+    /* ===== DASHBOARD ===== */
     .hero{
       position:relative;
       overflow:hidden;
@@ -996,23 +1073,39 @@
       .bb-item.full{grid-column:1 / -1}
     }
 
-    @media (max-width: 1180px){
-      .main-stage{grid-template-columns:1fr}
-      .login-card{position:static}
+    @media (max-width: 1200px){
+      .auth-shell{
+        grid-template-columns:1fr;
+        min-height:auto;
+      }
+
+      .auth-visual{
+        padding:34px 30px 20px;
+      }
+
+      .auth-form-wrap{
+        padding:10px 20px 28px;
+      }
     }
 
-    @media (max-width: 700px){
+    @media (max-width: 1180px){
+      .main-stage{grid-template-columns:1fr}
+    }
+
+    @media (max-width: 760px){
       .app-shell{padding:16px 12px 28px}
       .topbar{flex-direction:column;align-items:flex-start}
       .brand-text h1{font-size:22px}
       .hero-title{font-size:25px}
       .section-card{padding:16px}
-      .login-head{padding:24px 20px 20px}
-      .login-body{padding:18px}
+      .login-card-top{padding:22px 20px 16px}
+      .login-body{padding:18px 20px 22px}
       .hero{padding:20px}
       .hero-top{flex-direction:column}
       .hero-update{white-space:normal}
-      .login-side-showcase{display:none}
+      .auth-title{font-size:38px}
+      .auth-bottom{grid-template-columns:1fr}
+      .auth-form-wrap{padding:0 12px 18px}
     }
   </style>
 </head>
@@ -1029,8 +1122,8 @@
       <div class="brand">
         <div class="brand-badge">E</div>
         <div class="brand-text">
-          <h1>EDUX Parent Portal</h1>
-          <p>Theo dõi hành trình học tập của con theo phong cách dashboard hiện đại</p>
+          <h1>EDUX Portal</h1>
+          <p>Học tập thông minh, tương lai rạng ngời</p>
         </div>
       </div>
 
@@ -1044,47 +1137,79 @@
 
     <div class="main-stage" id="mainStage">
       <div class="login-wrap" id="loginWrap">
-        <div class="login-side-showcase">
-          <div>
-            <h3>Đồng hành cùng con mỗi ngày</h3>
-            <p>Cập nhật báo bài, chuyên cần, điểm số và nhận xét của giáo viên trong một giao diện rõ ràng, hiện đại và dễ theo dõi.</p>
-          </div>
-          <div class="showcase-pills">
-            <div class="showcase-pill">Báo bài trực quan</div>
-            <div class="showcase-pill">BTVN xác nhận nhanh</div>
-            <div class="showcase-pill">Theo dõi tiến độ học tập</div>
-          </div>
-        </div>
+        <section class="auth-shell">
+          <div class="auth-visual">
+            <div>
+              <div class="auth-kicker">✨ Parent Portal thế hệ mới</div>
+              <h2 class="auth-title">Đồng hành cùng con mỗi ngày</h2>
+              <p class="auth-desc">
+                Theo dõi báo bài, bài tập, chuyên cần, điểm số và các cập nhật từ giáo viên
+                trong một không gian trực quan, hiện đại và dễ theo dõi dành riêng cho phụ huynh.
+              </p>
 
-        <div class="card login-card" id="loginCard">
-          <div class="login-head">
-            <h2 class="login-title">Đăng nhập cổng phụ huynh</h2>
-            <p class="login-subtitle">
-              Vui lòng nhập mã học viên để xem báo bài, điểm số, tình hình chuyên cần và các cập nhật mới nhất của con.
-            </p>
-          </div>
-
-          <div class="login-body">
-            <div class="field">
-              <label for="studentIdInput">Mã học viên</label>
-              <input id="studentIdInput" type="text" placeholder="Ví dụ: EduX-HV4646" />
+              <div class="auth-pills">
+                <div class="auth-pill">Báo bài trực quan</div>
+                <div class="auth-pill">Xác nhận BTVN nhanh</div>
+                <div class="auth-pill">Theo dõi tiến độ học tập</div>
+              </div>
             </div>
 
-            <div class="field">
-              <label for="accessCodeInput">Mã truy cập</label>
-              <input id="accessCodeInput" type="password" placeholder="Nhập mã truy cập" />
-            </div>
-
-            <button class="btn btn-primary" id="loginBtn" type="button" style="width:100%;">
-              Đăng nhập
-            </button>
-
-            <div class="login-note">
-              Mã truy cập mặc định hiện tại là <strong>123</strong>.<br>
-              Nếu anh/chị host file này trên GitHub Pages, hãy nhớ dán URL Web App Apps Script vào biến <strong>API_URL_OVERRIDE</strong> trong phần script bên dưới.
+            <div class="auth-bottom">
+              <div class="auth-stat">
+                <div class="auth-stat-number">01</div>
+                <div class="auth-stat-label">Đăng nhập nhanh bằng mã học viên</div>
+              </div>
+              <div class="auth-stat">
+                <div class="auth-stat-number">24/7</div>
+                <div class="auth-stat-label">Xem lại thông tin học tập mọi lúc</div>
+              </div>
+              <div class="auth-stat">
+                <div class="auth-stat-number">Live</div>
+                <div class="auth-stat-label">Cập nhật dữ liệu mới nhất từ hệ thống</div>
+              </div>
             </div>
           </div>
-        </div>
+
+          <div class="auth-form-wrap">
+            <div class="login-card" id="loginCard">
+              <div class="login-card-top">
+                <div class="login-card-badge">🔐 Đăng nhập phụ huynh</div>
+                <h2 class="login-title">Chào mừng quay lại</h2>
+                <p class="login-subtitle">
+                  Nhập mã học viên để theo dõi hành trình học tập của con theo phong cách dashboard hiện đại.
+                </p>
+              </div>
+
+              <div class="login-body">
+                <div class="field">
+                  <label for="studentIdInput">Mã học viên</label>
+                  <div class="input-shell">
+                    <span class="input-icon">👤</span>
+                    <input id="studentIdInput" type="text" placeholder="Ví dụ: EduX-HV4646" />
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label for="accessCodeInput">Mã truy cập</label>
+                  <div class="input-shell">
+                    <span class="input-icon">🔑</span>
+                    <input id="accessCodeInput" type="password" placeholder="Nhập mã truy cập" />
+                  </div>
+                </div>
+
+                <button class="btn btn-primary login-btn" id="loginBtn" type="button">
+                  Đăng nhập vào portal
+                </button>
+
+                <div class="login-footer">
+                  Mã truy cập mặc định hiện tại là <strong>123</strong>.<br>
+                  Nếu anh/chị host file này trên GitHub Pages, hãy nhớ dán URL Web App Apps Script vào biến
+                  <strong>API_URL_OVERRIDE</strong> trong phần script bên dưới.
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
 
       <div class="dashboard-panel" id="dashboardPanel">
