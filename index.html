@@ -6,789 +6,760 @@
   <title>EDUX - Góc học tập của con</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    :root{
-      --primary:#0E4BA9;
-      --primary-2:#1E5DC0;
-      --accent:#E4C28E;
-      --bg:#f4f7fc;
-      --card:#ffffff;
-      --text:#172033;
-      --muted:#667085;
-      --line:#e9eef5;
-      --success:#16a34a;
-      --success-bg:#dcfce7;
-      --danger:#dc2626;
-      --danger-bg:#fee2e2;
-      --warning:#92400e;
-      --warning-bg:#fef3c7;
-      --shadow:0 12px 32px rgba(14,75,169,.08);
-      --radius:22px;
+    :root {
+      /* Premium Color Palette */
+      --primary: #3b82f6;
+      --primary-glow: rgba(59, 130, 246, 0.5);
+      --primary-dark: #1d4ed8;
+      --primary-light: #93c5fd;
+      --secondary: #f59e0b;
+      --accent: #8b5cf6;
+      --accent-glow: rgba(139, 92, 246, 0.4);
+      --success: #10b981;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+      
+      /* Backgrounds & Surfaces */
+      --bg-main: #0f172a;
+      --bg-card: rgba(30, 41, 59, 0.7);
+      --bg-glass: rgba(255, 255, 255, 0.03);
+      --border-glass: rgba(255, 255, 255, 0.1);
+      --border-active: rgba(59, 130, 246, 0.5);
+      
+      /* Text */
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --text-light: #ffffff;
+      
+      /* Shadows & Effects */
+      --shadow-premium: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      --shadow-glow: 0 0 20px rgba(59, 130, 246, 0.2);
+      --radius-sm: 12px;
+      --radius-md: 20px;
+      --radius-lg: 32px;
+      --blur: 20px;
+      
+      /* Transitions */
+      --transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
     }
 
-    * { box-sizing: border-box; }
-
-    html, body {
+    * {
       margin: 0;
       padding: 0;
-      font-family: "Montserrat", Arial, sans-serif;
-      background:
-        radial-gradient(circle at top left, rgba(14,75,169,.08), transparent 30%),
-        radial-gradient(circle at top right, rgba(228,194,142,.16), transparent 28%),
-        var(--bg);
-      color: var(--text);
+      box-sizing: border-box;
     }
 
     body {
+      font-family: 'Outfit', sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-main);
       min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
     }
 
-    .page {
-      max-width: 1220px;
-      margin: 0 auto;
-      padding: 20px;
-    }
-
-    .hero {
-      position: relative;
+    /* --- Animated Mesh Background --- */
+    .mesh-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: radial-gradient(circle at 0% 0%, #1e293b 0%, #0f172a 100%);
       overflow: hidden;
-      background: linear-gradient(135deg, #0c3f91 0%, #0E4BA9 55%, #1c62d1 100%);
-      color: #fff;
-      border-radius: 28px;
-      padding: 28px;
-      box-shadow: 0 18px 50px rgba(14,75,169,.20);
-      margin-bottom: 18px;
     }
 
-    .hero::before,
-    .hero::after {
+    .mesh-bg::before,
+    .mesh-bg::after {
       content: "";
       position: absolute;
-      border-radius: 999px;
-      background: rgba(255,255,255,.10);
-      filter: blur(2px);
+      width: 800px;
+      height: 800px;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.15;
+      z-index: -1;
+      animation: meshFloat 20s infinite alternate;
     }
 
-    .hero::before {
-      width: 240px;
-      height: 240px;
-      top: -80px;
-      right: -40px;
+    .mesh-bg::before {
+      background: var(--primary);
+      top: -200px;
+      left: -200px;
     }
 
-    .hero::after {
-      width: 140px;
-      height: 140px;
-      bottom: -30px;
-      left: -20px;
+    .mesh-bg::after {
+      background: var(--accent);
+      bottom: -200px;
+      right: -200px;
+      animation-delay: -10s;
     }
 
-    .hero-top {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      justify-content: space-between;
-      gap: 18px;
-      align-items: flex-start;
-      flex-wrap: wrap;
+    @keyframes meshFloat {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(100px, 100px) scale(1.2); }
     }
 
-    .hero h1 {
-      margin: 0 0 10px;
-      font-size: 30px;
-      font-weight: 800;
-      letter-spacing: -.02em;
+    /* --- Custom Scrollbar --- */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--border-glass);
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--text-dim);
     }
 
-    .hero p {
-      margin: 0;
-      font-size: 15px;
-      line-height: 1.7;
-      max-width: 700px;
-      opacity: .97;
+    /* --- Layout --- */
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem;
     }
 
-    .hero-chip-group {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .hero-chip {
-      padding: 10px 14px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.16);
-      backdrop-filter: blur(10px);
-      font-size: 13px;
+    /* --- Typography --- */
+    h1, h2, h3, h4 {
       font-weight: 700;
-      color: #fff;
-      border: 1px solid rgba(255,255,255,.12);
+      letter-spacing: -0.03em;
+      line-height: 1.1;
     }
 
-    .card {
-      background: var(--card);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      border: 1px solid rgba(14,75,169,.05);
+    .title-xl { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; }
+    .title-lg { font-size: 2.25rem; }
+    .title-md { font-size: 1.75rem; }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #fff 0%, var(--primary-light) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
-    .login-wrap {
-      min-height: calc(100vh - 180px);
-      display: grid;
-      place-items: center;
-    }
-
-    .login-card {
-      width: min(100%, 520px);
-      padding: 26px;
-    }
-
-    .login-head {
-      margin-bottom: 18px;
-    }
-
-    .login-title {
-      margin: 0 0 8px;
-      font-size: 26px;
-      font-weight: 800;
-      color: var(--primary);
-    }
-
-    .login-sub {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.7;
-      font-size: 14px;
-    }
-
-    .field {
-      margin-bottom: 14px;
-    }
-
-    .field label {
-      display: block;
-      margin-bottom: 8px;
-      font-size: 14px;
-      font-weight: 700;
-      color: #24324b;
-    }
-
-    .field input {
-      width: 100%;
-      border: 1px solid #d7dfec;
-      background: #fff;
-      border-radius: 16px;
-      padding: 14px 16px;
-      font-size: 15px;
-      font-family: inherit;
-      color: var(--text);
-      outline: none;
-      transition: .18s ease;
-    }
-
-    .field input:focus {
-      border-color: rgba(14,75,169,.65);
-      box-shadow: 0 0 0 4px rgba(14,75,169,.10);
-    }
-
+    /* --- Buttons --- */
     .btn {
-      border: none;
-      border-radius: 16px;
-      padding: 13px 18px;
-      font-size: 14px;
-      font-weight: 800;
-      font-family: inherit;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.875rem 1.75rem;
+      border-radius: var(--radius-md);
+      font-weight: 600;
       cursor: pointer;
-      transition: .18s ease;
-    }
-
-    .btn:hover {
-      transform: translateY(-1px);
-    }
-
-    .btn:disabled {
-      opacity: .65;
-      cursor: not-allowed;
-      transform: none;
+      transition: var(--transition);
+      border: 1px solid transparent;
+      gap: 0.75rem;
+      font-family: inherit;
+      font-size: 0.9375rem;
     }
 
     .btn-primary {
-      background: linear-gradient(135deg, var(--primary), var(--primary-2));
-      color: #fff;
-      box-shadow: 0 10px 24px rgba(14,75,169,.18);
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      box-shadow: 0 10px 20px -5px rgba(59, 130, 246, 0.4);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 15px 30px -5px rgba(59, 130, 246, 0.6);
     }
 
     .btn-secondary {
-      background: #edf3ff;
-      color: var(--primary);
+      background: var(--bg-glass);
+      color: var(--text-main);
+      border: 1px solid var(--border-glass);
+      backdrop-filter: blur(10px);
     }
 
-    .btn-success {
-      background: var(--success);
-      color: #fff;
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: var(--primary-light);
+      transform: translateY(-2px);
     }
 
-    .btn-danger {
-      background: var(--danger);
-      color: #fff;
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-muted);
     }
 
-    .full {
+    .btn-ghost:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-main);
+    }
+
+    /* --- Cards & Glassmorphism --- */
+    .glass-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(var(--blur));
+      -webkit-backdrop-filter: blur(var(--blur));
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-premium);
+      padding: 2rem;
+      position: relative;
+      transition: var(--transition);
+    }
+
+    .glass-card:hover {
+      border-color: var(--border-active);
+      box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.6), var(--shadow-glow);
+    }
+
+    /* --- Login View --- */
+    .login-screen {
+      display: flex;
+      min-height: calc(100vh - 5rem);
+      align-items: center;
+      justify-content: center;
+    }
+
+    .login-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 5rem;
+      align-items: center;
       width: 100%;
     }
 
-    .muted {
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.7;
+    .login-content h1 {
+      margin-bottom: 1.5rem;
     }
 
-    .error {
-      margin-top: 12px;
-      padding: 12px 14px;
-      border-radius: 14px;
-      background: #fff2f2;
-      color: #b42318;
-      border: 1px solid #fecaca;
-      font-size: 14px;
-      line-height: 1.6;
-      white-space: pre-wrap;
+    .login-content p {
+      color: var(--text-muted);
+      font-size: 1.25rem;
+      margin-bottom: 3rem;
+      max-width: 540px;
     }
 
-    .hidden { display: none !important; }
-
-    .dashboard {
-      display: grid;
-      gap: 18px;
-    }
-
-    .topbar {
-      padding: 18px;
-      display: grid;
-      grid-template-columns: 1.2fr .8fr;
-      gap: 16px;
-    }
-
-    .student-main {
+    .login-illustration {
       display: flex;
-      gap: 16px;
-      align-items: flex-start;
+      justify-content: center;
+      position: relative;
     }
 
-    .student-avatar {
-      width: 62px;
-      height: 62px;
-      border-radius: 18px;
-      background: linear-gradient(135deg, rgba(14,75,169,.12), rgba(228,194,142,.30));
-      color: var(--primary);
-      display: grid;
-      place-items: center;
-      font-size: 24px;
-      font-weight: 800;
-      flex-shrink: 0;
+    .login-illustration img {
+      width: 110%;
+      max-width: 600px;
+      filter: drop-shadow(0 30px 60px rgba(59, 130, 246, 0.3));
+      animation: float 8s ease-in-out infinite;
     }
 
-    .student-title {
-      margin: 0 0 8px;
-      font-size: 24px;
-      font-weight: 800;
-      letter-spacing: -.02em;
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-30px) rotate(2deg); }
     }
 
-    .student-sub {
-      margin: 0;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.7;
+    .form-group {
+      margin-bottom: 1.5rem;
     }
 
-    .meta-grid {
-      margin-top: 14px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 10px;
-    }
-
-    .meta-item {
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 12px;
-      background: #fafcff;
-    }
-
-    .meta-item .k {
+    .form-group label {
       display: block;
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--muted);
-      margin-bottom: 6px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      margin-bottom: 0.625rem;
+      color: var(--text-muted);
       text-transform: uppercase;
-      letter-spacing: .03em;
+      letter-spacing: 0.05em;
     }
 
-    .meta-item .v {
-      font-size: 14px;
-      font-weight: 700;
-      color: #1d2c45;
-      line-height: 1.5;
-      word-break: break-word;
+    .form-input {
+      width: 100%;
+      padding: 1rem 1.25rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-glass);
+      background: rgba(15, 23, 42, 0.5);
+      color: white;
+      font-family: inherit;
+      font-size: 1rem;
+      transition: var(--transition);
     }
 
-    .topbar-actions {
+    .form-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+      background: rgba(15, 23, 42, 0.8);
+    }
+
+    /* --- Dashboard --- */
+    .dashboard-layout {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 2.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .sidebar {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 1.5rem;
+    }
+
+    .main-content {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    /* --- Profile Section --- */
+    .profile-card {
+      text-align: center;
+      padding: 3rem 1.5rem;
+    }
+
+    .avatar-wrapper {
+      position: relative;
+      width: 110px;
+      height: 110px;
+      margin: 0 auto 2rem;
+    }
+
+    .avatar {
+      width: 100%;
+      height: 100%;
+      border-radius: 35%;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      font-weight: 800;
+      border: 4px solid rgba(255,255,255,0.1);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+      transform: rotate(-5deg);
+      transition: var(--transition);
+    }
+
+    .profile-card:hover .avatar {
+      transform: rotate(0deg) scale(1.05);
+    }
+
+    .student-info h2 {
+      font-size: 1.75rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .student-info p {
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+
+    .meta-info {
+      margin-top: 2.5rem;
+      display: grid;
+      gap: 1rem;
+      text-align: left;
+    }
+
+    .meta-row {
+      display: flex;
       justify-content: space-between;
+      padding: 0.875rem 0;
+      border-bottom: 1px solid var(--border-glass);
     }
 
-    .fee-box {
-      padding: 16px;
-      border-radius: 18px;
-      background: linear-gradient(135deg, rgba(14,75,169,.06), rgba(228,194,142,.18));
-      border: 1px solid rgba(14,75,169,.08);
+    .meta-row:last-child { border-bottom: none; }
+
+    .meta-row .label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
     }
 
-    .fee-box h3 {
-      margin: 0 0 10px;
-      font-size: 15px;
-      font-weight: 800;
-      color: var(--primary);
+    .meta-row .value {
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: var(--text-main);
     }
 
-    .fee-box p {
-      margin: 0;
-      font-size: 14px;
-      color: #334155;
-      line-height: 1.8;
-    }
-
-    .action-row {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .metrics {
+    /* --- Stats Grid (Bento) --- */
+    .stats-grid {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 16px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
     }
 
-    .metric {
-      padding: 18px;
-      position: relative;
-      overflow: hidden;
+    .stat-card {
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      border-radius: var(--radius-md);
     }
 
-    .metric::after {
-      content: "";
-      position: absolute;
-      right: -18px;
-      top: -18px;
-      width: 78px;
-      height: 78px;
-      border-radius: 999px;
-      background: rgba(14,75,169,.05);
-    }
-
-    .metric .label {
-      position: relative;
-      z-index: 1;
-      font-size: 13px;
+    .stat-card .label {
+      font-size: 0.75rem;
       font-weight: 700;
-      color: var(--muted);
-      margin-bottom: 8px;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
     }
 
-    .metric .value {
-      position: relative;
-      z-index: 1;
-      font-size: 30px;
+    .stat-card .value {
+      font-size: 2.25rem;
       font-weight: 800;
-      color: var(--primary);
-      letter-spacing: -.03em;
+      color: white;
     }
 
-    .tabs {
+    /* --- Tabs --- */
+    .tabs-nav {
       display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
+      gap: 0.5rem;
+      padding: 0.625rem;
+      background: rgba(15, 23, 42, 0.4);
+      border-radius: var(--radius-md);
+      margin-bottom: 2rem;
+      width: fit-content;
+      border: 1px solid var(--border-glass);
     }
 
-    .tab-btn {
-      background: #fff;
-      border: 1px solid #d8e2f0;
-      border-radius: 999px;
-      padding: 11px 16px;
-      font-size: 13px;
-      font-weight: 800;
-      font-family: inherit;
-      color: var(--primary);
+    .tab-trigger {
+      padding: 0.75rem 1.5rem;
+      border-radius: calc(var(--radius-md) - 6px);
+      font-weight: 600;
+      font-size: 0.9375rem;
       cursor: pointer;
-      transition: .18s ease;
+      transition: var(--transition);
+      border: none;
+      background: transparent;
+      color: var(--text-dim);
     }
 
-    .tab-btn.active {
-      background: linear-gradient(135deg, var(--primary), var(--primary-2));
-      color: #fff;
-      border-color: transparent;
-      box-shadow: 0 10px 20px rgba(14,75,169,.16);
+    .tab-trigger.active {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
     }
 
+    .tab-trigger:hover:not(.active) {
+      color: var(--text-main);
+      background: rgba(255,255,255,0.05);
+    }
+
+    /* --- Panels --- */
     .panel {
-      padding: 20px;
+      display: none;
+      animation: slideUp 0.5s cubic-bezier(0.23, 1, 0.32, 1);
     }
 
-    .panel h3 {
-      margin: 0 0 14px;
-      font-size: 20px;
-      font-weight: 800;
-      color: #20304b;
+    .panel.active {
+      display: block;
     }
 
-    .list {
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* --- List Styles --- */
+    .list-container {
       display: grid;
-      gap: 14px;
+      gap: 1.25rem;
     }
 
-    .lesson-card,
-    .hw-card {
-      padding: 18px;
-      border: 1px solid var(--line);
-      border-radius: 20px;
-      background: linear-gradient(180deg, #fff 0%, #fcfdff 100%);
+    .lesson-item {
+      padding: 2rem;
+      background: rgba(255,255,255,0.02);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-glass);
+      transition: var(--transition);
     }
 
-    .lesson-date,
-    .hw-date {
-      font-size: 13px;
+    .lesson-item:hover {
+      background: rgba(255,255,255,0.04);
+      border-color: var(--primary-light);
+      transform: translateX(8px);
+    }
+
+    .date-tag {
+      font-size: 0.75rem;
       font-weight: 800;
-      color: var(--primary);
-      margin-bottom: 10px;
-      letter-spacing: .02em;
+      color: var(--primary-light);
+      background: rgba(59, 130, 246, 0.15);
+      padding: 0.375rem 1rem;
+      border-radius: 99px;
       text-transform: uppercase;
     }
 
-    .lesson-card.locked {
-      border: 1px dashed #f59e0b;
-      background: #fffdf7;
+    .lesson-content h4 {
+      margin-bottom: 0.75rem;
+      color: var(--primary-light);
+      font-size: 1.1rem;
     }
 
-    .lesson-block,
-    .hw-task,
-    .hw-submission {
-      line-height: 1.8;
-      font-size: 14px;
-      color: #27364f;
-      white-space: pre-wrap;
+    .lesson-content p {
+      color: var(--text-muted);
+      font-size: 1rem;
     }
 
-    .lesson-block + .lesson-block,
-    .hw-submission {
-      margin-top: 12px;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      border-radius: 999px;
-      padding: 7px 12px;
-      font-size: 12px;
-      font-weight: 800;
-      margin-bottom: 10px;
-    }
-
-    .badge-done {
-      background: var(--success-bg);
-      color: #166534;
-    }
-
-    .badge-todo {
-      background: var(--danger-bg);
-      color: #991b1b;
-    }
-
-    .badge-neutral {
-      background: #eef2ff;
-      color: #4338ca;
-    }
-
-    .badge-locked {
-      background: var(--warning-bg);
-      color: var(--warning);
-    }
-
-    .hw-actions {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 14px;
-    }
-
-    .table-wrap {
-      overflow: auto;
-      border-radius: 18px;
-      border: 1px solid var(--line);
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 520px;
-      background: #fff;
-    }
-
-    th, td {
-      padding: 13px 14px;
-      border-bottom: 1px solid var(--line);
-      text-align: left;
-      vertical-align: top;
-      font-size: 14px;
-    }
-
-    th {
-      background: #f8fbff;
-      color: var(--primary);
-      font-weight: 800;
-      position: sticky;
-      top: 0;
-    }
-
-    .report-box {
-      border: 1px solid var(--line);
-      border-radius: 20px;
-      background: linear-gradient(180deg, #fff, #fcfdff);
-      padding: 18px;
-      white-space: pre-wrap;
-      line-height: 1.9;
-      font-size: 14px;
-      color: #24324b;
-    }
-
-    .empty {
-      color: var(--muted);
-      font-style: italic;
-      line-height: 1.8;
-    }
-
-    .loading-overlay {
+    /* --- Loading --- */
+    .loader-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(255,255,255,.58);
+      background: rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(10px);
       display: none;
       align-items: center;
       justify-content: center;
       z-index: 9999;
-      backdrop-filter: blur(4px);
     }
 
-    .loading-overlay.show {
-      display: flex;
+    .loader {
+      width: 60px;
+      height: 60px;
+      border: 4px solid var(--primary-light);
+      border-bottom-color: transparent;
+      border-radius: 50%;
+      display: inline-block;
+      animation: rotation 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
     }
 
-    .loading-box {
-      background: #fff;
-      padding: 16px 22px;
-      border-radius: 18px;
-      box-shadow: 0 18px 40px rgba(15,23,42,.12);
-      font-weight: 800;
-      color: var(--primary);
-      font-size: 14px;
+    @keyframes rotation {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
 
-    @media (max-width: 992px) {
-      .topbar {
+    /* --- Empty State --- */
+    .empty {
+      text-align: center;
+      padding: 4rem 2rem;
+      color: var(--text-dim);
+      font-style: italic;
+    }
+
+    /* --- Responsive --- */
+    @media (max-width: 1200px) {
+      .dashboard-layout {
         grid-template-columns: 1fr;
       }
-      .metrics {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    @media (max-width: 640px) {
-      .page {
-        padding: 14px;
-      }
-      .hero {
-        padding: 22px 18px;
-      }
-      .hero h1 {
-        font-size: 24px;
-      }
-      .student-main {
-        flex-direction: column;
-      }
-      .metrics {
-        grid-template-columns: 1fr;
-      }
-      .metric .value {
-        font-size: 26px;
-      }
-      .action-row {
+      .sidebar {
         display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+      .login-grid {
+        gap: 3rem;
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .login-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      .login-content p {
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .login-illustration {
+        display: none;
+      }
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
         grid-template-columns: 1fr;
       }
-      .btn {
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+      .tabs-nav {
         width: 100%;
+        overflow-x: auto;
+        padding-bottom: 0.5rem;
       }
-      .hw-actions {
-        display: grid;
-        grid-template-columns: 1fr;
-      }
-      table {
-        min-width: 100%;
+      .title-xl {
+        font-size: 2.5rem;
       }
     }
   </style>
 </head>
 <body>
-  <div class="loading-overlay" id="loadingOverlay">
-    <div class="loading-box" id="loadingText">Đang xử lý...</div>
+  <div class="mesh-bg"></div>
+  
+  <div id="loader" class="loader-overlay">
+    <div class="loader"></div>
   </div>
 
-  <div class="page">
-    <section class="hero">
-      <div class="hero-top">
-        <div>
-          <h1>EDUX - Góc học tập của con</h1>
-          <p>
-            Phụ huynh có thể theo dõi quá trình học tập, điểm danh, bài tập về nhà,
-            báo bài và báo cáo cá nhân của con trong một giao diện trực quan, dễ theo dõi.
-          </p>
+  <div class="container">
+    <!-- --- Login View --- -->
+    <div id="loginView" class="login-screen">
+      <div class="login-grid">
+        <div class="login-content">
+          <h1 class="title-xl gradient-text">Chào mừng đến với <span style="color: var(--primary);">EDUX</span></h1>
+          <p>Góc học tập cá nhân giúp phụ huynh theo dõi sát sao hành trình phát triển của con một cách thông minh và trực quan nhất.</p>
+          
+          <div class="glass-card">
+            <h3 class="title-md" style="margin-bottom: 2rem;">Đăng nhập Phụ huynh</h3>
+            <div id="loginError" class="error-box" style="display:none; color: var(--danger); background: rgba(239, 68, 68, 0.1); padding: 1rem; border-radius: 12px; margin-bottom: 1.5rem; font-size: 0.875rem; border: 1px solid var(--danger);"></div>
+            
+            <div class="form-group">
+              <label>Mã học viên</label>
+              <input type="text" id="studentIdInput" class="form-input" placeholder="Ví dụ: EduX-HV-0001">
+            </div>
+            
+            <div class="form-group">
+              <label>Mã truy cập</label>
+              <input type="password" id="accessCodeInput" class="form-input" value="123">
+            </div>
+            
+            <button id="loginBtn" class="btn btn-primary" style="width: 100%; margin-top: 1rem;" onclick="login()">
+              Truy cập ngay
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+            
+            <p style="margin-top: 2rem; font-size: 0.8125rem; color: var(--text-dim); text-align: center;">
+              Mã truy cập mặc định là <strong style="color: var(--text-main);">123</strong>. Liên hệ giáo viên nếu bạn quên mã.
+            </p>
+          </div>
         </div>
-        <div class="hero-chip-group">
-          <div class="hero-chip">Theo dõi tiến độ</div>
-          <div class="hero-chip">Cập nhật theo thời gian thực</div>
-          <div class="hero-chip">Thiết kế cho phụ huynh</div>
+        
+        <div class="login-illustration">
+          <img src="../../brain/ddc04584-57ad-4768-af8d-673a340e4904/edux_modern_illustration_1776414778237.png" alt="EDUX Modern Illustration">
         </div>
-      </div>
-    </section>
-
-    <div id="loginView" class="login-wrap">
-      <div class="login-card card">
-        <div class="login-head">
-          <h2 class="login-title">Đăng nhập phụ huynh</h2>
-          <p class="login-sub">
-            Vui lòng nhập mã học viên để truy cập hồ sơ học tập của con.
-          </p>
-        </div>
-
-        <div class="field">
-          <label>Mã học viên</label>
-          <input id="studentIdInput" type="text" placeholder="Ví dụ: EduX-HV-0001">
-        </div>
-
-        <div class="field">
-          <label>Mã truy cập</label>
-          <input id="accessCodeInput" type="password" value="123">
-        </div>
-
-        <button id="loginBtn" class="btn btn-primary full" onclick="login()">Đăng nhập</button>
-        <div id="loginError" class="error hidden"></div>
-        <p class="muted">Mã truy cập mặc định nội bộ hiện tại là 123.</p>
       </div>
     </div>
 
-    <div id="dashboardView" class="dashboard hidden">
-      <section class="topbar card">
+    <!-- --- Dashboard View --- -->
+    <div id="dashboardView" style="display: none;">
+      <header style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; flex-wrap: wrap; gap: 1.5rem;">
         <div>
-          <div class="student-main">
-            <div class="student-avatar" id="studentAvatar">HV</div>
-            <div>
-              <h2 class="student-title" id="studentName">Học viên</h2>
-              <p class="student-sub">
-                Cập nhật đầy đủ thông tin học tập, báo bài, bài tập và tiến độ của con.
-              </p>
+          <h1 class="title-lg gradient-text">Bảng điều khiển</h1>
+          <p style="color: var(--text-muted);">Cập nhật mới nhất lúc <span id="updatedAt" style="color: var(--primary-light); font-weight: 600;">--:--</span></p>
+        </div>
+        <div style="display: flex; gap: 1rem;">
+          <button class="btn btn-secondary" onclick="refreshDashboard()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+            Làm mới
+          </button>
+          <button class="btn btn-ghost" onclick="logout()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+            Đăng xuất
+          </button>
+        </div>
+      </header>
+
+      <div class="dashboard-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+          <div class="glass-card profile-card">
+            <div class="avatar-wrapper">
+              <div class="avatar" id="studentAvatar">HV</div>
+            </div>
+            <div class="student-info">
+              <h2 id="studentName">--</h2>
+              <p id="studentClass">Lớp: --</p>
+            </div>
+            
+            <div class="meta-info">
+              <div class="meta-row">
+                <span class="label">Mã học viên</span>
+                <span class="value" id="studentId">--</span>
+              </div>
+              <div class="meta-row">
+                <span class="label">Giáo viên</span>
+                <span class="value" id="studentTeacher">--</span>
+              </div>
+              <div class="meta-row">
+                <span class="label">Ngày sinh</span>
+                <span class="value" id="studentDob">--</span>
+              </div>
             </div>
           </div>
 
-          <div class="meta-grid">
-            <div class="meta-item">
-              <span class="k">Mã học viên</span>
-              <span class="v" id="studentId"></span>
+          <div class="glass-card" style="padding: 2rem;">
+            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem;">
+              <div style="width: 40px; height: 40px; background: rgba(245, 158, 11, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--warning);">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+              </div>
+              <h4 style="color: var(--text-main);">Học phí & Thông báo</h4>
             </div>
-            <div class="meta-item">
-              <span class="k">Lớp</span>
-              <span class="v" id="studentClass"></span>
-            </div>
-            <div class="meta-item">
-              <span class="k">Giáo viên</span>
-              <span class="v" id="studentTeacher"></span>
-            </div>
-            <div class="meta-item">
-              <span class="k">Ngày sinh</span>
-              <span class="v" id="studentDob"></span>
+            <div style="background: rgba(59, 130, 246, 0.05); padding: 1.25rem; border-radius: 16px; border: 1px solid var(--border-glass);">
+              <p style="font-size: 0.875rem; font-weight: 600; color: var(--text-muted);">Trạng thái: <span id="feeStatus" style="color: var(--success);">--</span></p>
             </div>
           </div>
-        </div>
+        </aside>
 
-        <div class="topbar-actions">
-          <div class="fee-box">
-            <h3>Thông tin học phí</h3>
-            <p><strong>Trạng thái:</strong> <span id="feeStatus"></span></p>
-            <p><strong>Cập nhật:</strong> <span id="updatedAt"></span></p>
+        <!-- Main Content -->
+        <main class="main-content">
+          <!-- Stats -->
+          <div class="stats-grid">
+            <div class="glass-card stat-card">
+              <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                <span class="label">Đi học</span>
+                <svg style="color: var(--primary-light);" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><polyline points="17 11 19 13 23 9"/></svg>
+              </div>
+              <span class="value" id="mAttend">0</span>
+            </div>
+            <div class="glass-card stat-card">
+              <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                <span class="label">Vắng/Phép</span>
+                <svg style="color: var(--danger);" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="18" y1="8" x2="23" y2="13"/><line x1="23" y1="8" x2="18" y2="13"/></svg>
+              </div>
+              <span class="value" id="mAbsent">0/0</span>
+            </div>
+            <div class="glass-card stat-card">
+              <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                <span class="label">Bài tập</span>
+                <svg style="color: var(--accent);" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14.5 2 14.5 7.5 20 7.5"/></svg>
+              </div>
+              <span class="value" id="mHomework">0/0</span>
+            </div>
+            <div class="glass-card stat-card">
+              <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                <span class="label">Điểm TB</span>
+                <svg style="color: var(--success);" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5"/></svg>
+              </div>
+              <span class="value" id="mAvg">-</span>
+            </div>
           </div>
 
-          <div class="action-row">
-            <button class="btn btn-secondary" onclick="refreshDashboard()">Làm mới</button>
-            <button class="btn btn-secondary" onclick="logout()">Thoát</button>
+          <!-- Tabs Section -->
+          <div class="glass-card" style="padding: 2.5rem;">
+            <nav class="tabs-nav">
+              <button class="tab-trigger active" onclick="switchTab('baoBai', this)">Báo bài</button>
+              <button class="tab-trigger" onclick="switchTab('homework', this)">Bài tập</button>
+              <button class="tab-trigger" onclick="switchTab('attendance', this)">Điểm danh</button>
+              <button class="tab-trigger" onclick="switchTab('scores', this)">Điểm số</button>
+              <button class="tab-trigger" onclick="switchTab('report', this)">Báo cáo</button>
+            </nav>
+
+            <div id="tab-baoBai" class="panel active">
+              <div id="baoBaiList" class="list-container"></div>
+            </div>
+
+            <div id="tab-homework" class="panel">
+              <div id="homeworkList" class="list-container"></div>
+            </div>
+
+            <div id="tab-attendance" class="panel">
+              <div id="attendanceTableWrap"></div>
+            </div>
+
+            <div id="tab-scores" class="panel">
+              <div id="scoresWrap"></div>
+            </div>
+
+            <div id="tab-report" class="panel">
+              <div id="reportBox" style="white-space: pre-wrap; line-height: 2; color: var(--text-main); font-size: 1.05rem; padding: 1rem; background: rgba(255,255,255,0.02); border-radius: 16px;"></div>
+            </div>
           </div>
-        </div>
-      </section>
-
-      <section class="metrics">
-        <div class="metric card">
-          <div class="label">Đi học</div>
-          <div class="value" id="mAttend">0</div>
-        </div>
-        <div class="metric card">
-          <div class="label">Vắng / Có phép</div>
-          <div class="value" id="mAbsent">0</div>
-        </div>
-        <div class="metric card">
-          <div class="label">BTVN đã làm</div>
-          <div class="value" id="mHomework">0/0</div>
-        </div>
-        <div class="metric card">
-          <div class="label">Điểm trung bình</div>
-          <div class="value" id="mAvg">-</div>
-        </div>
-      </section>
-
-      <section class="tabs">
-        <button class="tab-btn active" data-tab="baoBai" onclick="switchTab('baoBai', this)">Báo bài</button>
-        <button class="tab-btn" data-tab="homework" onclick="switchTab('homework', this)">Bài tập về nhà</button>
-        <button class="tab-btn" data-tab="attendance" onclick="switchTab('attendance', this)">Điểm danh</button>
-        <button class="tab-btn" data-tab="scores" onclick="switchTab('scores', this)">Điểm số</button>
-        <button class="tab-btn" data-tab="report" onclick="switchTab('report', this)">Báo cáo cá nhân</button>
-      </section>
-
-      <section id="tab-baoBai" class="panel card">
-        <h3>Báo bài</h3>
-        <div id="baoBaiList" class="list"></div>
-      </section>
-
-      <section id="tab-homework" class="panel card hidden">
-        <h3>Bài tập về nhà</h3>
-        <div id="homeworkList" class="list"></div>
-      </section>
-
-      <section id="tab-attendance" class="panel card hidden">
-        <h3>Điểm danh</h3>
-        <div id="attendanceTableWrap"></div>
-      </section>
-
-      <section id="tab-scores" class="panel card hidden">
-        <h3>Điểm số</h3>
-        <div id="scoresWrap"></div>
-      </section>
-
-      <section id="tab-report" class="panel card hidden">
-        <h3>Báo cáo cá nhân</h3>
-        <div id="reportBox" class="report-box"></div>
-      </section>
+        </main>
+      </div>
     </div>
   </div>
 
@@ -799,104 +770,53 @@
     let currentAccessCode = '123';
     let currentData = null;
 
-    function clean(v) {
-      return v == null ? '' : String(v).trim();
-    }
+    // --- Helpers ---
+    function clean(v) { return v == null ? '' : String(v).trim(); }
+    function enc(str) { return encodeURIComponent(clean(str)); }
+    function dec(str) { try { return decodeURIComponent(str || ''); } catch (e) { return clean(str); } }
 
-    function escapeHtml(str) {
-      return clean(str)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#39;');
-    }
-
-    function enc(str) {
-      return encodeURIComponent(clean(str));
-    }
-
-    function dec(str) {
-      try {
-        return decodeURIComponent(str || '');
-      } catch (e) {
-        return clean(str);
-      }
-    }
-
-    function setLoading(show, text) {
-      const overlay = document.getElementById('loadingOverlay');
-      const label = document.getElementById('loadingText');
-      label.textContent = text || 'Đang xử lý...';
-      overlay.classList.toggle('show', !!show);
+    function setLoading(show) {
+      const loader = document.getElementById('loader');
+      loader.style.display = show ? 'flex' : 'none';
     }
 
     async function callApi(payload) {
       const form = new URLSearchParams();
-
       Object.keys(payload || {}).forEach(key => {
         form.append(key, payload[key] == null ? '' : String(payload[key]));
       });
 
-      let res;
-      let text;
-
       try {
-        res = await fetch(API_URL, {
-          method: 'POST',
-          body: form
-        });
-        text = await res.text();
+        const res = await fetch(API_URL, { method: 'POST', body: form });
+        const text = await res.text();
+        return JSON.parse(text);
       } catch (err) {
-        throw new Error(
-          'Không gọi được API.\n' +
-          'Kiểm tra lại deploy web app và quyền truy cập "Anyone".\n\n' +
-          (err.message || err)
-        );
+        throw new Error('Không thể kết nối với máy chủ. Vui lòng thử lại sau.');
       }
-
-      let json;
-      try {
-        json = JSON.parse(text);
-      } catch (err) {
-        console.error('Raw API response:', text);
-        throw new Error(
-          'API không trả về JSON hợp lệ.\n\nRaw response:\n' +
-          String(text).slice(0, 700)
-        );
-      }
-
-      return json;
     }
 
+    // --- Auth ---
     async function login() {
       const studentId = clean(document.getElementById('studentIdInput').value);
       const accessCode = clean(document.getElementById('accessCodeInput').value || '123');
       const errorBox = document.getElementById('loginError');
-      const loginBtn = document.getElementById('loginBtn');
 
-      errorBox.classList.add('hidden');
-      errorBox.textContent = '';
+      errorBox.style.display = 'none';
 
       if (!studentId) {
         errorBox.textContent = 'Vui lòng nhập Mã học viên.';
-        errorBox.classList.remove('hidden');
+        errorBox.style.display = 'block';
         return;
       }
 
-      loginBtn.disabled = true;
-      setLoading(true, 'Đang đăng nhập...');
+      setLoading(true);
 
       try {
-        const json = await callApi({
-          action: 'login',
-          studentId,
-          accessCode
-        });
+        const json = await callApi({ action: 'login', studentId, accessCode });
 
         if (!json.ok) {
-          errorBox.textContent = json.message || 'Đăng nhập thất bại.';
-          errorBox.classList.remove('hidden');
+          errorBox.textContent = json.message || 'Mã học viên hoặc mã truy cập không đúng.';
+          errorBox.style.display = 'block';
           return;
         }
 
@@ -904,43 +824,13 @@
         currentAccessCode = accessCode;
         currentData = json.data;
 
-        document.getElementById('loginView').classList.add('hidden');
-        document.getElementById('dashboardView').classList.remove('hidden');
+        document.getElementById('loginView').style.display = 'none';
+        document.getElementById('dashboardView').style.display = 'block';
 
         renderDashboard(json.data);
       } catch (err) {
-        errorBox.textContent = err.message || String(err);
-        errorBox.classList.remove('hidden');
-        console.error(err);
-      } finally {
-        loginBtn.disabled = false;
-        setLoading(false);
-      }
-    }
-
-    async function refreshDashboard(studentId) {
-      const sid = studentId || currentStudentId;
-      if (!sid) return;
-
-      setLoading(true, 'Đang làm mới dữ liệu...');
-
-      try {
-        const json = await callApi({
-          action: 'refresh',
-          studentId: sid,
-          accessCode: currentAccessCode
-        });
-
-        if (!json.ok) {
-          alert(json.message || 'Không thể làm mới dữ liệu.');
-          return;
-        }
-
-        currentData = json.data;
-        renderDashboard(json.data);
-      } catch (err) {
-        alert(err.message || 'Không thể làm mới dữ liệu.');
-        console.error(err);
+        errorBox.textContent = err.message;
+        errorBox.style.display = 'block';
       } finally {
         setLoading(false);
       }
@@ -949,223 +839,212 @@
     function logout() {
       currentStudentId = '';
       currentData = null;
-      document.getElementById('dashboardView').classList.add('hidden');
-      document.getElementById('loginView').classList.remove('hidden');
+      document.getElementById('dashboardView').style.display = 'none';
+      document.getElementById('loginView').style.display = 'flex';
     }
 
-    function renderDashboard(data) {
-      const studentName = clean(data.student?.name);
-      document.getElementById('studentName').textContent = studentName || 'Học viên';
-      document.getElementById('studentId').textContent = clean(data.student?.id);
-      document.getElementById('studentClass').textContent = clean(data.student?.className);
-      document.getElementById('studentTeacher').textContent = clean(data.student?.teacher);
-      document.getElementById('studentDob').textContent = clean(data.student?.dob);
-      document.getElementById('feeStatus').textContent = clean(data.feeInfo?.feeStatus);
-      document.getElementById('updatedAt').textContent = clean(data.updatedAt);
-
-      const initials = studentName
-        ? studentName.split(' ').slice(-2).map(x => x.charAt(0).toUpperCase()).join('').slice(0,2)
-        : 'HV';
-      document.getElementById('studentAvatar').textContent = initials;
-
-      document.getElementById('mAttend').textContent = clean(data.metrics?.attendancePresent || 0);
-      document.getElementById('mAbsent').textContent =
-        `${clean(data.metrics?.attendanceAbsent || 0)} / ${clean(data.metrics?.attendanceExcused || 0)}`;
-      document.getElementById('mHomework').textContent =
-        `${clean(data.metrics?.homeworkDone || 0)}/${clean(data.metrics?.homeworkTotal || 0)}`;
-      document.getElementById('mAvg').textContent =
-        data.metrics?.avgScore == null ? '-' : clean(data.metrics.avgScore);
-
-      document.getElementById('baoBaiList').innerHTML = renderBaoBaiList(data.baoBai || []);
-      document.getElementById('homeworkList').innerHTML = renderHomeworkList(data.homework || [], data.student?.id || '');
-      document.getElementById('attendanceTableWrap').innerHTML = renderAttendanceTable(data.attendance || []);
-      document.getElementById('scoresWrap').innerHTML = renderScores(data);
-      document.getElementById('reportBox').textContent = clean(data.reportText) || 'Chưa có báo cáo cá nhân.';
-    }
-
-    function renderBaoBaiList(items) {
-      if (!items.length) {
-        return '<div class="empty">Chưa có dữ liệu báo bài.</div>';
-      }
-
-      return items.map(item => {
-        if (item.locked) {
-          return `
-            <div class="lesson-card locked">
-              <div class="lesson-date">${escapeHtml(item.date)}</div>
-              <div><span class="badge badge-locked">Chưa mở</span></div>
-              <div class="lesson-block">
-                <strong>Bài học:</strong>
-                <div>Nội dung sẽ hiển thị vào đúng ngày học.</div>
-              </div>
-              <div class="lesson-block">
-                <strong>Bài tập về nhà:</strong>
-                <div>Nội dung sẽ hiển thị khi đến ngày tương ứng.</div>
-              </div>
-            </div>
-          `;
-        }
-
-        return `
-          <div class="lesson-card">
-            <div class="lesson-date">${escapeHtml(item.date)}</div>
-            <div class="lesson-block">
-              <strong>Bài học:</strong>
-              <div>${escapeHtml(item.lesson)}</div>
-            </div>
-            <div class="lesson-block">
-              <strong>Bài tập về nhà:</strong>
-              <div>${escapeHtml(item.homework)}</div>
-            </div>
-          </div>
-        `;
-      }).join('');
-    }
-
-    function homeworkBadge(status) {
-      const s = clean(status);
-      if (s === 'Đã làm') return '<span class="badge badge-done">Đã làm</span>';
-      if (s === 'Chưa làm') return '<span class="badge badge-todo">Chưa làm</span>';
-      return `<span class="badge badge-neutral">${escapeHtml(s || 'Chưa cập nhật')}</span>`;
-    }
-
-    function renderHomeworkList(items, studentId) {
-      if (!items.length) {
-        return '<div class="empty">Chưa có dữ liệu bài tập về nhà.</div>';
-      }
-
-      return items.map(item => `
-        <div class="hw-card">
-          <div class="hw-date">${escapeHtml(item.date)}</div>
-          <div class="hw-task"><strong>Bài tập:</strong> ${escapeHtml(item.task)}</div>
-          ${item.submission ? `<div class="hw-submission"><strong>Bài làm:</strong> ${escapeHtml(item.submission)}</div>` : ''}
-          <div>${homeworkBadge(item.status)}</div>
-          <div class="hw-actions">
-            <button class="btn btn-success" onclick="confirmHomework('${enc(studentId)}','${enc(item.date)}','${enc(item.task)}','Đã làm')">Đã làm</button>
-            <button class="btn btn-danger" onclick="confirmHomework('${enc(studentId)}','${enc(item.date)}','${enc(item.task)}','Chưa làm')">Chưa làm</button>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    async function confirmHomework(encodedStudentId, encodedDate, encodedTask, status) {
-      const studentId = dec(encodedStudentId);
-      const date = dec(encodedDate);
-      const task = dec(encodedTask);
-
-      setLoading(true, 'Đang cập nhật trạng thái bài tập...');
-
+    // --- Data & Rendering ---
+    async function refreshDashboard() {
+      if (!currentStudentId) return;
+      setLoading(true);
       try {
-        const json = await callApi({
-          action: 'confirm_homework',
-          studentId,
-          accessCode: currentAccessCode,
-          date,
-          task,
-          status
-        });
-
-        if (!json.ok) {
-          alert(json.message || 'Không thể cập nhật trạng thái BTVN.');
-          return;
+        const json = await callApi({ action: 'refresh', studentId: currentStudentId, accessCode: currentAccessCode });
+        if (json.ok) {
+          currentData = json.data;
+          renderDashboard(json.data);
         }
-
-        await refreshDashboard(studentId);
       } catch (err) {
-        alert(err.message || 'Không thể cập nhật trạng thái BTVN.');
-        console.error(err);
+        alert('Lỗi cập nhật dữ liệu.');
       } finally {
         setLoading(false);
       }
     }
 
-    function renderAttendanceTable(items) {
-      if (!items.length) {
-        return '<div class="empty">Chưa có dữ liệu điểm danh.</div>';
-      }
+    function renderDashboard(data) {
+      const s = data.student || {};
+      document.getElementById('studentName').textContent = clean(s.name) || 'Học viên';
+      document.getElementById('studentId').textContent = clean(s.id);
+      document.getElementById('studentClass').textContent = 'Lớp: ' + clean(s.className);
+      document.getElementById('studentTeacher').textContent = clean(s.teacher);
+      document.getElementById('studentDob').textContent = clean(s.dob);
+      document.getElementById('feeStatus').textContent = clean(data.feeInfo?.feeStatus);
+      document.getElementById('updatedAt').textContent = clean(data.updatedAt);
 
-      return `
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Ngày</th>
-                <th>Trạng thái</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${items.map(item => `
-                <tr>
-                  <td>${escapeHtml(item.date)}</td>
-                  <td>${escapeHtml(item.status)}</td>
-                </tr>
-              `).join('')}
-            </tbody>
-          </table>
+      // Avatar Initials
+      const names = (clean(s.name) || 'H V').split(' ');
+      document.getElementById('studentAvatar').textContent = names.length > 1 
+        ? (names[names.length-2][0] + names[names.length-1][0]).toUpperCase()
+        : names[0][0].toUpperCase();
+
+      // Metrics
+      document.getElementById('mAttend').textContent = data.metrics?.attendancePresent || 0;
+      document.getElementById('mAbsent').textContent = `${data.metrics?.attendanceAbsent || 0} / ${data.metrics?.attendanceExcused || 0}`;
+      document.getElementById('mHomework').textContent = `${data.metrics?.homeworkDone || 0}/${data.metrics?.homeworkTotal || 0}`;
+      document.getElementById('mAvg').textContent = data.metrics?.avgScore || '-';
+
+      renderBaoBai(data.baoBai || []);
+      renderHomework(data.homework || []);
+      renderAttendance(data.attendance || []);
+      renderScores(data);
+      document.getElementById('reportBox').textContent = clean(data.reportText) || 'Chưa có báo cáo cá nhân từ giáo viên.';
+    }
+
+    function renderBaoBai(items) {
+      const container = document.getElementById('baoBaiList');
+      if (!items.length) {
+        container.innerHTML = '<p class="empty">Chưa có dữ liệu báo bài.</p>';
+        return;
+      }
+      container.innerHTML = items.map(item => `
+        <div class="lesson-item">
+          <div class="lesson-header">
+            <span class="date-tag">${item.date}</span>
+            ${item.locked ? '<span style="color:var(--warning); font-size: 0.75rem; font-weight:700; letter-spacing: 0.05em;">ĐANG KHÓA</span>' : ''}
+          </div>
+          <div class="lesson-content">
+            <div style="display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1rem;">
+              <div style="color: var(--primary-light); margin-top: 0.25rem;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+              </div>
+              <div>
+                <h4>Bài học:</h4>
+                <p>${item.locked ? 'Nội dung sẽ hiển thị vào ngày học.' : clean(item.lesson)}</p>
+              </div>
+            </div>
+            <div style="display: flex; align-items: flex-start; gap: 1rem;">
+              <div style="color: var(--accent); margin-top: 0.25rem;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+              </div>
+              <div>
+                <h4>Bài tập về nhà:</h4>
+                <p>${item.locked ? 'Nội dung sẽ hiển thị vào ngày học.' : clean(item.homework)}</p>
+              </div>
+            </div>
+          </div>
         </div>
+      `).join('');
+    }
+
+    function renderHomework(items) {
+      const container = document.getElementById('homeworkList');
+      if (!items.length) {
+        container.innerHTML = '<p class="empty">Chưa có bài tập nào được giao.</p>';
+        return;
+      }
+      container.innerHTML = items.map(item => `
+        <div class="lesson-item">
+          <div class="lesson-header">
+            <span class="date-tag">${item.date}</span>
+            <span class="status-badge" 
+                  style="font-size: 0.75rem; font-weight:700; color: ${item.status === 'Đã làm' ? 'var(--success)' : 'var(--danger)'}; background: ${item.status === 'Đã làm' ? 'rgba(16, 185, 129, 0.1)' : 'rgba(239, 68, 68, 0.1)'}; padding: 0.25rem 0.75rem; border-radius: 99px;">
+              ${item.status || 'Chưa làm'}
+            </span>
+          </div>
+          <div class="lesson-content">
+            <div style="display: flex; align-items: flex-start; gap: 1rem;">
+              <div style="color: var(--primary-light); margin-top: 0.25rem;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+              </div>
+              <div style="flex: 1;">
+                <p><strong>Nhiệm vụ:</strong> ${clean(item.task)}</p>
+                ${item.submission ? `<p style="margin-top:0.75rem; font-style: italic; color: var(--text-dim); background: rgba(0,0,0,0.2); padding: 0.75rem; border-radius: 12px; border-left: 3px solid var(--primary);">Bài làm: ${clean(item.submission)}</p>` : ''}
+                <div style="margin-top: 1.5rem; display: flex; gap: 0.5rem;">
+                  <button class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.75rem;" onclick="updateHW('${enc(item.date)}','${enc(item.task)}','Đã làm')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    Xác nhận Đã làm
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    async function updateHW(date, task, status) {
+      setLoading(true);
+      try {
+        const json = await callApi({
+          action: 'confirm_homework',
+          studentId: currentStudentId,
+          accessCode: currentAccessCode,
+          date: dec(date),
+          task: dec(task),
+          status
+        });
+        if (json.ok) refreshDashboard();
+      } catch (err) {
+        alert('Không thể cập nhật.');
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    function renderAttendance(items) {
+      const container = document.getElementById('attendanceTableWrap');
+      if (!items.length) {
+        container.innerHTML = '<p class="empty">Chưa có dữ liệu điểm danh.</p>';
+        return;
+      }
+      container.innerHTML = `
+        <table style="width:100%; border-collapse: collapse; margin-top: 1rem;">
+          <thead>
+            <tr style="text-align: left; border-bottom: 2px solid #f1f5f9;">
+              <th style="padding: 1rem 0; color: var(--text-muted); font-size: 0.8125rem; text-transform: uppercase;">Ngày học</th>
+              <th style="padding: 1rem 0; color: var(--text-muted); font-size: 0.8125rem; text-transform: uppercase;">Trạng thái</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${items.map(item => `
+              <tr style="border-bottom: 1px solid #f1f5f9;">
+                <td style="padding: 1rem 0; font-weight: 600;">${item.date}</td>
+                <td style="padding: 1rem 0;">
+                  <span style="color: ${item.status === 'Có mặt' ? 'var(--success)' : 'var(--danger)'}; font-weight: 700;">${item.status}</span>
+                </td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
       `;
     }
 
     function renderScores(data) {
+      const container = document.getElementById('scoresWrap');
       const daily = data.dailyScores || [];
       const mock = data.mocktests || [];
+      
+      if (!daily.length && !mock.length) {
+        container.innerHTML = '<p class="empty">Chưa có dữ liệu điểm số.</p>';
+        return;
+      }
+
       let html = '';
-
       if (daily.length) {
-        html += `
-          <h4>Daily data</h4>
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr><th>Ngày</th><th>Điểm</th></tr>
-              </thead>
-              <tbody>
-                ${daily.map(item => `
-                  <tr>
-                    <td>${escapeHtml(item.date)}</td>
-                    <td>${escapeHtml(item.rawScore)}</td>
-                  </tr>
-                `).join('')}
-              </tbody>
-            </table>
-          </div>
-        `;
+        html += '<h4 style="margin-bottom:1rem;">Điểm hằng ngày</h4>';
+        html += daily.map(d => `<div style="display:flex; justify-content:space-between; padding:0.75rem 0; border-bottom:1px solid #f1f5f9;">
+          <span>${d.date}</span><span style="font-weight:700; color:var(--primary);">${d.rawScore}</span>
+        </div>`).join('');
       }
-
+      
       if (mock.length) {
-        html += `
-          <h4 style="margin-top:18px;">Mocktest / Minitest</h4>
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr><th>Bài test</th><th>Điểm</th><th>TB</th></tr>
-              </thead>
-              <tbody>
-                ${mock.map(item => `
-                  <tr>
-                    <td>${escapeHtml(item.testName)}</td>
-                    <td>${escapeHtml((item.scores || []).join(' | '))}</td>
-                    <td>${item.average == null ? '-' : escapeHtml(item.average)}</td>
-                  </tr>
-                `).join('')}
-              </tbody>
-            </table>
+        html += '<h4 style="margin-top:2rem; margin-bottom:1rem;">Kiểm tra định kỳ</h4>';
+        html += mock.map(m => `<div class="lesson-item">
+          <div style="display:flex; justify-content:space-between;">
+            <strong>${m.testName}</strong>
+            <span style="font-weight:800; color:var(--accent);">TB: ${m.average || '-'}</span>
           </div>
-        `;
+          <p style="font-size:0.875rem; color:var(--text-muted); margin-top:0.5rem;">Chi tiết: ${(m.scores || []).join(' | ')}</p>
+        </div>`).join('');
       }
-
-      return html || '<div class="empty">Chưa có dữ liệu điểm số.</div>';
+      container.innerHTML = html;
     }
 
-    function switchTab(tabName, btn) {
-      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-      if (btn) btn.classList.add('active');
-
-      ['baoBai', 'homework', 'attendance', 'scores', 'report'].forEach(name => {
-        document.getElementById('tab-' + name).classList.add('hidden');
-      });
-
-      document.getElementById('tab-' + tabName).classList.remove('hidden');
+    function switchTab(tabId, btn) {
+      document.querySelectorAll('.tab-trigger').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      document.getElementById('tab-' + tabId).classList.add('active');
     }
   </script>
 </body>
