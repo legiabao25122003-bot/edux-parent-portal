@@ -3,47 +3,49 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>EDUX - Góc học tập của con</title>
+  <title>WeWIN - EDUX Learning Dashboard</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      /* Premium Color Palette */
-      --primary: #3b82f6;
-      --primary-glow: rgba(59, 130, 246, 0.5);
-      --primary-dark: #1d4ed8;
-      --primary-light: #93c5fd;
-      --secondary: #f59e0b;
-      --accent: #8b5cf6;
-      --accent-glow: rgba(139, 92, 246, 0.4);
+      /* WeWIN Color Palette */
+      --primary: #0E4BA9;
+      --primary-rgb: 14, 75, 169;
+      --primary-dark: #0a3a82;
+      --primary-light: #3d7ad6;
+      
+      --accent: #E4C28E;
+      --accent-rgb: 228, 194, 142;
+      --accent-dark: #c5a16d;
+      
       --success: #10b981;
       --danger: #ef4444;
       --warning: #f59e0b;
       
-      /* Backgrounds & Surfaces */
-      --bg-main: #0f172a;
-      --bg-card: rgba(30, 41, 59, 0.7);
-      --bg-glass: rgba(255, 255, 255, 0.03);
-      --border-glass: rgba(255, 255, 255, 0.1);
-      --border-active: rgba(59, 130, 246, 0.5);
+      /* Backgrounds & Surfaces (Light Theme) */
+      --bg-main: #f4f7fa;
+      --bg-card: #ffffff;
+      --bg-glass: rgba(255, 255, 255, 0.8);
       
       /* Text */
-      --text-main: #f1f5f9;
-      --text-muted: #94a3b8;
-      --text-dim: #64748b;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --text-dim: #94a3b8;
       --text-light: #ffffff;
       
       /* Shadows & Effects */
-      --shadow-premium: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-      --shadow-glow: 0 0 20px rgba(59, 130, 246, 0.2);
+      --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+      --shadow-premium: 0 25px 50px -12px rgba(14, 75, 169, 0.12);
+      --shadow-accent: 0 15px 30px -5px rgba(228, 194, 142, 0.3);
+      
       --radius-sm: 12px;
       --radius-md: 20px;
       --radius-lg: 32px;
-      --blur: 20px;
+      --blur: 16px;
       
-      /* Transitions */
-      --transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+      --transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     * {
@@ -53,72 +55,22 @@
     }
 
     body {
-      font-family: 'Outfit', sans-serif;
+      font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       background-color: var(--bg-main);
       color: var(--text-main);
       min-height: 100vh;
       overflow-x: hidden;
       line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    /* --- Animated Mesh Background --- */
-    .mesh-bg {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      background: radial-gradient(circle at 0% 0%, #1e293b 0%, #0f172a 100%);
-      overflow: hidden;
-    }
-
-    .mesh-bg::before,
-    .mesh-bg::after {
-      content: "";
-      position: absolute;
-      width: 800px;
-      height: 800px;
-      border-radius: 50%;
-      filter: blur(120px);
-      opacity: 0.15;
-      z-index: -1;
-      animation: meshFloat 20s infinite alternate;
-    }
-
-    .mesh-bg::before {
-      background: var(--primary);
-      top: -200px;
-      left: -200px;
-    }
-
-    .mesh-bg::after {
-      background: var(--accent);
-      bottom: -200px;
-      right: -200px;
-      animation-delay: -10s;
-    }
-
-    @keyframes meshFloat {
-      0% { transform: translate(0, 0) scale(1); }
-      100% { transform: translate(100px, 100px) scale(1.2); }
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(14, 75, 169, 0.05) 0, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(228, 194, 142, 0.1) 0, transparent 50%);
     }
 
     /* --- Custom Scrollbar --- */
-    ::-webkit-scrollbar {
-      width: 8px;
-    }
-    ::-webkit-scrollbar-track {
-      background: transparent;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: var(--border-glass);
-      border-radius: 10px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: var(--text-dim);
-    }
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 
     /* --- Layout --- */
     .container {
@@ -130,16 +82,16 @@
     /* --- Typography --- */
     h1, h2, h3, h4 {
       font-weight: 700;
-      letter-spacing: -0.03em;
-      line-height: 1.1;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
     }
 
-    .title-xl { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; }
-    .title-lg { font-size: 2.25rem; }
-    .title-md { font-size: 1.75rem; }
+    .title-xl { font-size: clamp(2.5rem, 5vw, 3.5rem); font-weight: 800; color: var(--primary); }
+    .title-lg { font-size: 2rem; color: var(--primary); }
+    .title-md { font-size: 1.5rem; }
 
-    .gradient-text {
-      background: linear-gradient(135deg, #fff 0%, var(--primary-light) 100%);
+    .brand-gradient {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
@@ -154,34 +106,45 @@
       font-weight: 600;
       cursor: pointer;
       transition: var(--transition);
-      border: 1px solid transparent;
+      border: 2px solid transparent;
       gap: 0.75rem;
       font-family: inherit;
       font-size: 0.9375rem;
     }
 
     .btn-primary {
-      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      background: var(--primary);
       color: white;
-      box-shadow: 0 10px 20px -5px rgba(59, 130, 246, 0.4);
+      box-shadow: 0 10px 20px -5px rgba(14, 75, 169, 0.3);
     }
 
     .btn-primary:hover {
-      transform: translateY(-3px) scale(1.02);
-      box-shadow: 0 15px 30px -5px rgba(59, 130, 246, 0.6);
+      transform: translateY(-2px);
+      background: var(--primary-dark);
+      box-shadow: 0 15px 25px -5px rgba(14, 75, 169, 0.4);
+    }
+
+    .btn-accent {
+      background: var(--accent);
+      color: var(--primary-dark);
+      box-shadow: var(--shadow-accent);
+    }
+
+    .btn-accent:hover {
+      transform: translateY(-2px);
+      background: var(--accent-dark);
+      box-shadow: 0 20px 35px -5px rgba(228, 194, 142, 0.5);
     }
 
     .btn-secondary {
-      background: var(--bg-glass);
-      color: var(--text-main);
-      border: 1px solid var(--border-glass);
-      backdrop-filter: blur(10px);
+      background: white;
+      color: var(--primary);
+      border: 2px solid #e2e8f0;
     }
 
     .btn-secondary:hover {
-      background: rgba(255, 255, 255, 0.08);
-      border-color: var(--primary-light);
-      transform: translateY(-2px);
+      border-color: var(--primary);
+      background: #f8fafc;
     }
 
     .btn-ghost {
@@ -190,26 +153,28 @@
     }
 
     .btn-ghost:hover {
-      background: rgba(255, 255, 255, 0.05);
-      color: var(--text-main);
+      background: rgba(14, 75, 169, 0.05);
+      color: var(--primary);
     }
 
-    /* --- Cards & Glassmorphism --- */
-    .glass-card {
+    /* --- Cards --- */
+    .card {
       background: var(--bg-card);
-      backdrop-filter: blur(var(--blur));
-      -webkit-backdrop-filter: blur(var(--blur));
-      border: 1px solid var(--border-glass);
       border-radius: var(--radius-md);
-      box-shadow: var(--shadow-premium);
+      box-shadow: var(--shadow-md);
       padding: 2rem;
-      position: relative;
+      border: 1px solid #f1f5f9;
       transition: var(--transition);
     }
 
-    .glass-card:hover {
-      border-color: var(--border-active);
-      box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.6), var(--shadow-glow);
+    .card-premium {
+      border: 1px solid rgba(228, 194, 142, 0.3);
+      box-shadow: var(--shadow-premium);
+    }
+
+    .card-premium:hover {
+      transform: translateY(-5px);
+      border-color: var(--accent);
     }
 
     /* --- Login View --- */
@@ -228,45 +193,32 @@
       width: 100%;
     }
 
-    .login-content h1 {
-      margin-bottom: 1.5rem;
-    }
-
     .login-content p {
       color: var(--text-muted);
       font-size: 1.25rem;
       margin-bottom: 3rem;
-      max-width: 540px;
-    }
-
-    .login-illustration {
-      display: flex;
-      justify-content: center;
-      position: relative;
+      max-width: 500px;
     }
 
     .login-illustration img {
-      width: 110%;
-      max-width: 600px;
-      filter: drop-shadow(0 30px 60px rgba(59, 130, 246, 0.3));
+      width: 100%;
+      max-width: 580px;
+      filter: drop-shadow(0 30px 60px rgba(14, 75, 169, 0.15));
       animation: float 8s ease-in-out infinite;
     }
 
     @keyframes float {
-      0%, 100% { transform: translateY(0) rotate(0deg); }
-      50% { transform: translateY(-30px) rotate(2deg); }
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-25px); }
     }
 
-    .form-group {
-      margin-bottom: 1.5rem;
-    }
-
+    .form-group { margin-bottom: 1.5rem; }
     .form-group label {
       display: block;
       font-size: 0.875rem;
-      font-weight: 600;
-      margin-bottom: 0.625rem;
-      color: var(--text-muted);
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--primary);
       text-transform: uppercase;
       letter-spacing: 0.05em;
     }
@@ -275,9 +227,8 @@
       width: 100%;
       padding: 1rem 1.25rem;
       border-radius: var(--radius-sm);
-      border: 1px solid var(--border-glass);
-      background: rgba(15, 23, 42, 0.5);
-      color: white;
+      border: 2px solid #e2e8f0;
+      background: #f8fafc;
       font-family: inherit;
       font-size: 1rem;
       transition: var(--transition);
@@ -286,8 +237,8 @@
     .form-input:focus {
       outline: none;
       border-color: var(--primary);
-      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
-      background: rgba(15, 23, 42, 0.8);
+      background: white;
+      box-shadow: 0 0 0 4px rgba(14, 75, 169, 0.1);
     }
 
     /* --- Dashboard --- */
@@ -298,314 +249,174 @@
       margin-top: 1.5rem;
     }
 
-    .sidebar {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-    }
+    .sidebar { display: flex; flex-direction: column; gap: 1.5rem; }
+    .main-content { display: flex; flex-direction: column; gap: 1.5rem; }
 
-    .main-content {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-    }
-
-    /* --- Profile Section --- */
+    /* --- Profile Card --- */
     .profile-card {
       text-align: center;
-      padding: 3rem 1.5rem;
+      background: linear-gradient(to bottom, #ffffff, #f8fafc);
     }
 
     .avatar-wrapper {
       position: relative;
-      width: 110px;
-      height: 110px;
-      margin: 0 auto 2rem;
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 1.5rem;
     }
 
     .avatar {
       width: 100%;
       height: 100%;
-      border-radius: 35%;
-      background: linear-gradient(135deg, var(--primary), var(--accent));
+      border-radius: 28px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
       color: white;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 2.5rem;
+      font-size: 2.75rem;
       font-weight: 800;
-      border: 4px solid rgba(255,255,255,0.1);
-      box-shadow: 0 15px 30px rgba(0,0,0,0.3);
-      transform: rotate(-5deg);
-      transition: var(--transition);
+      box-shadow: 0 15px 30px rgba(14, 75, 169, 0.2);
+      border: 4px solid white;
     }
 
-    .profile-card:hover .avatar {
-      transform: rotate(0deg) scale(1.05);
-    }
+    .student-info h2 { font-size: 1.75rem; color: var(--primary); margin-bottom: 0.25rem; }
+    .student-info p { color: var(--accent-dark); font-weight: 600; font-size: 0.9375rem; }
 
-    .student-info h2 {
-      font-size: 1.75rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .student-info p {
-      color: var(--text-muted);
-      font-size: 1rem;
-    }
-
-    .meta-info {
-      margin-top: 2.5rem;
-      display: grid;
-      gap: 1rem;
-      text-align: left;
-    }
-
+    .meta-info { margin-top: 2rem; display: grid; gap: 0.75rem; text-align: left; }
     .meta-row {
       display: flex;
       justify-content: space-between;
-      padding: 0.875rem 0;
-      border-bottom: 1px solid var(--border-glass);
+      padding: 0.75rem 0;
+      border-bottom: 1px solid #f1f5f9;
     }
-
     .meta-row:last-child { border-bottom: none; }
+    .meta-row .label { font-size: 0.75rem; font-weight: 700; color: var(--text-dim); text-transform: uppercase; }
+    .meta-row .value { font-size: 0.9375rem; font-weight: 600; color: var(--text-main); }
 
-    .meta-row .label {
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: var(--text-dim);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-    }
-
-    .meta-row .value {
-      font-size: 0.9375rem;
-      font-weight: 600;
-      color: var(--text-main);
-    }
-
-    /* --- Stats Grid (Bento) --- */
+    /* --- Stats Grid --- */
     .stats-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 1.5rem;
     }
 
-    .stat-card {
-      padding: 1.75rem;
+    .stat-tile {
+      padding: 1.5rem;
       display: flex;
       flex-direction: column;
-      gap: 0.75rem;
-      border-radius: var(--radius-md);
+      gap: 0.5rem;
+      border-left: 4px solid var(--primary);
     }
 
-    .stat-card .label {
-      font-size: 0.75rem;
-      font-weight: 700;
-      color: var(--text-dim);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-    }
-
-    .stat-card .value {
-      font-size: 2.25rem;
-      font-weight: 800;
-      color: white;
-    }
+    .stat-tile .label { font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; }
+    .stat-tile .value { font-size: 2.25rem; font-weight: 800; color: var(--primary); }
 
     /* --- Tabs --- */
     .tabs-nav {
       display: flex;
       gap: 0.5rem;
-      padding: 0.625rem;
-      background: rgba(15, 23, 42, 0.4);
-      border-radius: var(--radius-md);
+      background: #f1f5f9;
+      padding: 0.5rem;
+      border-radius: 16px;
       margin-bottom: 2rem;
       width: fit-content;
-      border: 1px solid var(--border-glass);
     }
 
     .tab-trigger {
       padding: 0.75rem 1.5rem;
-      border-radius: calc(var(--radius-md) - 6px);
-      font-weight: 600;
-      font-size: 0.9375rem;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.875rem;
       cursor: pointer;
       transition: var(--transition);
       border: none;
       background: transparent;
-      color: var(--text-dim);
+      color: var(--text-muted);
     }
 
     .tab-trigger.active {
-      background: var(--primary);
-      color: white;
-      box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
-    }
-
-    .tab-trigger:hover:not(.active) {
-      color: var(--text-main);
-      background: rgba(255,255,255,0.05);
+      background: white;
+      color: var(--primary);
+      box-shadow: var(--shadow-sm);
     }
 
     /* --- Panels --- */
-    .panel {
-      display: none;
-      animation: slideUp 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-    }
+    .panel { display: none; animation: slideUp 0.4s ease-out; }
+    .panel.active { display: block; }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
-    .panel.active {
-      display: block;
-    }
-
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* --- List Styles --- */
-    .list-container {
-      display: grid;
-      gap: 1.25rem;
-    }
-
-    .lesson-item {
-      padding: 2rem;
-      background: rgba(255,255,255,0.02);
-      border-radius: var(--radius-md);
-      border: 1px solid var(--border-glass);
+    /* --- Items --- */
+    .item-card {
+      padding: 1.75rem;
+      background: #ffffff;
+      border-radius: 16px;
+      border: 1px solid #f1f5f9;
+      margin-bottom: 1.25rem;
       transition: var(--transition);
     }
-
-    .lesson-item:hover {
-      background: rgba(255,255,255,0.04);
-      border-color: var(--primary-light);
-      transform: translateX(8px);
-    }
-
-    .date-tag {
+    .item-card:hover { border-color: var(--accent); transform: translateX(5px); }
+    .date-badge {
       font-size: 0.75rem;
       font-weight: 800;
-      color: var(--primary-light);
-      background: rgba(59, 130, 246, 0.15);
-      padding: 0.375rem 1rem;
+      color: var(--primary);
+      background: rgba(14, 75, 169, 0.08);
+      padding: 0.25rem 0.75rem;
       border-radius: 99px;
-      text-transform: uppercase;
-    }
-
-    .lesson-content h4 {
-      margin-bottom: 0.75rem;
-      color: var(--primary-light);
-      font-size: 1.1rem;
-    }
-
-    .lesson-content p {
-      color: var(--text-muted);
-      font-size: 1rem;
     }
 
     /* --- Loading --- */
     .loader-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(15, 23, 42, 0.8);
-      backdrop-filter: blur(10px);
+      background: rgba(255,255,255,0.9);
+      backdrop-filter: blur(8px);
       display: none;
       align-items: center;
       justify-content: center;
       z-index: 9999;
     }
-
     .loader {
-      width: 60px;
-      height: 60px;
-      border: 4px solid var(--primary-light);
-      border-bottom-color: transparent;
+      width: 50px;
+      height: 50px;
+      border: 4px solid #e2e8f0;
+      border-bottom-color: var(--primary);
       border-radius: 50%;
-      display: inline-block;
-      animation: rotation 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+      animation: rotation 1s linear infinite;
     }
-
-    @keyframes rotation {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    /* --- Empty State --- */
-    .empty {
-      text-align: center;
-      padding: 4rem 2rem;
-      color: var(--text-dim);
-      font-style: italic;
-    }
+    @keyframes rotation { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
     /* --- Responsive --- */
     @media (max-width: 1200px) {
-      .dashboard-layout {
-        grid-template-columns: 1fr;
-      }
-      .sidebar {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-      }
-      .login-grid {
-        gap: 3rem;
-      }
+      .dashboard-layout { grid-template-columns: 1fr; }
+      .sidebar { display: grid; grid-template-columns: 1fr 1fr; }
     }
-
     @media (max-width: 1024px) {
-      .login-grid {
-        grid-template-columns: 1fr;
-        text-align: center;
-      }
-      .login-content p {
-        margin-left: auto;
-        margin-right: auto;
-      }
-      .login-illustration {
-        display: none;
-      }
-      .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
+      .login-grid { grid-template-columns: 1fr; text-align: center; }
+      .login-content p { margin: 0 auto 3rem; }
+      .login-illustration { display: none; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
     }
-
-    @media (max-width: 768px) {
-      .sidebar {
-        grid-template-columns: 1fr;
-      }
-      .stats-grid {
-        grid-template-columns: 1fr;
-      }
-      .tabs-nav {
-        width: 100%;
-        overflow-x: auto;
-        padding-bottom: 0.5rem;
-      }
-      .title-xl {
-        font-size: 2.5rem;
-      }
+    @media (max-width: 640px) {
+      .sidebar, .stats-grid { grid-template-columns: 1fr; }
+      .container { padding: 1.5rem; }
     }
   </style>
 </head>
 <body>
-  <div class="mesh-bg"></div>
-  
-  <div id="loader" class="loader-overlay">
-    <div class="loader"></div>
-  </div>
+  <div id="loader" class="loader-overlay"><div class="loader"></div></div>
 
   <div class="container">
     <!-- --- Login View --- -->
     <div id="loginView" class="login-screen">
       <div class="login-grid">
         <div class="login-content">
-          <h1 class="title-xl gradient-text">Chào mừng đến với <span style="color: var(--primary);">EDUX</span></h1>
-          <p>Góc học tập cá nhân giúp phụ huynh theo dõi sát sao hành trình phát triển của con một cách thông minh và trực quan nhất.</p>
+          <h1 class="title-xl mb-4">Chào mừng đến với <span class="brand-gradient">WeWIN EDUX</span></h1>
+          <p>Hệ thống quản lý học tập thông minh giúp kết nối phụ huynh và học sinh trên hành trình chinh phục tri thức.</p>
           
-          <div class="glass-card">
-            <h3 class="title-md" style="margin-bottom: 2rem;">Đăng nhập Phụ huynh</h3>
-            <div id="loginError" class="error-box" style="display:none; color: var(--danger); background: rgba(239, 68, 68, 0.1); padding: 1rem; border-radius: 12px; margin-bottom: 1.5rem; font-size: 0.875rem; border: 1px solid var(--danger);"></div>
+          <div class="card card-premium">
+            <h3 class="title-md" style="margin-bottom: 2rem; color: var(--primary);">Đăng nhập Phụ huynh</h3>
+            <div id="loginError" style="display:none; color: var(--danger); background: #fee2e2; padding: 1rem; border-radius: 12px; margin-bottom: 1.5rem; font-size: 0.875rem; border: 1px solid rgba(239, 68, 68, 0.2);"></div>
             
             <div class="form-group">
               <label>Mã học viên</label>
@@ -618,18 +429,18 @@
             </div>
             
             <button id="loginBtn" class="btn btn-primary" style="width: 100%; margin-top: 1rem;" onclick="login()">
-              Truy cập ngay
+              Truy cập Dashboard
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </button>
             
-            <p style="margin-top: 2rem; font-size: 0.8125rem; color: var(--text-dim); text-align: center;">
-              Mã truy cập mặc định là <strong style="color: var(--text-main);">123</strong>. Liên hệ giáo viên nếu bạn quên mã.
+            <p style="margin-top: 2rem; font-size: 0.8125rem; color: var(--text-muted); text-align: center;">
+              Mã mặc định: <strong style="color: var(--primary);">123</strong>. Hotline hỗ trợ: 1900 xxxx
             </p>
           </div>
         </div>
         
         <div class="login-illustration">
-          <img src="../../brain/ddc04584-57ad-4768-af8d-673a340e4904/edux_modern_illustration_1776414778237.png" alt="EDUX Modern Illustration">
+          <img src="../../brain/ddc04584-57ad-4768-af8d-673a340e4904/wewin_education_illustration_1776415453455.png" alt="WeWIN Education">
         </div>
       </div>
     </div>
@@ -638,98 +449,71 @@
     <div id="dashboardView" style="display: none;">
       <header style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; flex-wrap: wrap; gap: 1.5rem;">
         <div>
-          <h1 class="title-lg gradient-text">Bảng điều khiển</h1>
-          <p style="color: var(--text-muted);">Cập nhật mới nhất lúc <span id="updatedAt" style="color: var(--primary-light); font-weight: 600;">--:--</span></p>
+          <h4 style="color: var(--accent-dark); text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.75rem;">Hệ thống WeWIN</h4>
+          <h1 class="title-lg brand-gradient">Bảng điều khiển học tập</h1>
+          <p style="color: var(--text-muted); font-size: 0.875rem;">Cập nhật: <span id="updatedAt" style="color: var(--primary); font-weight: 700;">--:--</span></p>
         </div>
-        <div style="display: flex; gap: 1rem;">
+        <div style="display: flex; gap: 0.75rem;">
           <button class="btn btn-secondary" onclick="refreshDashboard()">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
             Làm mới
           </button>
-          <button class="btn btn-ghost" onclick="logout()">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
-            Đăng xuất
-          </button>
+          <button class="btn btn-ghost" onclick="logout()">Đăng xuất</button>
         </div>
       </header>
 
       <div class="dashboard-layout">
         <!-- Sidebar -->
         <aside class="sidebar">
-          <div class="glass-card profile-card">
+          <div class="card profile-card" style="padding-top: 3rem;">
             <div class="avatar-wrapper">
               <div class="avatar" id="studentAvatar">HV</div>
             </div>
             <div class="student-info">
               <h2 id="studentName">--</h2>
-              <p id="studentClass">Lớp: --</p>
+              <p id="studentClass">--</p>
             </div>
             
             <div class="meta-info">
-              <div class="meta-row">
-                <span class="label">Mã học viên</span>
-                <span class="value" id="studentId">--</span>
-              </div>
-              <div class="meta-row">
-                <span class="label">Giáo viên</span>
-                <span class="value" id="studentTeacher">--</span>
-              </div>
-              <div class="meta-row">
-                <span class="label">Ngày sinh</span>
-                <span class="value" id="studentDob">--</span>
-              </div>
+              <div class="meta-row"><span class="label">ID</span><span class="value" id="studentId">--</span></div>
+              <div class="meta-row"><span class="label">Giáo viên</span><span class="value" id="studentTeacher">--</span></div>
+              <div class="meta-row"><span class="label">Ngày sinh</span><span class="value" id="studentDob">--</span></div>
             </div>
           </div>
 
-          <div class="glass-card" style="padding: 2rem;">
-            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem;">
-              <div style="width: 40px; height: 40px; background: rgba(245, 158, 11, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--warning);">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
-              </div>
-              <h4 style="color: var(--text-main);">Học phí & Thông báo</h4>
+          <div class="card" style="border-top: 4px solid var(--accent);">
+            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent-dark)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              <h4 style="color: var(--primary);">Học phí</h4>
             </div>
-            <div style="background: rgba(59, 130, 246, 0.05); padding: 1.25rem; border-radius: 16px; border: 1px solid var(--border-glass);">
-              <p style="font-size: 0.875rem; font-weight: 600; color: var(--text-muted);">Trạng thái: <span id="feeStatus" style="color: var(--success);">--</span></p>
-            </div>
+            <p id="feeStatus" style="font-weight: 700; color: var(--success); font-size: 1.125rem;">--</p>
           </div>
         </aside>
 
         <!-- Main Content -->
         <main class="main-content">
-          <!-- Stats -->
+          <!-- Stats Bento -->
           <div class="stats-grid">
-            <div class="glass-card stat-card">
-              <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                <span class="label">Đi học</span>
-                <svg style="color: var(--primary-light);" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><polyline points="17 11 19 13 23 9"/></svg>
-              </div>
+            <div class="card stat-tile">
+              <span class="label">Đi học</span>
               <span class="value" id="mAttend">0</span>
             </div>
-            <div class="glass-card stat-card">
-              <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                <span class="label">Vắng/Phép</span>
-                <svg style="color: var(--danger);" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="18" y1="8" x2="23" y2="13"/><line x1="23" y1="8" x2="18" y2="13"/></svg>
-              </div>
+            <div class="card stat-tile" style="border-left-color: var(--danger);">
+              <span class="label">Vắng/Phép</span>
               <span class="value" id="mAbsent">0/0</span>
             </div>
-            <div class="glass-card stat-card">
-              <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                <span class="label">Bài tập</span>
-                <svg style="color: var(--accent);" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14.5 2 14.5 7.5 20 7.5"/></svg>
-              </div>
+            <div class="card stat-tile" style="border-left-color: var(--accent);">
+              <span class="label">Bài tập</span>
               <span class="value" id="mHomework">0/0</span>
             </div>
-            <div class="glass-card stat-card">
-              <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                <span class="label">Điểm TB</span>
-                <svg style="color: var(--success);" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5"/></svg>
-              </div>
+            <div class="card stat-tile" style="border-left-color: var(--success);">
+              <span class="label">Điểm TB</span>
               <span class="value" id="mAvg">-</span>
             </div>
           </div>
 
-          <!-- Tabs Section -->
-          <div class="glass-card" style="padding: 2.5rem;">
+          <!-- Content Section -->
+          <div class="card" style="padding: 2.5rem;">
             <nav class="tabs-nav">
               <button class="tab-trigger active" onclick="switchTab('baoBai', this)">Báo bài</button>
               <button class="tab-trigger" onclick="switchTab('homework', this)">Bài tập</button>
@@ -738,24 +522,12 @@
               <button class="tab-trigger" onclick="switchTab('report', this)">Báo cáo</button>
             </nav>
 
-            <div id="tab-baoBai" class="panel active">
-              <div id="baoBaiList" class="list-container"></div>
-            </div>
-
-            <div id="tab-homework" class="panel">
-              <div id="homeworkList" class="list-container"></div>
-            </div>
-
-            <div id="tab-attendance" class="panel">
-              <div id="attendanceTableWrap"></div>
-            </div>
-
-            <div id="tab-scores" class="panel">
-              <div id="scoresWrap"></div>
-            </div>
-
+            <div id="tab-baoBai" class="panel active"><div id="baoBaiList"></div></div>
+            <div id="tab-homework" class="panel"><div id="homeworkList"></div></div>
+            <div id="tab-attendance" class="panel"><div id="attendanceTableWrap"></div></div>
+            <div id="tab-scores" class="panel"><div id="scoresWrap"></div></div>
             <div id="tab-report" class="panel">
-              <div id="reportBox" style="white-space: pre-wrap; line-height: 2; color: var(--text-main); font-size: 1.05rem; padding: 1rem; background: rgba(255,255,255,0.02); border-radius: 16px;"></div>
+              <div id="reportBox" style="white-space: pre-wrap; line-height: 2; color: var(--text-main); font-size: 1.05rem; padding: 1.5rem; background: #f8fafc; border-radius: 16px; border: 1px dashed #cbd5e1;"></div>
             </div>
           </div>
         </main>
@@ -765,120 +537,71 @@
 
   <script>
     const API_URL = 'https://script.google.com/macros/s/AKfycbxC79BhJvRgzGm2tGc8SIPK0-BzW3BF8ySnN3BXox8JYfX4jd_m4Qb-iWKjDpeziaSD/exec';
-
     let currentStudentId = '';
     let currentAccessCode = '123';
-    let currentData = null;
 
-    // --- Helpers ---
     function clean(v) { return v == null ? '' : String(v).trim(); }
     function enc(str) { return encodeURIComponent(clean(str)); }
     function dec(str) { try { return decodeURIComponent(str || ''); } catch (e) { return clean(str); } }
 
-    function setLoading(show) {
-      const loader = document.getElementById('loader');
-      loader.style.display = show ? 'flex' : 'none';
-    }
+    function setLoading(show) { document.getElementById('loader').style.display = show ? 'flex' : 'none'; }
 
     async function callApi(payload) {
       const form = new URLSearchParams();
-      Object.keys(payload || {}).forEach(key => {
-        form.append(key, payload[key] == null ? '' : String(payload[key]));
-      });
-
+      Object.keys(payload || {}).forEach(key => form.append(key, payload[key] == null ? '' : String(payload[key])));
       try {
         const res = await fetch(API_URL, { method: 'POST', body: form });
         const text = await res.text();
         return JSON.parse(text);
-      } catch (err) {
-        throw new Error('Không thể kết nối với máy chủ. Vui lòng thử lại sau.');
-      }
+      } catch (err) { throw new Error('Kết nối thất bại. Thử lại sau.'); }
     }
 
-    // --- Auth ---
     async function login() {
       const studentId = clean(document.getElementById('studentIdInput').value);
       const accessCode = clean(document.getElementById('accessCodeInput').value || '123');
       const errorBox = document.getElementById('loginError');
-
       errorBox.style.display = 'none';
-
-      if (!studentId) {
-        errorBox.textContent = 'Vui lòng nhập Mã học viên.';
-        errorBox.style.display = 'block';
-        return;
-      }
-
+      if (!studentId) { errorBox.textContent = 'Nhập Mã học viên.'; errorBox.style.display = 'block'; return; }
       setLoading(true);
-
       try {
         const json = await callApi({ action: 'login', studentId, accessCode });
-
-        if (!json.ok) {
-          errorBox.textContent = json.message || 'Mã học viên hoặc mã truy cập không đúng.';
-          errorBox.style.display = 'block';
-          return;
-        }
-
-        currentStudentId = studentId;
-        currentAccessCode = accessCode;
-        currentData = json.data;
-
+        if (!json.ok) { errorBox.textContent = json.message || 'Mã không đúng.'; errorBox.style.display = 'block'; return; }
+        currentStudentId = studentId; currentAccessCode = accessCode;
         document.getElementById('loginView').style.display = 'none';
         document.getElementById('dashboardView').style.display = 'block';
-
         renderDashboard(json.data);
-      } catch (err) {
-        errorBox.textContent = err.message;
-        errorBox.style.display = 'block';
-      } finally {
-        setLoading(false);
-      }
+      } catch (err) { errorBox.textContent = err.message; errorBox.style.display = 'block'; }
+      finally { setLoading(false); }
     }
 
-    function logout() {
-      currentStudentId = '';
-      currentData = null;
-      document.getElementById('dashboardView').style.display = 'none';
-      document.getElementById('loginView').style.display = 'flex';
-    }
+    function logout() { location.reload(); }
 
-    // --- Data & Rendering ---
     async function refreshDashboard() {
       if (!currentStudentId) return;
       setLoading(true);
       try {
         const json = await callApi({ action: 'refresh', studentId: currentStudentId, accessCode: currentAccessCode });
-        if (json.ok) {
-          currentData = json.data;
-          renderDashboard(json.data);
-        }
-      } catch (err) {
-        alert('Lỗi cập nhật dữ liệu.');
-      } finally {
-        setLoading(false);
-      }
+        if (json.ok) renderDashboard(json.data);
+      } catch (err) { alert('Lỗi cập nhật.'); }
+      finally { setLoading(false); }
     }
 
     function renderDashboard(data) {
       const s = data.student || {};
       document.getElementById('studentName').textContent = clean(s.name) || 'Học viên';
       document.getElementById('studentId').textContent = clean(s.id);
-      document.getElementById('studentClass').textContent = 'Lớp: ' + clean(s.className);
+      document.getElementById('studentClass').textContent = 'Lớp: ' + (clean(s.className) || '--');
       document.getElementById('studentTeacher').textContent = clean(s.teacher);
       document.getElementById('studentDob').textContent = clean(s.dob);
       document.getElementById('feeStatus').textContent = clean(data.feeInfo?.feeStatus);
       document.getElementById('updatedAt').textContent = clean(data.updatedAt);
 
-      // Avatar Initials
       const names = (clean(s.name) || 'H V').split(' ');
       document.getElementById('studentAvatar').textContent = names.length > 1 
-        ? (names[names.length-2][0] + names[names.length-1][0]).toUpperCase()
-        : names[0][0].toUpperCase();
+        ? (names[names.length-2][0] + names[names.length-1][0]).toUpperCase() : names[0][0].toUpperCase();
 
-      // Metrics
       document.getElementById('mAttend').textContent = data.metrics?.attendancePresent || 0;
-      document.getElementById('mAbsent').textContent = `${data.metrics?.attendanceAbsent || 0} / ${data.metrics?.attendanceExcused || 0}`;
+      document.getElementById('mAbsent').textContent = `${data.metrics?.attendanceAbsent || 0}/${data.metrics?.attendanceExcused || 0}`;
       document.getElementById('mHomework').textContent = `${data.metrics?.homeworkDone || 0}/${data.metrics?.homeworkTotal || 0}`;
       document.getElementById('mAvg').textContent = data.metrics?.avgScore || '-';
 
@@ -886,40 +609,21 @@
       renderHomework(data.homework || []);
       renderAttendance(data.attendance || []);
       renderScores(data);
-      document.getElementById('reportBox').textContent = clean(data.reportText) || 'Chưa có báo cáo cá nhân từ giáo viên.';
+      document.getElementById('reportBox').textContent = clean(data.reportText) || 'Chưa có báo cáo cá nhân.';
     }
 
     function renderBaoBai(items) {
       const container = document.getElementById('baoBaiList');
-      if (!items.length) {
-        container.innerHTML = '<p class="empty">Chưa có dữ liệu báo bài.</p>';
-        return;
-      }
+      if (!items.length) { container.innerHTML = '<p class="empty">Chưa có dữ liệu báo bài.</p>'; return; }
       container.innerHTML = items.map(item => `
-        <div class="lesson-item">
-          <div class="lesson-header">
-            <span class="date-tag">${item.date}</span>
-            ${item.locked ? '<span style="color:var(--warning); font-size: 0.75rem; font-weight:700; letter-spacing: 0.05em;">ĐANG KHÓA</span>' : ''}
+        <div class="item-card">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+            <span class="date-badge">${item.date}</span>
+            ${item.locked ? '<span style="color:var(--warning); font-size: 0.7rem; font-weight:800;">🔒 ĐANG KHÓA</span>' : ''}
           </div>
-          <div class="lesson-content">
-            <div style="display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1rem;">
-              <div style="color: var(--primary-light); margin-top: 0.25rem;">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-              </div>
-              <div>
-                <h4>Bài học:</h4>
-                <p>${item.locked ? 'Nội dung sẽ hiển thị vào ngày học.' : clean(item.lesson)}</p>
-              </div>
-            </div>
-            <div style="display: flex; align-items: flex-start; gap: 1rem;">
-              <div style="color: var(--accent); margin-top: 0.25rem;">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-              </div>
-              <div>
-                <h4>Bài tập về nhà:</h4>
-                <p>${item.locked ? 'Nội dung sẽ hiển thị vào ngày học.' : clean(item.homework)}</p>
-              </div>
-            </div>
+          <div style="display: grid; gap: 0.75rem;">
+            <div><strong style="color: var(--primary); display: block; font-size: 0.85rem;">BÀI HỌC</strong><p>${item.locked ? 'Nội dung hiển thị vào ngày học.' : clean(item.lesson)}</p></div>
+            <div><strong style="color: var(--accent-dark); display: block; font-size: 0.85rem;">BÀI TẬP</strong><p>${item.locked ? 'Nội dung hiển thị vào ngày học.' : clean(item.homework)}</p></div>
           </div>
         </div>
       `).join('');
@@ -927,35 +631,17 @@
 
     function renderHomework(items) {
       const container = document.getElementById('homeworkList');
-      if (!items.length) {
-        container.innerHTML = '<p class="empty">Chưa có bài tập nào được giao.</p>';
-        return;
-      }
+      if (!items.length) { container.innerHTML = '<p class="empty">Chưa có bài tập.</p>'; return; }
       container.innerHTML = items.map(item => `
-        <div class="lesson-item">
-          <div class="lesson-header">
-            <span class="date-tag">${item.date}</span>
-            <span class="status-badge" 
-                  style="font-size: 0.75rem; font-weight:700; color: ${item.status === 'Đã làm' ? 'var(--success)' : 'var(--danger)'}; background: ${item.status === 'Đã làm' ? 'rgba(16, 185, 129, 0.1)' : 'rgba(239, 68, 68, 0.1)'}; padding: 0.25rem 0.75rem; border-radius: 99px;">
-              ${item.status || 'Chưa làm'}
-            </span>
+        <div class="item-card">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+            <span class="date-badge">${item.date}</span>
+            <span style="font-size: 0.75rem; font-weight: 800; color: ${item.status === 'Đã làm' ? 'var(--success)' : 'var(--danger)'};">● ${item.status || 'Chưa làm'}</span>
           </div>
-          <div class="lesson-content">
-            <div style="display: flex; align-items: flex-start; gap: 1rem;">
-              <div style="color: var(--primary-light); margin-top: 0.25rem;">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-              </div>
-              <div style="flex: 1;">
-                <p><strong>Nhiệm vụ:</strong> ${clean(item.task)}</p>
-                ${item.submission ? `<p style="margin-top:0.75rem; font-style: italic; color: var(--text-dim); background: rgba(0,0,0,0.2); padding: 0.75rem; border-radius: 12px; border-left: 3px solid var(--primary);">Bài làm: ${clean(item.submission)}</p>` : ''}
-                <div style="margin-top: 1.5rem; display: flex; gap: 0.5rem;">
-                  <button class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.75rem;" onclick="updateHW('${enc(item.date)}','${enc(item.task)}','Đã làm')">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                    Xác nhận Đã làm
-                  </button>
-                </div>
-              </div>
-            </div>
+          <p><strong>Nhiệm vụ:</strong> ${clean(item.task)}</p>
+          ${item.submission ? `<p style="margin-top:0.75rem; font-size: 0.9rem; color: var(--text-muted); background: #f1f5f9; padding: 0.75rem; border-radius: 8px;">Phản hồi: ${clean(item.submission)}</p>` : ''}
+          <div style="margin-top: 1.25rem;">
+            <button class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.75rem;" onclick="updateHW('${enc(item.date)}','${enc(item.task)}','Đã làm')">Xác nhận hoàn thành</button>
           </div>
         </div>
       `).join('');
@@ -964,77 +650,38 @@
     async function updateHW(date, task, status) {
       setLoading(true);
       try {
-        const json = await callApi({
-          action: 'confirm_homework',
-          studentId: currentStudentId,
-          accessCode: currentAccessCode,
-          date: dec(date),
-          task: dec(task),
-          status
-        });
+        const json = await callApi({ action: 'confirm_homework', studentId: currentStudentId, accessCode: currentAccessCode, date: dec(date), task: dec(task), status });
         if (json.ok) refreshDashboard();
-      } catch (err) {
-        alert('Không thể cập nhật.');
-      } finally {
-        setLoading(false);
-      }
+      } catch (err) { alert('Cập nhật thất bại.'); }
+      finally { setLoading(false); }
     }
 
     function renderAttendance(items) {
       const container = document.getElementById('attendanceTableWrap');
-      if (!items.length) {
-        container.innerHTML = '<p class="empty">Chưa có dữ liệu điểm danh.</p>';
-        return;
-      }
-      container.innerHTML = `
-        <table style="width:100%; border-collapse: collapse; margin-top: 1rem;">
-          <thead>
-            <tr style="text-align: left; border-bottom: 2px solid #f1f5f9;">
-              <th style="padding: 1rem 0; color: var(--text-muted); font-size: 0.8125rem; text-transform: uppercase;">Ngày học</th>
-              <th style="padding: 1rem 0; color: var(--text-muted); font-size: 0.8125rem; text-transform: uppercase;">Trạng thái</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${items.map(item => `
-              <tr style="border-bottom: 1px solid #f1f5f9;">
-                <td style="padding: 1rem 0; font-weight: 600;">${item.date}</td>
-                <td style="padding: 1rem 0;">
-                  <span style="color: ${item.status === 'Có mặt' ? 'var(--success)' : 'var(--danger)'}; font-weight: 700;">${item.status}</span>
-                </td>
-              </tr>
-            `).join('')}
-          </tbody>
-        </table>
-      `;
+      if (!items.length) { container.innerHTML = '<p class="empty">Chưa có dữ liệu.</p>'; return; }
+      container.innerHTML = `<table style="width:100%; border-collapse: collapse; margin-top: 1rem;">
+        <tr style="text-align: left; border-bottom: 2px solid #f1f5f9;">
+          <th style="padding: 1rem 0; color: var(--text-dim); font-size: 0.75rem; text-transform: uppercase;">Ngày học</th>
+          <th style="padding: 1rem 0; color: var(--text-dim); font-size: 0.75rem; text-transform: uppercase;">Trạng thái</th>
+        </tr>
+        ${items.map(item => `<tr style="border-bottom: 1px solid #f1f5f9;">
+          <td style="padding: 1rem 0; font-weight: 600;">${item.date}</td>
+          <td style="padding: 1rem 0;"><span style="color: ${item.status === 'Có mặt' ? 'var(--success)' : 'var(--danger)'}; font-weight: 700;">${item.status}</span></td>
+        </tr>`).join('')}
+      </table>`;
     }
 
     function renderScores(data) {
       const container = document.getElementById('scoresWrap');
       const daily = data.dailyScores || [];
       const mock = data.mocktests || [];
-      
-      if (!daily.length && !mock.length) {
-        container.innerHTML = '<p class="empty">Chưa có dữ liệu điểm số.</p>';
-        return;
-      }
-
+      if (!daily.length && !mock.length) { container.innerHTML = '<p class="empty">Chưa có điểm số.</p>'; return; }
       let html = '';
       if (daily.length) {
-        html += '<h4 style="margin-bottom:1rem;">Điểm hằng ngày</h4>';
-        html += daily.map(d => `<div style="display:flex; justify-content:space-between; padding:0.75rem 0; border-bottom:1px solid #f1f5f9;">
-          <span>${d.date}</span><span style="font-weight:700; color:var(--primary);">${d.rawScore}</span>
-        </div>`).join('');
+        html += '<h4 style="margin-bottom:1rem; color: var(--primary);">Điểm chuyên cần</h4>' + daily.map(d => `<div style="display:flex; justify-content:space-between; padding:0.75rem 0; border-bottom:1px solid #f1f5f9;"><span>${d.date}</span><span style="font-weight:700; color:var(--primary);">${d.rawScore}</span></div>`).join('');
       }
-      
       if (mock.length) {
-        html += '<h4 style="margin-top:2rem; margin-bottom:1rem;">Kiểm tra định kỳ</h4>';
-        html += mock.map(m => `<div class="lesson-item">
-          <div style="display:flex; justify-content:space-between;">
-            <strong>${m.testName}</strong>
-            <span style="font-weight:800; color:var(--accent);">TB: ${m.average || '-'}</span>
-          </div>
-          <p style="font-size:0.875rem; color:var(--text-muted); margin-top:0.5rem;">Chi tiết: ${(m.scores || []).join(' | ')}</p>
-        </div>`).join('');
+        html += '<h4 style="margin-top:2rem; margin-bottom:1rem; color: var(--primary);">Kết quả kiểm tra</h4>' + mock.map(m => `<div class="item-card"><div style="display:flex; justify-content:space-between;"><strong>${m.testName}</strong><span style="font-weight:800; color:var(--accent-dark);">TB: ${m.average || '-'}</span></div><p style="font-size:0.875rem; color:var(--text-muted); margin-top:0.5rem;">Chi tiết: ${(m.scores || []).join(' | ')}</p></div>`).join('');
       }
       container.innerHTML = html;
     }
@@ -1042,7 +689,6 @@
     function switchTab(tabId, btn) {
       document.querySelectorAll('.tab-trigger').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      
       document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
       document.getElementById('tab-' + tabId).classList.add('active');
     }
