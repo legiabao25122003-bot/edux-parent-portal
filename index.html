@@ -564,11 +564,12 @@
       word-break:break-word;
     }
 
+    /* ĐÃ NÂNG CẤP - THẺ METRICS */
     .metrics{
       display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-      gap:14px;
-      margin-bottom:20px;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); /* Tăng min-width để các thẻ tự phân bổ rộng rãi hơn */
+      gap:20px; /* Tăng khoảng cách để trông thoáng hơn */
+      margin-bottom:24px;
     }
 
     .metric-card{
@@ -577,9 +578,14 @@
       background:rgba(255,255,255,.95);
       border:1px solid rgba(255,255,255,.68);
       border-radius:24px;
-      padding:18px;
+      padding:22px; /* Tăng padding */
       box-shadow:var(--shadow-md);
       backdrop-filter:blur(8px);
+      transition:transform .2s ease;
+    }
+    
+    .metric-card:hover{
+      transform:translateY(-2px);
     }
 
     .metric-card::after{
@@ -623,38 +629,46 @@
       z-index:1;
     }
 
+    /* ĐÃ NÂNG CẤP - THANH TABS (SEGMENTED CONTROL) */
     .tabs{
       display:flex;
-      gap:10px;
+      gap:12px;
       flex-wrap:wrap;
-      margin-bottom:18px;
+      margin-bottom:24px;
+      background: rgba(255, 255, 255, 0.6);
+      padding: 8px;
+      border-radius: 20px;
+      box-shadow: inset 0 2px 8px rgba(14,75,169,.06);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.8);
     }
 
     .tab-btn{
+      flex: 1 1 180px; /* Giúp các nút luôn chiếm đều toàn bộ chiều ngang thanh Tabs */
       border:none;
-      background:rgba(255,255,255,.92);
-      color:var(--primary);
-      border:1px solid var(--border);
-      padding:12px 17px;
-      border-radius:999px;
+      background:transparent;
+      color:var(--muted);
+      padding:14px 16px;
+      border-radius:14px;
       font-family:inherit;
-      font-size:13px;
+      font-size:14px;
       font-weight:800;
       cursor:pointer;
-      transition:all .18s ease;
-      box-shadow:var(--shadow-sm);
+      transition:all .2s ease;
+      text-align: center;
     }
 
     .tab-btn:hover{
+      color:var(--primary);
+      background:rgba(255,255,255,.8);
       transform:translateY(-1px);
-      border-color:rgba(14,75,169,.20);
     }
 
     .tab-btn.active{
       background:linear-gradient(135deg,var(--primary),var(--primary-2));
       color:#fff;
-      border-color:transparent;
-      box-shadow:0 12px 24px rgba(14,75,169,.18);
+      box-shadow:0 12px 24px rgba(14,75,169,.22);
+      transform:none;
     }
 
     .tab-panel{display:none}
@@ -932,270 +946,205 @@
     }
 
 
-    /* =========================================
-       NÂNG CẤP GIAO DIỆN BÁO BÀI (LESSON REPORT)
-       ========================================= */
-    .baobai-toolbar {
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      margin-bottom: 20px;
+    .baobai-toolbar{
+      display:flex;
+      align-items:center;
+      justify-content:flex-start;
+      margin-bottom:14px;
     }
 
-    .baobai-filter-pill {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-2) 100%);
-      color: #fff;
-      border-radius: 999px;
-      padding: 10px 18px;
-      font-size: 13px;
-      font-weight: 800;
-      box-shadow: 0 8px 20px rgba(14, 75, 169, 0.2);
-      letter-spacing: 0.3px;
+    .baobai-filter-pill{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      background:#198754;
+      color:#fff;
+      border-radius:999px;
+      padding:8px 14px;
+      font-size:12px;
+      font-weight:800;
+      box-shadow:var(--shadow-sm);
     }
 
-    /* Thanh điều hướng ngày dạng Pill hiện đại */
-    .baobai-daybar {
-      display: grid;
-      grid-template-columns: auto 1fr auto;
-      align-items: center;
-      gap: 12px;
-      background: #ffffff;
-      border: 1px solid rgba(14, 75, 169, 0.12);
-      border-radius: 999px;
-      padding: 8px 10px;
-      margin-bottom: 24px;
-      box-shadow: 0 10px 24px rgba(14, 75, 169, 0.06);
+    .baobai-daybar{
+      display:grid;
+      grid-template-columns:auto 1fr auto;
+      align-items:center;
+      gap:12px;
+      background:#EAF5EA;
+      border:1px solid rgba(25,135,84,.12);
+      border-radius:18px;
+      padding:10px 12px;
+      margin-bottom:16px;
+      box-shadow:var(--shadow-sm);
     }
 
-    .baobai-nav-btn {
-      border: none;
-      background: var(--bg-soft);
-      color: var(--primary);
-      border-radius: 999px;
-      padding: 10px 20px;
-      font-family: inherit;
-      font-size: 13px;
-      font-weight: 800;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      border: 1px solid transparent;
+    .baobai-nav-btn{
+      border:none;
+      background:#fff;
+      color:#3B6F46;
+      border-radius:999px;
+      padding:8px 14px;
+      font-family:inherit;
+      font-size:12px;
+      font-weight:800;
+      cursor:pointer;
+      box-shadow:0 4px 14px rgba(25,135,84,.10);
+      transition:all .18s ease;
     }
 
-    .baobai-nav-btn:hover:not(:disabled) {
-      background: #fff;
-      border-color: rgba(14, 75, 169, 0.15);
-      box-shadow: 0 4px 12px rgba(14, 75, 169, 0.1);
-      transform: translateY(-1px);
+    .baobai-nav-btn:hover{transform:translateY(-1px)}
+    .baobai-nav-btn:disabled{
+      opacity:.45;
+      cursor:not-allowed;
+      transform:none;
     }
 
-    .baobai-nav-btn:disabled {
-      opacity: 0.4;
-      cursor: not-allowed;
-      background: transparent;
+    .baobai-day-title{
+      text-align:center;
+      font-size:15px;
+      font-weight:800;
+      color:#1B5E20;
+      line-height:1.5;
     }
 
-    .baobai-day-title {
-      text-align: center;
-      font-size: 15px;
-      font-weight: 800;
-      color: var(--primary);
-      line-height: 1.5;
+    .baobai-empty-day{
+      text-align:center;
+      color:#66748D;
+      font-size:14px;
+      line-height:1.9;
+      padding:18px 8px 6px;
     }
 
-    .baobai-empty-day {
-      text-align: center;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.9;
-      padding: 30px 20px;
-      background: #fff;
-      border-radius: 24px;
-      border: 1px dashed rgba(14, 75, 169, 0.15);
+    .bao-bai-list{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:16px;
     }
 
-    .bao-bai-list {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 20px;
+    .bb-card{
+      background:#fff;
+      border:1px solid rgba(14,75,169,.10);
+      border-radius:24px;
+      overflow:hidden;
+      box-shadow:var(--shadow-md);
     }
 
-    /* Card Báo Bài */
-    .bb-card {
-      background: #fff;
-      border: 1px solid rgba(14, 75, 169, 0.10);
-      border-radius: 28px;
-      overflow: hidden;
-      box-shadow: var(--shadow-md);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-    
-    .bb-card:hover {
-      box-shadow: var(--shadow-lg);
-    }
+    .bb-card.locked{opacity:.97}
 
-    .bb-card.locked { opacity: 0.85; filter: grayscale(20%); }
-
-    .bb-head {
-      background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.15), transparent 30%),
-                  linear-gradient(135deg, var(--primary) 0%, #1A56B8 50%, var(--primary-2) 100%);
-      color: #fff;
-      padding: 22px 24px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 16px;
-      border-bottom: 1px solid rgba(14, 75, 169, 0.05);
+    .bb-head{
+      background:
+        radial-gradient(circle at top right, rgba(255,255,255,.18), transparent 28%),
+        linear-gradient(135deg,var(--primary) 0%, var(--primary-2) 100%);
+      color:#fff;
+      padding:18px 18px 16px;
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:12px;
     }
 
-    .bb-date-wrap {
-      display: flex;
-      align-items: center;
-      gap: 14px;
+    .bb-date{
+      font-size:22px;
+      font-weight:800;
+      line-height:1.2;
+      letter-spacing:-.01em;
     }
 
-    .bb-date-icon {
-      width: 48px;
-      height: 48px;
-      background: rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(4px);
-      border-radius: 16px;
-      display: grid;
-      place-items: center;
-      font-size: 20px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+    .bb-week{
+      font-size:12px;
+      opacity:.88;
+      margin-top:5px;
     }
 
-    .bb-date {
-      font-size: 22px;
-      font-weight: 800;
-      line-height: 1.1;
-      letter-spacing: -0.01em;
+    .bb-status{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-width:96px;
+      padding:8px 12px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:800;
+      background:rgba(255,255,255,.18);
+      color:#fff;
+      text-align:center;
+      white-space:nowrap;
     }
 
-    .bb-week {
-      font-size: 13px;
-      color: rgba(255, 255, 255, 0.85);
-      margin-top: 4px;
-      font-weight: 500;
+    .bb-status.present{ background:#dff6e7; color:#137333; }
+    .bb-status.absent{ background:#fde7e9; color:#b3261e; }
+    .bb-status.makeup{ background:#fff3db; color:#9a6700; }
+    .bb-status.locked{ background:#e8eefb; color:#0E4BA9; }
+    .bb-status.neutral{ background:#EEF2F7; color:#475467; }
+
+    .bb-body{
+      padding:16px;
+      display:grid;
+      gap:12px;
+      background:linear-gradient(180deg,#FFFFFF 0%, #FAFCFF 100%);
     }
 
-    .bb-status {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 100px;
-      padding: 8px 16px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 800;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-      white-space: nowrap;
+    .bb-lock-note{
+      background:#F4F8FF;
+      border:1px dashed rgba(14,75,169,.24);
+      color:#0E4BA9;
+      border-radius:14px;
+      padding:12px 14px;
+      font-size:13px;
+      font-weight:700;
+      line-height:1.7;
     }
 
-    .bb-status.present { background: #EAF7EF; color: #166534; }
-    .bb-status.absent { background: #FDECEC; color: #B42318; }
-    .bb-status.makeup { background: #FFF7E6; color: #B97A00; }
-    .bb-status.locked { background: rgba(255,255,255,0.2); color: #fff; backdrop-filter: blur(4px); }
-    .bb-status.neutral { background: #F4F6F8; color: #475467; }
-
-    .bb-body {
-      padding: 24px;
-      display: grid;
-      gap: 16px;
-      background: linear-gradient(180deg, #FFFFFF 0%, #FAFCFF 100%);
+    .bb-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:12px;
     }
 
-    .bb-lock-note {
-      background: #F4F8FF;
-      border: 1px dashed rgba(14, 75, 169, 0.24);
-      color: var(--primary);
-      border-radius: 18px;
-      padding: 16px;
-      font-size: 13px;
-      font-weight: 700;
-      line-height: 1.7;
-      display: flex;
-      align-items: center;
-      gap: 10px;
+    .bb-item{
+      background:#fff;
+      border:1px solid rgba(14,75,169,.08);
+      border-radius:16px;
+      padding:12px 14px;
+      box-shadow:var(--shadow-sm);
     }
 
-    .bb-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 16px;
+    .bb-label{
+      font-size:11px;
+      font-weight:800;
+      color:var(--primary);
+      margin-bottom:6px;
+      text-transform:uppercase;
+      letter-spacing:.38px;
     }
 
-    .bb-item {
-      background: #fff;
-      border: 1px solid rgba(14, 75, 169, 0.08);
-      border-radius: 20px;
-      padding: 18px;
-      box-shadow: 0 4px 12px rgba(14, 75, 169, 0.03);
-      transition: transform 0.2s ease, border-color 0.2s ease;
+    .bb-value{
+      color:var(--text);
+      font-size:14px;
+      line-height:1.75;
+      white-space:pre-line;
+      word-break:break-word;
     }
 
-    .bb-item:hover {
-      transform: translateY(-2px);
-      border-color: rgba(14, 75, 169, 0.2);
+    .bb-link{
+      color:var(--primary);
+      font-weight:700;
+      text-decoration:none;
     }
 
-    .bb-label {
-      font-size: 12px;
-      font-weight: 800;
-      color: var(--primary);
-      margin-bottom: 8px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
+    .bb-link:hover{
+      text-decoration:underline;
     }
 
-    .bb-label-icon {
-      font-size: 16px;
-    }
-
-    .bb-value {
-      color: var(--text);
-      font-size: 14px;
-      line-height: 1.75;
-      white-space: pre-line;
-      word-break: break-word;
-      font-weight: 500;
-    }
-
-    .bb-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: var(--bg-soft);
-      color: var(--primary);
-      padding: 8px 14px;
-      border-radius: 12px;
-      font-weight: 700;
-      text-decoration: none;
-      border: 1px solid var(--border);
-      transition: all 0.2s ease;
-    }
-
-    .bb-link:hover {
-      background: var(--bg);
-      border-color: rgba(14, 75, 169, 0.3);
-      transform: translateY(-1px);
-    }
-
-    .bb-empty {
-      background: #fff;
-      border: 1px dashed rgba(14, 75, 169, 0.18);
-      border-radius: 24px;
-      padding: 40px 20px;
-      text-align: center;
-      color: var(--muted);
-      font-weight: 500;
-      box-shadow: var(--shadow-sm);
+    .bb-empty{
+      background:#fff;
+      border:1px dashed rgba(14,75,169,.18);
+      border-radius:18px;
+      padding:24px;
+      text-align:center;
+      color:var(--muted);
+      box-shadow:var(--shadow-sm);
     }
 
     @media (min-width: 980px){
@@ -1724,7 +1673,8 @@
         { label: 'Ngày bắt đầu', value: feeInfo.startDate || '--' },
         { label: 'Ngày kết thúc', value: feeInfo.endDate || '--' },
         { label: 'Tình hình báo phí', value: feeInfo.feeStatus || '--' },
-        { label: 'Học phí', value: feeInfo.price || '--' }
+        { label: 'Học phí', value: feeInfo.price || '--' },
+        { label: 'Sale phụ trách', value: feeInfo.saleName || '--' }
       ];
 
       document.getElementById('studentInfoGrid').innerHTML = items.map(function(item) {
@@ -1937,12 +1887,9 @@
       return `
         <article class="bb-card ${locked ? 'locked' : ''}">
           <div class="bb-head">
-            <div class="bb-date-wrap">
-              <div class="bb-date-icon">📅</div>
-              <div>
-                <div class="bb-date">${escapeHtml_(item.date || '')}</div>
-                <div class="bb-week">${escapeHtml_(item.weekLabel || '')}</div>
-              </div>
+            <div>
+              <div class="bb-date">${escapeHtml_(item.date || '')}</div>
+              <div class="bb-week">${escapeHtml_(item.weekLabel || '')}</div>
             </div>
             <div class="bb-status ${statusClass}">${escapeHtml_(statusText)}</div>
           </div>
@@ -1950,39 +1897,36 @@
           <div class="bb-body">
             ${locked ? `
               <div class="bb-lock-note">
-                🔒 Báo bài của buổi này sẽ được mở vào ngày ${escapeHtml_(item.unlockDate || item.date || '')}.
+                Báo bài của buổi này sẽ được mở vào ngày ${escapeHtml_(item.unlockDate || item.date || '')}.
               </div>
             ` : ''}
 
             <div class="bb-grid">
-              ${renderBaoBaiField_('🎯', 'Nội dung buổi học', item.lessonFocus, 'full')}
-              ${renderBaoBaiField_('📚', 'Từ vựng & Ngữ pháp', item.vocabularyGrammar)}
-              ${renderBaoBaiField_('⚡', 'Kỹ năng luyện tập', item.skillsPracticed)}
-              ${renderBaoBaiField_('🏠', 'Bài tập về nhà', item.homeworkPractice)}
-              ${renderBaoBaiMaterialsField_('📎', item.materialsText, item.materialsUrl)}
-              ${renderBaoBaiField_('👩‍🏫', 'Ghi chú giáo viên', item.teacherNote, 'full')}
+              ${renderBaoBaiField_('Nội dung buổi học', item.lessonFocus, 'full')}
+              ${renderBaoBaiField_('Từ vựng & Ngữ pháp', item.vocabularyGrammar)}
+              ${renderBaoBaiField_('Kỹ năng luyện tập', item.skillsPracticed)}
+              ${renderBaoBaiField_('Bài tập về nhà', item.homeworkPractice)}
+              ${renderBaoBaiMaterialsField_(item.materialsText, item.materialsUrl)}
+              ${renderBaoBaiField_('Ghi chú giáo viên', item.teacherNote, 'full')}
             </div>
           </div>
         </article>
       `;
     }
 
-    function renderBaoBaiField_(icon, label, value, extraClass) {
+    function renderBaoBaiField_(label, value, extraClass) {
       const text = (value || '').trim();
       if (!text) return '';
 
       return `
         <div class="bb-item ${extraClass || ''}">
-          <div class="bb-label">
-            <span class="bb-label-icon">${icon}</span>
-            <span>${escapeHtml_(label)}</span>
-          </div>
+          <div class="bb-label">${escapeHtml_(label)}</div>
           <div class="bb-value">${nl2br_(escapeHtml_(text))}</div>
         </div>
       `;
     }
 
-    function renderBaoBaiMaterialsField_(icon, text, url) {
+    function renderBaoBaiMaterialsField_(text, url) {
       const safeText = (text || '').trim();
       const safeUrl = (url || '').trim();
 
@@ -1991,13 +1935,10 @@
       if (safeUrl) {
         return `
           <div class="bb-item">
-            <div class="bb-label">
-              <span class="bb-label-icon">${icon}</span>
-              <span>Tài liệu / Link</span>
-            </div>
+            <div class="bb-label">Tài liệu / Link</div>
             <div class="bb-value">
               <a class="bb-link" href="${escapeAttr_(safeUrl)}" target="_blank" rel="noopener noreferrer">
-                🔗 ${escapeHtml_(safeText || 'Mở tài liệu')}
+                ${escapeHtml_(safeText || 'Mở tài liệu')}
               </a>
             </div>
           </div>
@@ -2006,10 +1947,7 @@
 
       return `
         <div class="bb-item">
-          <div class="bb-label">
-            <span class="bb-label-icon">${icon}</span>
-            <span>Tài liệu / Link</span>
-          </div>
+          <div class="bb-label">Tài liệu / Link</div>
           <div class="bb-value">${nl2br_(escapeHtml_(safeText))}</div>
         </div>
       `;
