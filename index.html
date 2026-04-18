@@ -198,7 +198,6 @@
       width:100%;
     }
 
-    /* ===== AUTH HERO ===== */
     .login-wrap{
       display:block;
     }
@@ -459,7 +458,6 @@
       color:#425A87;
     }
 
-    /* ===== DASHBOARD ===== */
     .hero{
       position:relative;
       overflow:hidden;
@@ -791,38 +789,6 @@
     .status-locked{background:#EEF2F7;color:#475467}
     .status-neutral{background:#F4F6F8;color:#475467}
 
-    .action-group{
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
-    }
-
-    .mini-btn{
-      border:none;
-      cursor:pointer;
-      border-radius:999px;
-      padding:8px 12px;
-      font-family:inherit;
-      font-size:12px;
-      font-weight:800;
-      transition:all .18s ease;
-    }
-
-    .mini-btn.done{
-      background:#E4F6EC;
-      color:#146C43;
-    }
-
-    .mini-btn.pending{
-      background:#FDEBEC;
-      color:#B42318;
-    }
-
-    .mini-btn.active{
-      box-shadow:0 0 0 3px rgba(14,75,169,.08);
-      transform:translateY(-1px);
-    }
-
     .report-box{
       background:linear-gradient(180deg,#FFFFFF 0%, #FBFDFF 100%);
       border:1px solid rgba(14,75,169,.10);
@@ -1149,7 +1115,7 @@
 
               <div class="auth-pills">
                 <div class="auth-pill">Báo bài trực quan</div>
-                <div class="auth-pill">Xác nhận BTVN nhanh</div>
+                <div class="auth-pill">BTVN rõ ràng</div>
                 <div class="auth-pill">Theo dõi tiến độ học tập</div>
               </div>
             </div>
@@ -1274,7 +1240,7 @@
             <div class="section-head">
               <div>
                 <h3 class="section-title">Bài tập về nhà</h3>
-                <p class="section-subtitle">Phụ huynh có thể xác nhận tình trạng hoàn thành bài tập</p>
+                <p class="section-subtitle">Theo dõi bài tập về nhà của con</p>
               </div>
             </div>
             <div class="table-wrap" id="homeworkWrap"></div>
@@ -1709,7 +1675,6 @@
               <th>Bài tập</th>
               <th>Bài làm</th>
               <th>Trạng thái</th>
-              <th>Xác nhận</th>
             </tr>
           </thead>
           <tbody>
@@ -1722,51 +1687,12 @@
                   <td>${escapeHtml_(item.task || '--')}</td>
                   <td>${escapeHtml_(item.submission || '--')}</td>
                   <td><span class="status-pill ${isDone ? 'status-present' : 'status-absent'}">${escapeHtml_(item.status || '--')}</span></td>
-                  <td>
-                    <div class="action-group">
-                      <button
-                        class="mini-btn done ${isDone ? 'active' : ''}"
-                        onclick="confirmHomework_(${JSON.stringify(item.date || '')}, ${JSON.stringify(item.task || '')}, 'Đã làm')"
-                        type="button"
-                      >Đã làm</button>
-                      <button
-                        class="mini-btn pending ${!isDone ? 'active' : ''}"
-                        onclick="confirmHomework_(${JSON.stringify(item.date || '')}, ${JSON.stringify(item.task || '')}, 'Chưa làm')"
-                        type="button"
-                      >Chưa làm</button>
-                    </div>
-                  </td>
                 </tr>
               `;
             }).join('')}
           </tbody>
         </table>
       `;
-    }
-
-    async function confirmHomework_(date, task, status) {
-      try {
-        showLoading_(true);
-
-        const res = await postApi_('confirm_homework', {
-          studentId: currentAuth.studentId,
-          accessCode: currentAuth.accessCode,
-          date: date,
-          task: task,
-          status: status
-        });
-
-        if (!res || !res.ok) {
-          throw new Error((res && res.message) || 'Không cập nhật được trạng thái bài tập.');
-        }
-
-        showNotice_(res.message || 'Đã cập nhật trạng thái bài tập.', 'success');
-        await loadStudentData_('refresh');
-      } catch (err) {
-        showNotice_(err.message || String(err), 'error');
-      } finally {
-        showLoading_(false);
-      }
     }
 
     function renderBaoBaiSection_(items) {
