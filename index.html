@@ -198,6 +198,7 @@
       width:100%;
     }
 
+    /* ===== AUTH HERO ===== */
     .login-wrap{
       display:block;
     }
@@ -458,6 +459,7 @@
       color:#425A87;
     }
 
+    /* ===== DASHBOARD ===== */
     .hero{
       position:relative;
       overflow:hidden;
@@ -789,6 +791,38 @@
     .status-locked{background:#EEF2F7;color:#475467}
     .status-neutral{background:#F4F6F8;color:#475467}
 
+    .action-group{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+
+    .mini-btn{
+      border:none;
+      cursor:pointer;
+      border-radius:999px;
+      padding:8px 12px;
+      font-family:inherit;
+      font-size:12px;
+      font-weight:800;
+      transition:all .18s ease;
+    }
+
+    .mini-btn.done{
+      background:#E4F6EC;
+      color:#146C43;
+    }
+
+    .mini-btn.pending{
+      background:#FDEBEC;
+      color:#B42318;
+    }
+
+    .mini-btn.active{
+      box-shadow:0 0 0 3px rgba(14,75,169,.08);
+      transform:translateY(-1px);
+    }
+
     .report-box{
       background:linear-gradient(180deg,#FFFFFF 0%, #FBFDFF 100%);
       border:1px solid rgba(14,75,169,.10);
@@ -897,10 +931,81 @@
       to { transform:rotate(360deg); }
     }
 
+
+    .baobai-toolbar{
+      display:flex;
+      align-items:center;
+      justify-content:flex-start;
+      margin-bottom:14px;
+    }
+
+    .baobai-filter-pill{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      background:#198754;
+      color:#fff;
+      border-radius:999px;
+      padding:8px 14px;
+      font-size:12px;
+      font-weight:800;
+      box-shadow:var(--shadow-sm);
+    }
+
+    .baobai-daybar{
+      display:grid;
+      grid-template-columns:auto 1fr auto;
+      align-items:center;
+      gap:12px;
+      background:#EAF5EA;
+      border:1px solid rgba(25,135,84,.12);
+      border-radius:18px;
+      padding:10px 12px;
+      margin-bottom:16px;
+      box-shadow:var(--shadow-sm);
+    }
+
+    .baobai-nav-btn{
+      border:none;
+      background:#fff;
+      color:#3B6F46;
+      border-radius:999px;
+      padding:8px 14px;
+      font-family:inherit;
+      font-size:12px;
+      font-weight:800;
+      cursor:pointer;
+      box-shadow:0 4px 14px rgba(25,135,84,.10);
+      transition:all .18s ease;
+    }
+
+    .baobai-nav-btn:hover{transform:translateY(-1px)}
+    .baobai-nav-btn:disabled{
+      opacity:.45;
+      cursor:not-allowed;
+      transform:none;
+    }
+
+    .baobai-day-title{
+      text-align:center;
+      font-size:15px;
+      font-weight:800;
+      color:#1B5E20;
+      line-height:1.5;
+    }
+
+    .baobai-empty-day{
+      text-align:center;
+      color:#66748D;
+      font-size:14px;
+      line-height:1.9;
+      padding:18px 8px 6px;
+    }
+
     .bao-bai-list{
       display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(340px,1fr));
-      gap:18px;
+      grid-template-columns:1fr;
+      gap:16px;
     }
 
     .bb-card{
@@ -909,12 +1014,6 @@
       border-radius:24px;
       overflow:hidden;
       box-shadow:var(--shadow-md);
-      transition:transform .18s ease, box-shadow .18s ease;
-    }
-
-    .bb-card:hover{
-      transform:translateY(-2px);
-      box-shadow:0 20px 36px rgba(14,75,169,.12);
     }
 
     .bb-card.locked{opacity:.97}
@@ -932,7 +1031,7 @@
     }
 
     .bb-date{
-      font-size:19px;
+      font-size:22px;
       font-weight:800;
       line-height:1.2;
       letter-spacing:-.01em;
@@ -985,7 +1084,7 @@
 
     .bb-grid{
       display:grid;
-      grid-template-columns:1fr;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
       gap:12px;
     }
 
@@ -1035,7 +1134,6 @@
     }
 
     @media (min-width: 980px){
-      .bb-grid{grid-template-columns:1fr 1fr}
       .bb-item.full{grid-column:1 / -1}
     }
 
@@ -1115,7 +1213,7 @@
 
               <div class="auth-pills">
                 <div class="auth-pill">Báo bài trực quan</div>
-                <div class="auth-pill">BTVN rõ ràng</div>
+                <div class="auth-pill">Báo bài theo ngày</div>
                 <div class="auth-pill">Theo dõi tiến độ học tập</div>
               </div>
             </div>
@@ -1196,7 +1294,6 @@
         <div class="tabs" id="tabButtons">
           <button class="tab-btn active" data-tab="overview">Tổng quan</button>
           <button class="tab-btn" data-tab="attendance">Điểm danh</button>
-          <button class="tab-btn" data-tab="homework">BTVN</button>
           <button class="tab-btn" data-tab="baobai">Báo bài</button>
           <button class="tab-btn" data-tab="score">Điểm & Báo cáo</button>
         </div>
@@ -1234,19 +1331,6 @@
             <div class="table-wrap" id="attendanceWrap"></div>
           </section>
         </div>
-
-        <div class="tab-panel" data-panel="homework">
-          <section class="section-card">
-            <div class="section-head">
-              <div>
-                <h3 class="section-title">Bài tập về nhà</h3>
-                <p class="section-subtitle">Theo dõi bài tập về nhà của con</p>
-              </div>
-            </div>
-            <div class="table-wrap" id="homeworkWrap"></div>
-          </section>
-        </div>
-
         <div class="tab-panel" data-panel="baobai">
           <section class="section-card">
             <div class="section-head">
@@ -1255,7 +1339,17 @@
                 <p class="section-subtitle">Theo dõi chi tiết từng buổi học của con</p>
               </div>
             </div>
+            
+            <div class="baobai-toolbar">
+              <div class="baobai-filter-pill">Tất cả bài học</div>
+            </div>
+            <div class="baobai-daybar">
+              <button class="baobai-nav-btn" id="baobaiPrevBtn" type="button">‹ Trước</button>
+              <div class="baobai-day-title" id="baobaiDayTitle">Hôm nay</div>
+              <button class="baobai-nav-btn" id="baobaiNextBtn" type="button">Sau ›</button>
+            </div>
             <div id="baoBaiList" class="bao-bai-list"></div>
+
           </section>
         </div>
 
@@ -1385,6 +1479,7 @@
         accessCode: DEFAULT_ACCESS_CODE
       };
       currentData = null;
+      window.__baobaiSelectedDate = '';
 
       const loginWrap = document.getElementById('loginWrap');
       const dashboardPanel = document.getElementById('dashboardPanel');
@@ -1484,7 +1579,6 @@
       renderStudentInfo_(data);
       renderDailyScores_(data.dailyScores || []);
       renderAttendance_(data.attendance || []);
-      renderHomework_(data.homework || []);
       renderBaoBaiSection_(data.baoBai || []);
       renderMocktests_(data.mocktests || []);
       renderReportText_(data.reportText || '');
@@ -1528,11 +1622,6 @@
           title: 'Vắng / Có phép',
           value: safeDisplayNumber_(metrics.attendanceAbsent) + ' / ' + safeDisplayNumber_(metrics.attendanceExcused),
           sub: 'Tổng hợp chuyên cần'
-        },
-        {
-          title: 'BTVN hoàn thành',
-          value: safeDisplayNumber_(metrics.homeworkDone) + '/' + safeDisplayNumber_(metrics.homeworkTotal),
-          sub: 'Bài tập về nhà'
         },
         {
           title: 'Điểm trung bình',
@@ -1658,52 +1747,122 @@
       return 'status-neutral';
     }
 
-    function renderHomework_(items) {
-      const root = document.getElementById('homeworkWrap');
-
-      if (!items.length) {
-        root.innerHTML = `<div class="empty-state">Hiện chưa có dữ liệu bài tập về nhà.</div>`;
-        return;
-      }
-
-      root.innerHTML = `
-        <table>
-          <thead>
-            <tr>
-              <th>STT</th>
-              <th>Ngày</th>
-              <th>Bài tập</th>
-              <th>Bài làm</th>
-              <th>Trạng thái</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${items.map(function(item, index) {
-              const isDone = (item.status || '').toLowerCase() === 'đã làm';
-              return `
-                <tr>
-                  <td>${escapeHtml_(item.no || String(index + 1))}</td>
-                  <td>${escapeHtml_(item.date || '--')}</td>
-                  <td>${escapeHtml_(item.task || '--')}</td>
-                  <td>${escapeHtml_(item.submission || '--')}</td>
-                  <td><span class="status-pill ${isDone ? 'status-present' : 'status-absent'}">${escapeHtml_(item.status || '--')}</span></td>
-                </tr>
-              `;
-            }).join('')}
-          </tbody>
-        </table>
-      `;
-    }
-
     function renderBaoBaiSection_(items) {
       const root = document.getElementById('baoBaiList');
+      const prevBtn = document.getElementById('baobaiPrevBtn');
+      const nextBtn = document.getElementById('baobaiNextBtn');
+      const titleEl = document.getElementById('baobaiDayTitle');
 
       if (!Array.isArray(items) || !items.length) {
+        if (titleEl) titleEl.textContent = 'Hôm nay';
+        if (prevBtn) prevBtn.disabled = true;
+        if (nextBtn) nextBtn.disabled = true;
         root.innerHTML = '<div class="bb-empty">Hiện chưa có báo bài để hiển thị.</div>';
         return;
       }
 
-      root.innerHTML = items.map(renderBaoBaiCard_).join('');
+      const range = getBaoBaiDateRange_(items);
+      if (!range.start || !range.end) {
+        root.innerHTML = '<div class="bb-empty">Hiện chưa có báo bài để hiển thị.</div>';
+        return;
+      }
+
+      if (!window.__baobaiSelectedDate) {
+        window.__baobaiSelectedDate = formatDateKey_(new Date());
+      }
+
+      let selected = parseDateKey_(window.__baobaiSelectedDate);
+      if (!selected) selected = stripTime_(new Date());
+
+      if (selected.getTime() < range.start.getTime()) selected = new Date(range.start.getTime());
+      if (selected.getTime() > range.end.getTime()) selected = new Date(range.end.getTime());
+
+      window.__baobaiSelectedDate = formatDateKey_(selected);
+
+      const selectedKey = window.__baobaiSelectedDate;
+      const dayItems = items.filter(function(item) {
+        return (item.date || '').trim() === selectedKey;
+      });
+
+      if (titleEl) {
+        titleEl.textContent = buildBaoBaiDayTitle_(selectedKey);
+      }
+
+      if (prevBtn) {
+        prevBtn.disabled = selected.getTime() <= range.start.getTime();
+        prevBtn.onclick = function() {
+          changeBaoBaiDay_(-1, items);
+        };
+      }
+
+      if (nextBtn) {
+        nextBtn.disabled = selected.getTime() >= range.end.getTime();
+        nextBtn.onclick = function() {
+          changeBaoBaiDay_(1, items);
+        };
+      }
+
+      if (!dayItems.length) {
+        root.innerHTML = '<div class="baobai-empty-day">Không có lịch học hoặc bài tập trong ngày này.</div>';
+        return;
+      }
+
+      root.innerHTML = dayItems.map(renderBaoBaiCard_).join('');
+    }
+
+    function changeBaoBaiDay_(step, items) {
+      const range = getBaoBaiDateRange_(items || []);
+      if (!range.start || !range.end) return;
+
+      const current = parseDateKey_(window.__baobaiSelectedDate) || stripTime_(new Date());
+      const next = new Date(current.getFullYear(), current.getMonth(), current.getDate() + step);
+
+      if (next.getTime() < range.start.getTime() || next.getTime() > range.end.getTime()) return;
+
+      window.__baobaiSelectedDate = formatDateKey_(next);
+      renderBaoBaiSection_(items || []);
+    }
+
+    function getBaoBaiDateRange_(items) {
+      const dates = (items || [])
+        .map(function(item) { return parseDateKey_(item.date); })
+        .filter(Boolean)
+        .sort(function(a, b) { return a.getTime() - b.getTime(); });
+
+      const today = stripTime_(new Date());
+
+      if (!dates.length) {
+        return { start: today, end: today };
+      }
+
+      const start = dates[0].getTime() < today.getTime() ? dates[0] : today;
+      const end = dates[dates.length - 1].getTime() > today.getTime() ? dates[dates.length - 1] : today;
+
+      return { start: stripTime_(start), end: stripTime_(end) };
+    }
+
+    function buildBaoBaiDayTitle_(dateKey) {
+      const todayKey = formatDateKey_(new Date());
+      return dateKey === todayKey ? 'Hôm nay (' + dateKey + ')' : dateKey;
+    }
+
+    function parseDateKey_(text) {
+      const s = String(text || '').trim();
+      const m = s.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+      if (!m) return null;
+      return new Date(Number(m[3]), Number(m[2]) - 1, Number(m[1]));
+    }
+
+    function formatDateKey_(date) {
+      const d = stripTime_(date);
+      const dd = String(d.getDate()).padStart(2, '0');
+      const mm = String(d.getMonth() + 1).padStart(2, '0');
+      const yyyy = d.getFullYear();
+      return dd + '/' + mm + '/' + yyyy;
+    }
+
+    function stripTime_(date) {
+      return new Date(date.getFullYear(), date.getMonth(), date.getDate());
     }
 
     function renderBaoBaiCard_(item) {
