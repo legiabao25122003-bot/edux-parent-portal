@@ -628,45 +628,62 @@
       z-index:1;
     }
 
-    .tabs{
-      display:flex;
-      gap:12px;
-      flex-wrap:wrap;
-      margin-bottom:24px;
-      background: rgba(255, 255, 255, 0.6);
-      padding: 8px;
-      border-radius: 20px;
-      box-shadow: inset 0 2px 8px rgba(14,75,169,.06);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.8);
+    /* --- NÂNG CẤP GIAO DIỆN TABS --- */
+    .tabs {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+      background: rgba(255, 255, 255, 0.85);
+      padding: 10px;
+      border-radius: 24px;
+      box-shadow: 0 8px 24px rgba(14,75,169,.06);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(14,75,169,.1);
     }
 
-    .tab-btn{
-      flex: 1 1 180px;
-      border:none;
-      background:transparent;
-      color:var(--muted);
-      padding:14px 16px;
-      border-radius:14px;
-      font-family:inherit;
-      font-size:14px;
-      font-weight:800;
-      cursor:pointer;
-      transition:all .2s ease;
+    .tab-btn {
+      flex: 1 1 160px;
+      border: none;
+      background: transparent;
+      color: #66748D;
+      padding: 15px 16px;
+      border-radius: 16px;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all .25s ease;
       text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
     }
 
-    .tab-btn:hover{
-      color:var(--primary);
-      background:rgba(255,255,255,.8);
-      transform:translateY(-1px);
+    .tab-icon {
+      font-size: 18px;
+      transition: transform .2s ease;
     }
 
-    .tab-btn.active{
-      background:linear-gradient(135deg,var(--primary),var(--primary-2));
-      color:#fff;
-      box-shadow:0 12px 24px rgba(14,75,169,.22);
-      transform:none;
+    .tab-btn:hover {
+      color: var(--primary);
+      background: rgba(14,75,169,.04);
+    }
+
+    .tab-btn:hover .tab-icon {
+      transform: scale(1.15);
+    }
+
+    .tab-btn.active {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-2) 100%);
+      color: #fff;
+      box-shadow: 0 10px 20px rgba(14,75,169,.25);
+      transform: translateY(-2px);
+    }
+    
+    .tab-btn.active .tab-icon {
+      transform: scale(1.15);
     }
 
     .tab-panel{display:none}
@@ -803,16 +820,66 @@
     .status-locked{background:#EEF2F7;color:#475467}
     .status-neutral{background:#F4F6F8;color:#475467}
 
-    .report-box{
-      background:linear-gradient(180deg,#FFFFFF 0%, #FBFDFF 100%);
-      border:1px solid rgba(14,75,169,.10);
-      border-radius:22px;
-      padding:20px;
-      font-size:15px;
-      line-height:1.95;
-      color:var(--text);
-      white-space:pre-line;
-      box-shadow:var(--shadow-sm);
+    .report-box {
+      background: #fff;
+      border: 1px solid rgba(14,75,169,.12);
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: var(--shadow-md);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .report-box::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 5px;
+      background: linear-gradient(90deg, var(--primary) 0%, var(--primary-2) 50%, var(--accent) 100%);
+    }
+
+    .report-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .report-avatar {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, #EEF4FF 0%, #D8E5FF 100%);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid rgba(14,75,169,.08);
+    }
+
+    .report-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--primary);
+      margin: 0;
+    }
+
+    .report-subtitle {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+      margin: 4px 0 0;
+    }
+
+    .report-content {
+      font-size: 15px;
+      line-height: 1.9;
+      color: var(--text);
+      background: #F8FBFF;
+      border: 1px dashed rgba(14,75,169,.18);
+      border-radius: 18px;
+      padding: 18px 22px;
+      white-space: pre-line;
     }
 
     .score-grid{
@@ -910,7 +977,6 @@
     @keyframes spin {
       to { transform:rotate(360deg); }
     }
-
 
     .baobai-toolbar{
       display:flex;
@@ -1062,10 +1128,9 @@
       line-height:1.7;
     }
 
-    /* ĐÃ NÂNG CẤP - BỐ CỤC BÁO BÀI */
     .bb-grid{
       display:grid;
-      grid-template-columns:1fr; /* Mặc định 1 cột trên Mobile */
+      grid-template-columns:1fr;
       gap:16px;
     }
 
@@ -1094,7 +1159,7 @@
       line-height:1.75;
       white-space:pre-line;
       word-break:break-word;
-      flex-grow:1; /* Giúp đẩy nội dung giãn đều nếu các ô có chiều cao khác nhau */
+      flex-grow:1;
     }
 
     .bb-link{
@@ -1117,13 +1182,13 @@
       box-shadow:var(--shadow-sm);
     }
 
-    /* Trên PC/Tablet (>= 768px): Cố định 2 cột cân đối */
+    /* Tablet & Desktop */
     @media (min-width: 768px){
       .bb-grid{
         grid-template-columns: repeat(2, 1fr);
       }
       .bb-item.full{
-        grid-column: 1 / -1; /* Các item đánh dấu 'full' sẽ chiếm trọn hàng ngang */
+        grid-column: 1 / -1;
       }
     }
 
@@ -1132,14 +1197,8 @@
         grid-template-columns:1fr;
         min-height:auto;
       }
-
-      .auth-visual{
-        padding:34px 30px 20px;
-      }
-
-      .auth-form-wrap{
-        padding:10px 20px 28px;
-      }
+      .auth-visual{ padding:34px 30px 20px; }
+      .auth-form-wrap{ padding:10px 20px 28px; }
     }
 
     @media (max-width: 1180px){
@@ -1160,6 +1219,11 @@
       .auth-title{font-size:38px}
       .auth-bottom{grid-template-columns:1fr}
       .auth-form-wrap{padding:0 12px 18px}
+      
+      /* Tabs Mobile Tweak */
+      .tabs { padding: 8px; border-radius: 20px; }
+      .tab-btn { flex: 1 1 45%; padding: 12px; font-size: 13px; }
+      .tab-icon { font-size: 16px; }
     }
   </style>
 </head>
@@ -1200,14 +1264,12 @@
                 Theo dõi báo bài, bài tập, chuyên cần, điểm số và các cập nhật từ giáo viên
                 trong một không gian trực quan, hiện đại và dễ theo dõi dành riêng cho phụ huynh.
               </p>
-
               <div class="auth-pills">
                 <div class="auth-pill">Báo bài trực quan</div>
                 <div class="auth-pill">Báo bài theo ngày</div>
                 <div class="auth-pill">Theo dõi tiến độ học tập</div>
               </div>
             </div>
-
             <div class="auth-bottom">
               <div class="auth-stat">
                 <div class="auth-stat-number">01</div>
@@ -1229,11 +1291,8 @@
               <div class="login-card-top">
                 <div class="login-card-badge">🔐 Đăng nhập phụ huynh</div>
                 <h2 class="login-title">Chào mừng quay lại</h2>
-                <p class="login-subtitle">
-                  Nhập mã học viên để theo dõi hành trình học tập của con theo phong cách dashboard hiện đại.
-                </p>
+                <p class="login-subtitle">Nhập mã học viên để theo dõi hành trình học tập của con.</p>
               </div>
-
               <div class="login-body">
                 <div class="field">
                   <label for="studentIdInput">Mã học viên</label>
@@ -1242,7 +1301,6 @@
                     <input id="studentIdInput" type="text" placeholder="Ví dụ: EduX-HV4646" />
                   </div>
                 </div>
-
                 <div class="field">
                   <label for="accessCodeInput">Mã truy cập</label>
                   <div class="input-shell">
@@ -1250,15 +1308,9 @@
                     <input id="accessCodeInput" type="password" placeholder="Nhập mã truy cập" />
                   </div>
                 </div>
-
-                <button class="btn btn-primary login-btn" id="loginBtn" type="button">
-                  Đăng nhập vào portal
-                </button>
-
+                <button class="btn btn-primary login-btn" id="loginBtn" type="button">Đăng nhập vào portal</button>
                 <div class="login-footer">
-                  Mã truy cập mặc định hiện tại là <strong>123</strong>.<br>
-                  Nếu anh/chị host file này trên GitHub Pages, hãy nhớ dán URL Web App Apps Script vào biến
-                  <strong>API_URL_OVERRIDE</strong> trong phần script bên dưới.
+                  Mã truy cập mặc định hiện tại là <strong>123</strong>.
                 </div>
               </div>
             </div>
@@ -1275,17 +1327,24 @@
             </div>
             <div class="hero-update" id="heroUpdatedAt">Cập nhật: --</div>
           </div>
-
           <div class="hero-meta" id="heroMetaGrid"></div>
         </section>
 
         <section class="metrics" id="metricsGrid"></section>
 
         <div class="tabs" id="tabButtons">
-          <button class="tab-btn active" data-tab="overview">Tổng quan</button>
-          <button class="tab-btn" data-tab="attendance">Điểm danh</button>
-          <button class="tab-btn" data-tab="baobai">Báo bài</button>
-          <button class="tab-btn" data-tab="score">Điểm & Báo cáo</button>
+          <button class="tab-btn active" data-tab="overview">
+            <span class="tab-icon">🏠</span> Tổng quan
+          </button>
+          <button class="tab-btn" data-tab="attendance">
+            <span class="tab-icon">📅</span> Điểm danh
+          </button>
+          <button class="tab-btn" data-tab="baobai">
+            <span class="tab-icon">📘</span> Báo bài
+          </button>
+          <button class="tab-btn" data-tab="score">
+            <span class="tab-icon">📊</span> Điểm & Báo cáo
+          </button>
         </div>
 
         <div class="tab-panel active" data-panel="overview">
@@ -1293,18 +1352,13 @@
             <div class="section-head">
               <div>
                 <h3 class="section-title">Thông tin học viên</h3>
-                <p class="section-subtitle">Thông tin hồ sơ cơ bản và học phí hiện tại</p>
               </div>
             </div>
             <div class="info-grid" id="studentInfoGrid"></div>
           </section>
-
           <section class="section-card">
             <div class="section-head">
-              <div>
-                <h3 class="section-title">Daily Data</h3>
-                <p class="section-subtitle">Điểm số và dữ liệu gần nhất của con</p>
-              </div>
+              <h3 class="section-title">Daily Data</h3>
             </div>
             <div class="table-wrap" id="dailyScoreWrap"></div>
           </section>
@@ -1313,53 +1367,36 @@
         <div class="tab-panel" data-panel="attendance">
           <section class="section-card">
             <div class="section-head">
-              <div>
-                <h3 class="section-title">Chuyên cần</h3>
-                <p class="section-subtitle">Lịch sử điểm danh gần nhất của con</p>
-              </div>
+              <h3 class="section-title">Chuyên cần</h3>
             </div>
             <div class="table-wrap" id="attendanceWrap"></div>
           </section>
         </div>
+
         <div class="tab-panel" data-panel="baobai">
           <section class="section-card">
             <div class="section-head">
-              <div>
-                <h3 class="section-title">📘 Báo bài</h3>
-                <p class="section-subtitle">Theo dõi chi tiết từng buổi học của con</p>
-              </div>
-            </div>
-            
-            <div class="baobai-toolbar">
-              <div class="baobai-filter-pill">Tất cả bài học</div>
+              <h3 class="section-title">📘 Báo bài</h3>
             </div>
             <div class="baobai-daybar">
-              <button class="baobai-nav-btn" id="baobaiPrevBtn" type="button">‹ Trước</button>
+              <button class="baobai-nav-btn" id="baobaiPrevBtn">‹ Trước</button>
               <div class="baobai-day-title" id="baobaiDayTitle">Hôm nay</div>
-              <button class="baobai-nav-btn" id="baobaiNextBtn" type="button">Sau ›</button>
+              <button class="baobai-nav-btn" id="baobaiNextBtn">Sau ›</button>
             </div>
             <div id="baoBaiList" class="bao-bai-list"></div>
-
           </section>
         </div>
 
         <div class="tab-panel" data-panel="score">
           <section class="section-card">
             <div class="section-head">
-              <div>
-                <h3 class="section-title">Mini test / Mock test</h3>
-                <p class="section-subtitle">Tổng hợp điểm theo từng bài kiểm tra</p>
-              </div>
+              <h3 class="section-title">Mini test / Mock test</h3>
             </div>
             <div id="mocktestWrap"></div>
           </section>
-
           <section class="section-card">
             <div class="section-head">
-              <div>
-                <h3 class="section-title">Báo cáo cá nhân</h3>
-                <p class="section-subtitle">Nhận xét và cập nhật học tập của giáo viên</p>
-              </div>
+              <h3 class="section-title">Báo cáo cá nhân</h3>
             </div>
             <div id="reportWrap"></div>
           </section>
@@ -1371,199 +1408,87 @@
   <script>
     const API_URL_OVERRIDE = 'https://script.google.com/macros/s/AKfycbxC79BhJvRgzGm2tGc8SIPK0-BzW3BF8ySnN3BXox8JYfX4jd_m4Qb-iWKjDpeziaSD/exec';
     const DEFAULT_ACCESS_CODE = '123';
-
-    let currentAuth = {
-      studentId: '',
-      accessCode: DEFAULT_ACCESS_CODE
-    };
-
+    let currentAuth = { studentId: '', accessCode: DEFAULT_ACCESS_CODE };
     let currentData = null;
 
     function getApiUrl_() {
       const raw = (API_URL_OVERRIDE || '').trim();
-      if (raw) {
-        if (raw.includes('mode=api')) return raw;
-        return raw + (raw.includes('?') ? '&' : '?') + 'mode=api';
-      }
-      const base = window.location.origin + window.location.pathname;
-      return base + '?mode=api';
+      if (!raw) return '';
+      return raw + (raw.includes('?') ? '&' : '?') + 'mode=api';
     }
 
     const API_URL = getApiUrl_();
 
     document.addEventListener('DOMContentLoaded', function() {
-      const params = new URLSearchParams(window.location.search);
-      const prefillStudentId = params.get('studentId') || '';
-
       const studentIdInput = document.getElementById('studentIdInput');
       const accessCodeInput = document.getElementById('accessCodeInput');
       const loginBtn = document.getElementById('loginBtn');
       const refreshBtn = document.getElementById('refreshBtn');
       const logoutBtn = document.getElementById('logoutBtn');
 
-      if (studentIdInput) studentIdInput.value = prefillStudentId;
       if (accessCodeInput) accessCodeInput.value = DEFAULT_ACCESS_CODE;
-
       if (loginBtn) loginBtn.addEventListener('click', handleLogin_);
       if (refreshBtn) refreshBtn.addEventListener('click', handleRefresh_);
       if (logoutBtn) logoutBtn.addEventListener('click', handleLogout_);
 
-      if (studentIdInput) {
-        studentIdInput.addEventListener('keydown', function(e) {
-          if (e.key === 'Enter') handleLogin_();
-        });
-      }
-
-      if (accessCodeInput) {
-        accessCodeInput.addEventListener('keydown', function(e) {
-          if (e.key === 'Enter') handleLogin_();
-        });
-      }
-
       setupTabs_();
-      pingApiOnLoad_();
     });
 
-    async function pingApiOnLoad_() {
-      try {
-        await postApi_('ping', {});
-      } catch (err) {
-        showNotice_('Không kết nối được tới API. Hãy kiểm tra lại link Web App hoặc triển khai quyền "Anyone".', 'error');
-      }
-    }
-
     function setupTabs_() {
-      const buttons = Array.from(document.querySelectorAll('.tab-btn'));
-      buttons.forEach(function(btn) {
-        btn.addEventListener('click', function() {
+      const buttons = document.querySelectorAll('.tab-btn');
+      buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
           const tab = btn.getAttribute('data-tab');
-
-          buttons.forEach(function(x) { x.classList.remove('active'); });
+          buttons.forEach(x => x.classList.remove('active'));
           btn.classList.add('active');
-
-          document.querySelectorAll('.tab-panel').forEach(function(panel) {
-            panel.classList.toggle('active', panel.getAttribute('data-panel') === tab);
+          document.querySelectorAll('.tab-panel').forEach(p => {
+            p.classList.toggle('active', p.getAttribute('data-panel') === tab);
           });
         });
       });
     }
 
     async function handleLogin_() {
-      const studentId = (document.getElementById('studentIdInput').value || '').trim();
-      const accessCode = (document.getElementById('accessCodeInput').value || '').trim() || DEFAULT_ACCESS_CODE;
-
-      currentAuth.studentId = studentId;
-      currentAuth.accessCode = accessCode;
-
+      currentAuth.studentId = document.getElementById('studentIdInput').value.trim();
+      currentAuth.accessCode = document.getElementById('accessCodeInput').value.trim();
       await loadStudentData_('login');
     }
 
-    async function handleRefresh_() {
-      if (!currentAuth.studentId) return;
-      await loadStudentData_('refresh');
-    }
+    async function handleRefresh_() { await loadStudentData_('refresh'); }
 
     function handleLogout_() {
-      currentAuth = {
-        studentId: '',
-        accessCode: DEFAULT_ACCESS_CODE
-      };
-      currentData = null;
-      window.__baobaiSelectedDate = '';
-
-      const loginWrap = document.getElementById('loginWrap');
-      const dashboardPanel = document.getElementById('dashboardPanel');
-      const refreshBtn = document.getElementById('refreshBtn');
-      const logoutBtn = document.getElementById('logoutBtn');
-      const mainStage = document.getElementById('mainStage');
-
-      if (loginWrap) loginWrap.style.display = '';
-      if (dashboardPanel) dashboardPanel.classList.remove('show');
-      if (refreshBtn) refreshBtn.style.display = 'none';
-      if (logoutBtn) logoutBtn.style.display = 'none';
-      if (mainStage) mainStage.classList.remove('logged-in');
-
-      showNotice_('', '');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      document.getElementById('loginWrap').style.display = '';
+      document.getElementById('dashboardPanel').classList.remove('show');
+      document.getElementById('mainStage').classList.remove('logged-in');
     }
 
     async function loadStudentData_(action) {
       try {
         showLoading_(true);
-        showNotice_('', '');
-
-        const res = await postApi_(action, {
-          studentId: currentAuth.studentId,
-          accessCode: currentAuth.accessCode
-        });
-
-        if (!res || !res.ok) {
-          throw new Error((res && res.message) || 'Không thể tải dữ liệu.');
-        }
-
-        currentData = res.data || null;
+        const res = await postApi_(action, { studentId: currentAuth.studentId, accessCode: currentAuth.accessCode });
+        if (!res || !res.ok) throw new Error(res.message || 'Lỗi tải dữ liệu');
+        currentData = res.data;
         renderDashboard_(currentData);
-
-        const loginWrap = document.getElementById('loginWrap');
-        const dashboardPanel = document.getElementById('dashboardPanel');
-        const refreshBtn = document.getElementById('refreshBtn');
-        const logoutBtn = document.getElementById('logoutBtn');
-        const mainStage = document.getElementById('mainStage');
-
-        if (loginWrap) loginWrap.style.display = 'none';
-        if (dashboardPanel) dashboardPanel.classList.add('show');
-        if (refreshBtn) refreshBtn.style.display = '';
-        if (logoutBtn) logoutBtn.style.display = '';
-        if (mainStage) mainStage.classList.add('logged-in');
-
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      } catch (err) {
-        showNotice_(err.message || String(err), 'error');
-      } finally {
-        showLoading_(false);
-      }
+        document.getElementById('loginWrap').style.display = 'none';
+        document.getElementById('dashboardPanel').classList.add('show');
+        document.getElementById('mainStage').classList.add('logged-in');
+        document.getElementById('refreshBtn').style.display = '';
+        document.getElementById('logoutBtn').style.display = '';
+      } catch (err) { alert(err.message); } finally { showLoading_(false); }
     }
 
     async function postApi_(action, payload) {
-      const body = Object.assign({ action: action }, payload || {});
-
       const res = await fetch(API_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify(body),
-        redirect: 'follow'
+        body: JSON.stringify({ action, ...payload })
       });
-
-      const text = await res.text();
-
-      try {
-        return JSON.parse(text);
-      } catch (err) {
-        throw new Error('API trả về dữ liệu không hợp lệ: ' + text);
-      }
+      return res.json();
     }
 
-    function showLoading_(visible) {
-      const box = document.getElementById('loadingOverlay');
-      if (box) box.classList.toggle('show', !!visible);
-    }
-
-    function showNotice_(message, type) {
-      const box = document.getElementById('noticeBox');
-      if (!box) return;
-
-      box.className = 'notice';
-      box.textContent = message || '';
-
-      if (message) {
-        box.classList.add('show');
-        box.classList.add(type || 'success');
-      }
-    }
+    function showLoading_(v) { document.getElementById('loadingOverlay').classList.toggle('show', v); }
 
     function renderDashboard_(data) {
-      if (!data) return;
-
       renderHero_(data);
       renderMetrics_(data.metrics || {});
       renderStudentInfo_(data);
@@ -1575,432 +1500,128 @@
     }
 
     function renderHero_(data) {
-      const student = data.student || {};
-      document.getElementById('heroStudentName').textContent = student.name || 'Học viên';
-      document.getElementById('heroStudentMeta').textContent =
-        [student.className || 'Chưa có lớp', student.teacher || 'Chưa có giáo viên'].join(' • ');
+      const s = data.student || {};
+      document.getElementById('heroStudentName').textContent = s.name || 'Học viên';
+      document.getElementById('heroStudentMeta').textContent = `${s.className || '--'} • ${s.teacher || '--'}`;
       document.getElementById('heroUpdatedAt').textContent = 'Cập nhật: ' + (data.updatedAt || '--');
-
       const chips = [
-        { label: 'Mã học viên', value: student.id || '--' },
-        { label: 'Ngày sinh', value: student.dob || '--' },
-        { label: 'Tình hình học phí', value: (data.feeInfo && data.feeInfo.feeStatus) || '--' },
-        {
-          label: 'Thời hạn hiện tại',
-          value: ((data.feeInfo && data.feeInfo.startDate) || '--') + ' → ' + ((data.feeInfo && data.feeInfo.endDate) || '--')
-        }
+        { l: 'Mã HV', v: s.id },
+        { l: 'Ngày sinh', v: s.dob },
+        { l: 'Học phí', v: data.feeInfo?.feeStatus },
+        { l: 'Thời hạn', v: `${data.feeInfo?.startDate || '--'} → ${data.feeInfo?.endDate || '--'}` }
       ];
-
-      document.getElementById('heroMetaGrid').innerHTML = chips.map(function(item) {
-        return `
-          <div class="hero-chip">
-            <div class="label">${escapeHtml_(item.label)}</div>
-            <div class="value">${escapeHtml_(item.value)}</div>
-          </div>
-        `;
-      }).join('');
+      document.getElementById('heroMetaGrid').innerHTML = chips.map(c => `<div class="hero-chip"><div class="label">${c.l}</div><div class="value">${c.v || '--'}</div></div>`).join('');
     }
 
-    function renderMetrics_(metrics) {
+    function renderMetrics_(m) {
       const items = [
-        {
-          title: 'Đi học',
-          value: safeDisplayNumber_(metrics.attendancePresent),
-          sub: 'Số buổi có mặt'
-        },
-        {
-          title: 'Vắng / Có phép',
-          value: safeDisplayNumber_(metrics.attendanceAbsent) + ' / ' + safeDisplayNumber_(metrics.attendanceExcused),
-          sub: 'Tổng hợp chuyên cần'
-        },
-        {
-          title: 'Điểm trung bình',
-          value: metrics.avgScore == null ? '--' : escapeHtml_(String(metrics.avgScore)),
-          sub: 'Daily data + mini/mock test'
-        },
-        {
-          title: 'Điểm gần nhất',
-          value: metrics.latestScore == null ? '--' : escapeHtml_(String(metrics.latestScore)),
-          sub: 'Kết quả mới nhất'
-        }
+        { t: 'Đi học', v: m.attendancePresent, s: 'Số buổi có mặt' },
+        { t: 'Vắng', v: `${m.attendanceAbsent || 0}/${m.attendanceExcused || 0}`, s: 'Không phép/Có phép' },
+        { t: 'ĐTB', v: m.avgScore || '--', s: 'Trung bình tất cả' },
+        { t: 'Gần nhất', v: m.latestScore || '--', s: 'Kết quả mới nhất' }
       ];
-
-      document.getElementById('metricsGrid').innerHTML = items.map(function(item) {
-        return `
-          <article class="metric-card">
-            <div class="metric-kicker">${escapeHtml_(item.title)}</div>
-            <div class="metric-value">${item.value}</div>
-            <div class="metric-sub">${escapeHtml_(item.sub)}</div>
-          </article>
-        `;
-      }).join('');
+      document.getElementById('metricsGrid').innerHTML = items.map(i => `<article class="metric-card"><div class="metric-kicker">${i.t}</div><div class="metric-value">${i.v}</div><div class="metric-sub">${i.s}</div></article>`).join('');
     }
 
     function renderStudentInfo_(data) {
-      const student = data.student || {};
-      const feeInfo = data.feeInfo || {};
-
+      const s = data.student || {};
+      const f = data.feeInfo || {};
       const items = [
-        { label: 'Họ tên học viên', value: student.name || '--' },
-        { label: 'Mã học viên', value: student.id || '--' },
-        { label: 'Lớp học', value: student.className || '--' },
-        { label: 'Giáo viên', value: student.teacher || '--' },
-        { label: 'Ngày sinh', value: student.dob || '--' },
-        { label: 'Ngày bắt đầu', value: feeInfo.startDate || '--' },
-        { label: 'Ngày kết thúc', value: feeInfo.endDate || '--' },
-        { label: 'Tình hình báo phí', value: feeInfo.feeStatus || '--' },
-        { label: 'Học phí', value: feeInfo.price || '--' },
-        { label: 'Sale phụ trách', value: feeInfo.saleName || '--' }
+        { l: 'Học viên', v: s.name }, { l: 'Mã HV', v: s.id }, { l: 'Lớp', v: s.className },
+        { l: 'Giáo viên', v: s.teacher }, { l: 'Ngày bắt đầu', v: f.startDate }, { l: 'Học phí', v: f.feeStatus }
       ];
-
-      document.getElementById('studentInfoGrid').innerHTML = items.map(function(item) {
-        return `
-          <div class="info-item">
-            <div class="label">${escapeHtml_(item.label)}</div>
-            <div class="value">${escapeHtml_(item.value)}</div>
-          </div>
-        `;
-      }).join('');
+      document.getElementById('studentInfoGrid').innerHTML = items.map(i => `<div class="info-item"><div class="label">${i.l}</div><div class="value">${i.v || '--'}</div></div>`).join('');
     }
 
     function renderDailyScores_(items) {
       const root = document.getElementById('dailyScoreWrap');
-
-      if (!items.length) {
-        root.innerHTML = `<div class="empty-state">Hiện chưa có dữ liệu Daily Data để hiển thị.</div>`;
-        return;
-      }
-
-      root.innerHTML = `
-        <table>
-          <thead>
-            <tr>
-              <th>Ngày</th>
-              <th>Điểm thô</th>
-              <th>Điểm số</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${items.map(function(item) {
-              return `
-                <tr>
-                  <td>${escapeHtml_(item.date || '--')}</td>
-                  <td>${escapeHtml_(item.rawScore || '--')}</td>
-                  <td>${item.score == null ? '--' : escapeHtml_(String(item.score))}</td>
-                </tr>
-              `;
-            }).join('')}
-          </tbody>
-        </table>
-      `;
+      if (!items.length) { root.innerHTML = '<div class="empty-state">Chưa có dữ liệu</div>'; return; }
+      root.innerHTML = `<table><thead><tr><th>Ngày</th><th>Điểm thô</th><th>Điểm số</th></tr></thead><tbody>${items.map(i => `<tr><td>${i.date}</td><td>${i.rawScore}</td><td>${i.score}</td></tr>`).join('')}</tbody></table>`;
     }
 
     function renderAttendance_(items) {
       const root = document.getElementById('attendanceWrap');
-
-      if (!items.length) {
-        root.innerHTML = `<div class="empty-state">Hiện chưa có dữ liệu điểm danh để hiển thị.</div>`;
-        return;
-      }
-
-      root.innerHTML = `
-        <table>
-          <thead>
-            <tr>
-              <th>Ngày</th>
-              <th>Trạng thái</th>
-              <th>Ghi nhận gốc</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${items.map(function(item) {
-              const cls = getAttendanceStatusClass_(item.status);
-              return `
-                <tr>
-                  <td>${escapeHtml_(item.date || '--')}</td>
-                  <td><span class="status-pill ${cls}">${escapeHtml_(item.status || '--')}</span></td>
-                  <td>${escapeHtml_(item.rawStatus || '--')}</td>
-                </tr>
-              `;
-            }).join('')}
-          </tbody>
-        </table>
-      `;
+      if (!items.length) { root.innerHTML = '<div class="empty-state">Chưa có dữ liệu</div>'; return; }
+      root.innerHTML = `<table><thead><tr><th>Ngày</th><th>Trạng thái</th></tr></thead><tbody>${items.map(i => `<tr><td>${i.date}</td><td><span class="status-pill ${getAttendanceStatusClass_(i.status)}">${i.status}</span></td></tr>`).join('')}</tbody></table>`;
     }
 
-    function getAttendanceStatusClass_(status) {
-      const s = (status || '').toLowerCase();
+    function getAttendanceStatusClass_(s) {
+      s = s.toLowerCase();
       if (s.includes('đi học')) return 'status-present';
       if (s.includes('vắng')) return 'status-absent';
-      if (s.includes('có phép')) return 'status-excused';
-      if (s.includes('học bù')) return 'status-makeup';
       return 'status-neutral';
     }
 
     function renderBaoBaiSection_(items) {
       const root = document.getElementById('baoBaiList');
-      const prevBtn = document.getElementById('baobaiPrevBtn');
-      const nextBtn = document.getElementById('baobaiNextBtn');
-      const titleEl = document.getElementById('baobaiDayTitle');
+      if (!items.length) { root.innerHTML = '<div class="bb-empty">Chưa có báo bài</div>'; return; }
+      
+      if (!window.__baobaiIdx) window.__baobaiIdx = 0;
+      const item = items[window.__baobaiIdx];
+      
+      document.getElementById('baobaiDayTitle').textContent = item.date;
+      document.getElementById('baobaiPrevBtn').disabled = window.__baobaiIdx >= items.length - 1;
+      document.getElementById('baobaiNextBtn').disabled = window.__baobaiIdx <= 0;
 
-      if (!Array.isArray(items) || !items.length) {
-        if (titleEl) titleEl.textContent = 'Hôm nay';
-        if (prevBtn) prevBtn.disabled = true;
-        if (nextBtn) nextBtn.disabled = true;
-        root.innerHTML = '<div class="bb-empty">Hiện chưa có báo bài để hiển thị.</div>';
-        return;
-      }
+      document.getElementById('baobaiPrevBtn').onclick = () => { window.__baobaiIdx++; renderBaoBaiSection_(items); };
+      document.getElementById('baobaiNextBtn').onclick = () => { window.__baobaiIdx--; renderBaoBaiSection_(items); };
 
-      const range = getBaoBaiDateRange_(items);
-      if (!range.start || !range.end) {
-        root.innerHTML = '<div class="bb-empty">Hiện chưa có báo bài để hiển thị.</div>';
-        return;
-      }
-
-      if (!window.__baobaiSelectedDate) {
-        window.__baobaiSelectedDate = formatDateKey_(new Date());
-      }
-
-      let selected = parseDateKey_(window.__baobaiSelectedDate);
-      if (!selected) selected = stripTime_(new Date());
-
-      if (selected.getTime() < range.start.getTime()) selected = new Date(range.start.getTime());
-      if (selected.getTime() > range.end.getTime()) selected = new Date(range.end.getTime());
-
-      window.__baobaiSelectedDate = formatDateKey_(selected);
-
-      const selectedKey = window.__baobaiSelectedDate;
-      const dayItems = items.filter(function(item) {
-        return (item.date || '').trim() === selectedKey;
-      });
-
-      if (titleEl) {
-        titleEl.textContent = buildBaoBaiDayTitle_(selectedKey);
-      }
-
-      if (prevBtn) {
-        prevBtn.disabled = selected.getTime() <= range.start.getTime();
-        prevBtn.onclick = function() {
-          changeBaoBaiDay_(-1, items);
-        };
-      }
-
-      if (nextBtn) {
-        nextBtn.disabled = selected.getTime() >= range.end.getTime();
-        nextBtn.onclick = function() {
-          changeBaoBaiDay_(1, items);
-        };
-      }
-
-      if (!dayItems.length) {
-        root.innerHTML = '<div class="baobai-empty-day">Không có lịch học hoặc bài tập trong ngày này.</div>';
-        return;
-      }
-
-      root.innerHTML = dayItems.map(renderBaoBaiCard_).join('');
-    }
-
-    function changeBaoBaiDay_(step, items) {
-      const range = getBaoBaiDateRange_(items || []);
-      if (!range.start || !range.end) return;
-
-      const current = parseDateKey_(window.__baobaiSelectedDate) || stripTime_(new Date());
-      const next = new Date(current.getFullYear(), current.getMonth(), current.getDate() + step);
-
-      if (next.getTime() < range.start.getTime() || next.getTime() > range.end.getTime()) return;
-
-      window.__baobaiSelectedDate = formatDateKey_(next);
-      renderBaoBaiSection_(items || []);
-    }
-
-    function getBaoBaiDateRange_(items) {
-      const dates = (items || [])
-        .map(function(item) { return parseDateKey_(item.date); })
-        .filter(Boolean)
-        .sort(function(a, b) { return a.getTime() - b.getTime(); });
-
-      const today = stripTime_(new Date());
-
-      if (!dates.length) {
-        return { start: today, end: today };
-      }
-
-      const start = dates[0].getTime() < today.getTime() ? dates[0] : today;
-      const end = dates[dates.length - 1].getTime() > today.getTime() ? dates[dates.length - 1] : today;
-
-      return { start: stripTime_(start), end: stripTime_(end) };
-    }
-
-    function buildBaoBaiDayTitle_(dateKey) {
-      const todayKey = formatDateKey_(new Date());
-      return dateKey === todayKey ? 'Hôm nay (' + dateKey + ')' : dateKey;
-    }
-
-    function parseDateKey_(text) {
-      const s = String(text || '').trim();
-      const m = s.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
-      if (!m) return null;
-      return new Date(Number(m[3]), Number(m[2]) - 1, Number(m[1]));
-    }
-
-    function formatDateKey_(date) {
-      const d = stripTime_(date);
-      const dd = String(d.getDate()).padStart(2, '0');
-      const mm = String(d.getMonth() + 1).padStart(2, '0');
-      const yyyy = d.getFullYear();
-      return dd + '/' + mm + '/' + yyyy;
-    }
-
-    function stripTime_(date) {
-      return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+      root.innerHTML = renderBaoBaiCard_(item);
     }
 
     function renderBaoBaiCard_(item) {
-      const locked = !!item.locked;
-      const statusText = locked ? 'Chưa mở' : (item.status || 'Đang cập nhật');
-      const statusClass = getBaoBaiStatusClass_(statusText, locked);
-
       return `
-        <article class="bb-card ${locked ? 'locked' : ''}">
+        <article class="bb-card">
           <div class="bb-head">
-            <div>
-              <div class="bb-date">${escapeHtml_(item.date || '')}</div>
-              <div class="bb-week">${escapeHtml_(item.weekLabel || '')}</div>
-            </div>
-            <div class="bb-status ${statusClass}">${escapeHtml_(statusText)}</div>
+            <div><div class="bb-date">${item.date}</div><div class="bb-week">${item.weekLabel || ''}</div></div>
+            <div class="bb-status">${item.status || 'Đã xong'}</div>
           </div>
-
           <div class="bb-body">
-            ${locked ? `
-              <div class="bb-lock-note">
-                Báo bài của buổi này sẽ được mở vào ngày ${escapeHtml_(item.unlockDate || item.date || '')}.
-              </div>
-            ` : ''}
-
             <div class="bb-grid">
-              ${renderBaoBaiField_('Nội dung buổi học', item.lessonFocus, 'full')}
-              ${renderBaoBaiField_('Từ vựng & Ngữ pháp', item.vocabularyGrammar)}
-              ${renderBaoBaiField_('Kỹ năng luyện tập', item.skillsPracticed)}
-              ${renderBaoBaiField_('Bài tập về nhà', item.homeworkPractice)}
-              ${renderBaoBaiMaterialsField_(item.materialsText, item.materialsUrl)}
-              ${renderBaoBaiField_('Ghi chú giáo viên', item.teacherNote, 'full')}
+              ${renderBBField_('Tiêu điểm bài học', item.lessonFocus, 'full')}
+              ${renderBBField_('Từ vựng & Ngữ pháp', item.vocabularyGrammar)}
+              ${renderBBField_('Kỹ năng', item.skillsPracticed)}
+              ${renderBBField_('Bài tập về nhà', item.homeworkPractice)}
+              ${item.materialsUrl ? `<div class="bb-item"><div class="bb-label">Tài liệu</div><div class="bb-value"><a href="${item.materialsUrl}" target="_blank" class="bb-link">${item.materialsText || 'Xem link'}</a></div></div>` : ''}
             </div>
           </div>
-        </article>
-      `;
+        </article>`;
     }
 
-    function renderBaoBaiField_(label, value, extraClass) {
-      const text = (value || '').trim();
-      if (!text) return '';
-
-      return `
-        <div class="bb-item ${extraClass || ''}">
-          <div class="bb-label">${escapeHtml_(label)}</div>
-          <div class="bb-value">${nl2br_(escapeHtml_(text))}</div>
-        </div>
-      `;
-    }
-
-    function renderBaoBaiMaterialsField_(text, url) {
-      const safeText = (text || '').trim();
-      const safeUrl = (url || '').trim();
-
-      if (!safeText && !safeUrl) return '';
-
-      if (safeUrl) {
-        return `
-          <div class="bb-item">
-            <div class="bb-label">Tài liệu / Link</div>
-            <div class="bb-value">
-              <a class="bb-link" href="${escapeAttr_(safeUrl)}" target="_blank" rel="noopener noreferrer">
-                ${escapeHtml_(safeText || 'Mở tài liệu')}
-              </a>
-            </div>
-          </div>
-        `;
-      }
-
-      return `
-        <div class="bb-item">
-          <div class="bb-label">Tài liệu / Link</div>
-          <div class="bb-value">${nl2br_(escapeHtml_(safeText))}</div>
-        </div>
-      `;
-    }
-
-    function getBaoBaiStatusClass_(status, locked) {
-      if (locked) return 'locked';
-
-      const s = (status || '').toLowerCase();
-
-      if (s.includes('present')) return 'present';
-      if (s.includes('project completed')) return 'present';
-      if (s.includes('good participation')) return 'present';
-      if (s.includes('absent')) return 'absent';
-      if (s.includes('make-up') || s.includes('make up')) return 'makeup';
-
-      return 'neutral';
+    function renderBBField_(l, v, c) {
+      if (!v) return '';
+      return `<div class="bb-item ${c || ''}"><div class="bb-label">${l}</div><div class="bb-value">${v}</div></div>`;
     }
 
     function renderMocktests_(items) {
       const root = document.getElementById('mocktestWrap');
-
-      if (!items.length) {
-        root.innerHTML = '<div class="empty-state">Hiện chưa có dữ liệu mini test / mock test.</div>';
-        return;
-      }
-
-      root.innerHTML = `
-        <div class="score-grid">
-          ${items.map(function(item) {
-            return `
-              <div class="score-card">
-                <h4>${escapeHtml_(item.testName || 'Bài test')}</h4>
-                <p>Điểm trung bình: <strong>${item.average == null ? '--' : escapeHtml_(String(item.average))}</strong></p>
-                <div class="score-badges">
-                  ${(item.scores || []).map(function(score) {
-                    return `<span class="score-badge">${escapeHtml_(score)}</span>`;
-                  }).join('')}
-                </div>
-              </div>
-            `;
-          }).join('')}
-        </div>
-      `;
+      if (!items.length) { root.innerHTML = '<div class="empty-state">Chưa có dữ liệu</div>'; return; }
+      root.innerHTML = `<div class="score-grid">${items.map(i => `<div class="score-card"><h4>${i.testName}</h4><p>ĐTB: ${i.average}</p><div class="score-badges">${(i.scores || []).map(s => `<span class="score-badge">${s}</span>`).join('')}</div></div>`).join('')}</div>`;
     }
 
     function renderReportText_(text) {
       const root = document.getElementById('reportWrap');
-
       if (!(text || '').trim()) {
-        root.innerHTML = '<div class="empty-state">Hiện chưa có báo cáo cá nhân để hiển thị.</div>';
+        root.innerHTML = '<div class="empty-state">Hiện chưa có báo cáo cá nhân.</div>';
         return;
       }
-
-      root.innerHTML = `<div class="report-box">${nl2br_(escapeHtml_(text))}</div>`;
+      root.innerHTML = `
+        <div class="report-box">
+          <div class="report-header">
+            <div class="report-avatar">✍️</div>
+            <div>
+              <h4 class="report-title">Lời nhắn từ Giáo viên</h4>
+              <p class="report-subtitle">Đánh giá và cập nhật tình hình học tập</p>
+            </div>
+          </div>
+          <div class="report-content">${nl2br_(escapeHtml_(text))}</div>
+        </div>`;
     }
 
-    function safeDisplayNumber_(value) {
-      return value == null ? '--' : escapeHtml_(String(value));
+    function escapeHtml_(s) {
+      return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     }
-
-    function escapeHtml_(str) {
-      return String(str == null ? '' : str)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#39;');
-    }
-
-    function escapeAttr_(str) {
-      return escapeHtml_(str);
-    }
-
-    function nl2br_(str) {
-      return String(str || '').replace(/\n/g, '<br>');
-    }
+    function nl2br_(s) { return s.replace(/\n/g, '<br>'); }
   </script>
 </body>
 </html>
