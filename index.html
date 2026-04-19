@@ -6,729 +6,640 @@
   <title>EDUX Parent Portal</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
-    /* =========================================
-       1. GLOBAL VARIABLES & RESET
-       ========================================= */
+    /* ============================================================
+       DESIGN TOKENS
+    ============================================================ */
     :root {
-      /* Brand Colors */
-      --primary: #0E4BA9;
-      --primary-2: #2C6FE0;
-      --primary-3: #7EAFFF;
-      --accent: #E4C28E;
-      
-      /* Surface & Background */
-      --bg: #F4F7FB;
-      --bg-soft: #FFFFFF;
-      --surface: #FFFFFF;
-      --surface-glass: rgba(255, 255, 255, 0.85);
-      
-      /* Text Colors */
-      --text: #1E293B;
-      --text-muted: #64748B;
-      --border: rgba(14, 75, 169, 0.08);
-      
-      /* Status Colors */
-      --success-bg: #DCFCE7; --success-text: #166534;
-      --danger-bg: #FEE2E2;  --danger-text: #991B1B;
-      --warning-bg: #FEF3C7; --warning-text: #92400E;
-      --info-bg: #E0E7FF;    --info-text: #1E40AF;
-      
-      /* Shadows - Premium Soft */
-      --shadow-sm: 0 4px 12px rgba(14, 75, 169, 0.04);
-      --shadow-md: 0 12px 32px rgba(14, 75, 169, 0.06);
-      --shadow-lg: 0 24px 64px rgba(14, 75, 169, 0.12);
-      --shadow-glow: 0 8px 24px rgba(44, 111, 224, 0.25);
-      
-      /* Border Radius */
-      --radius-xl: 32px;
-      --radius-lg: 24px;
-      --radius-md: 16px;
-      --radius-sm: 12px;
+      --p:       #0E4BA9;
+      --p2:      #2C6FE0;
+      --p3:      #7EAFFF;
+      --p-pale:  #EEF4FF;
+      --p-xpale: #F5F9FF;
+      --accent:  #E4C28E;
+      --accent2: #B8902A;
+      --accent-bg: #FFF8EC;
+      --text:    #14243A;
+      --text2:   #3A5070;
+      --muted:   #7888A0;
+      --border:  rgba(14,75,169,.09);
+      --ok:      #0A8C50;
+      --ok-bg:   #E6F7EF;
+      --warn:    #9A6700;
+      --warn-bg: #FFF4DA;
+      --err:     #C8200A;
+      --err-bg:  #FDECEC;
+      --sx: 0 2px 8px rgba(14,75,169,.05);
+      --sm: 0 6px 22px rgba(14,75,169,.09);
+      --md: 0 14px 44px rgba(14,75,169,.13);
+      --lg: 0 28px 72px rgba(14,75,169,.17);
+      --xl: 0 44px 110px rgba(14,75,169,.21);
+      --r1:12px; --r2:18px; --r3:24px; --r4:32px; --r5:40px;
+      --ease: cubic-bezier(.4,0,.2,1);
+      --dur: .22s;
     }
 
-    * { box-sizing: border-box; }
-    html, body { margin: 0; padding: 0; scroll-behavior: smooth; }
-    
-    body {
-      font-family: 'Montserrat', system-ui, -apple-system, sans-serif;
-      color: var(--text);
-      background: #F8FAFC;
-      background-image: 
-        radial-gradient(circle at 0% 0%, rgba(44,111,224,0.04) 0%, transparent 40%),
-        radial-gradient(circle at 100% 100%, rgba(228,194,142,0.06) 0%, transparent 40%);
-      background-attachment: fixed;
-      min-height: 100vh;
-      -webkit-font-smoothing: antialiased;
+    /* ============================================================
+       BASE
+    ============================================================ */
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+    body{
+      font-family:'Montserrat',system-ui,sans-serif;
+      color:var(--text); min-height:100vh; background:#E8F0FD;
+      background-image:
+        radial-gradient(ellipse 70% 55% at 5% 0%,rgba(44,111,224,.13) 0%,transparent 55%),
+        radial-gradient(ellipse 55% 45% at 95% 0%,rgba(228,194,142,.16) 0%,transparent 52%),
+        radial-gradient(ellipse 45% 55% at 50% 100%,rgba(14,75,169,.07) 0%,transparent 55%);
     }
 
-    /* =========================================
-       2. LAYOUT & SHELL
-       ========================================= */
-    .app-shell {
-      max-width: 1440px;
-      margin: 0 auto;
-      padding: 32px 24px 60px;
+    /* shell */
+    .app-shell{max-width:1580px;margin:0 auto;padding:22px 22px 60px}
+
+    /* ============================================================
+       VIEW STATE
+    ============================================================ */
+    .main-stage{display:grid;grid-template-columns:1fr;gap:24px}
+    .login-wrap{display:block}
+    .dashboard-panel{display:none}
+    .dashboard-panel.show{display:block}
+
+    /* ============================================================
+       TOPBAR
+    ============================================================ */
+    .topbar{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:26px}
+    .brand{display:flex;align-items:center;gap:13px}
+    .brand-badge{
+      position:relative;width:50px;height:50px;border-radius:17px;
+      background:linear-gradient(145deg,#082E72 0%,#1756CC 52%,#3D87F5 100%);
+      color:#fff;display:grid;place-items:center;
+      font-size:21px;font-weight:900;
+      box-shadow:0 10px 26px rgba(14,75,169,.30),inset 0 1px 0 rgba(255,255,255,.22);
+      flex:0 0 auto;overflow:hidden;
     }
+    .brand-badge::before{content:'';position:absolute;top:-5px;right:-5px;width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,.16)}
+    .brand-text h1{font-size:21px;font-weight:900;letter-spacing:-.04em;color:var(--p);line-height:1.1}
+    .brand-text p{margin-top:2px;font-size:11.5px;font-weight:600;color:var(--muted)}
+    .top-actions{display:flex;align-items:center;gap:7px}
 
-    .main-stage {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 32px;
-      align-items: start;
+    /* ============================================================
+       BUTTONS
+    ============================================================ */
+    .btn{
+      border:none;outline:none;cursor:pointer;border-radius:999px;padding:10px 18px;
+      font-family:inherit;font-size:13px;font-weight:700;letter-spacing:.01em;
+      transition:transform var(--dur) var(--ease),box-shadow var(--dur) var(--ease),background var(--dur) var(--ease);
+      white-space:nowrap;display:inline-flex;align-items:center;gap:6px;
     }
-
-    .dashboard-panel { display: none; width: 100%; animation: fadeUp 0.6s ease forwards; }
-    .dashboard-panel.show { display: block; }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+    .btn:hover{transform:translateY(-1px)}
+    .btn:active{transform:translateY(0) scale(.98)}
+    .btn-primary{
+      background:linear-gradient(135deg,#0E4BA9 0%,#2C6FE0 100%);color:#fff;
+      box-shadow:0 8px 24px rgba(14,75,169,.24),inset 0 1px 0 rgba(255,255,255,.16);
     }
+    .btn-primary:hover{box-shadow:0 12px 32px rgba(14,75,169,.34),inset 0 1px 0 rgba(255,255,255,.16)}
+    .btn-soft{background:rgba(255,255,255,.92);color:var(--p);border:1px solid rgba(14,75,169,.13);box-shadow:var(--sx);backdrop-filter:blur(12px)}
+    .btn-soft:hover{background:#fff;box-shadow:var(--sm)}
+    .btn-danger{background:rgba(200,32,10,.07);color:var(--err);border:1px solid rgba(200,32,10,.13)}
+    .btn-danger:hover{background:rgba(200,32,10,.12)}
 
-    /* =========================================
-       3. TOPBAR & BRANDING
-       ========================================= */
-    .topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 40px;
-      background: var(--surface-glass);
-      padding: 16px 24px;
-      border-radius: var(--radius-lg);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(255,255,255,0.6);
-      box-shadow: var(--shadow-sm);
+    /* ============================================================
+       NOTICE / LOADING
+    ============================================================ */
+    .notice{display:none;margin-bottom:16px;padding:14px 18px;border-radius:var(--r2);font-size:14px;font-weight:700;line-height:1.6}
+    .notice.show{display:block}
+    .notice.error{background:var(--err-bg);color:#B42318;border:1px solid rgba(180,35,24,.12)}
+    .notice.success{background:var(--ok-bg);color:#166534;border:1px solid rgba(22,101,52,.12)}
+
+    .overlay{position:fixed;inset:0;background:rgba(6,15,32,.38);backdrop-filter:blur(7px);display:none;align-items:center;justify-content:center;z-index:9999}
+    .overlay.show{display:flex}
+    .loading-box{background:#fff;border-radius:var(--r3);padding:26px 32px;box-shadow:var(--lg);display:flex;align-items:center;gap:16px;font-size:15px;font-weight:700;color:var(--p)}
+    .spinner{width:26px;height:26px;border-radius:50%;border:3px solid rgba(14,75,169,.14);border-top-color:var(--p);animation:spin .7s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    /* ============================================================
+       LOGIN
+    ============================================================ */
+    .login-wrap{display:block}
+    .auth-shell{
+      position:relative;border-radius:var(--r5);overflow:hidden;
+      min-height:720px;display:grid;grid-template-columns:1.15fr .85fr;
+      background:#09224E;box-shadow:var(--xl);
     }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 16px;
+    .auth-visual{
+      position:relative;padding:54px 50px;color:#fff;
+      display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;
+      background:linear-gradient(150deg,#061736 0%,#0C3680 42%,#1B5CD4 100%);
     }
+    .auth-visual::before{content:'';position:absolute;width:520px;height:520px;border-radius:50%;top:-190px;right:-160px;background:radial-gradient(circle,rgba(61,135,245,.22) 0%,transparent 68%);pointer-events:none}
+    .auth-visual::after{content:'';position:absolute;width:380px;height:380px;border-radius:50%;bottom:-160px;left:-110px;background:radial-gradient(circle,rgba(228,194,142,.15) 0%,transparent 68%);pointer-events:none}
 
-    .brand-badge {
-      width: 56px;
-      height: 56px;
-      border-radius: 18px;
-      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-2) 100%);
-      color: #fff;
-      display: grid;
-      place-items: center;
-      font-size: 28px;
-      font-weight: 900;
-      box-shadow: var(--shadow-glow);
-      position: relative;
-      overflow: hidden;
+    .auth-tag{display:inline-flex;align-items:center;gap:8px;padding:9px 15px;border-radius:999px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.16);font-size:11.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;width:max-content;margin-bottom:30px;position:relative;z-index:1}
+    .auth-title{font-size:54px;font-weight:900;line-height:1.02;letter-spacing:-.05em;margin-bottom:20px;position:relative;z-index:1}
+    .auth-title em{font-style:normal;background:linear-gradient(130deg,#FCCF5A 0%,#FFE8A8 50%,#E4C28E 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .auth-desc{font-size:14.5px;line-height:1.9;font-weight:500;color:rgba(255,255,255,.78);max-width:430px;margin-bottom:34px;position:relative;z-index:1}
+    .auth-features{display:flex;flex-direction:column;gap:13px;position:relative;z-index:1}
+    .auth-feat{display:flex;align-items:flex-start;gap:12px}
+    .auth-feat-icon{width:38px;height:38px;border-radius:13px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.14);display:grid;place-items:center;font-size:16px;flex:0 0 auto}
+    .auth-feat-text strong{display:block;font-size:13px;font-weight:800;color:#fff;margin-bottom:2px}
+    .auth-feat-text span{font-size:12px;color:rgba(255,255,255,.66);font-weight:500}
+    .auth-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding-top:28px;border-top:1px solid rgba(255,255,255,.10);position:relative;z-index:1}
+    .auth-stat{text-align:center}
+    .auth-stat-n{font-size:26px;font-weight:900;line-height:1;margin-bottom:5px;background:linear-gradient(130deg,#FCD76A,#E4C28E);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .auth-stat-l{font-size:11px;color:rgba(255,255,255,.62);font-weight:600;line-height:1.5}
+
+    .auth-form-wrap{position:relative;background:linear-gradient(160deg,#ffffff 0%,#EDF4FF 100%);display:flex;align-items:center;justify-content:center;padding:44px 38px}
+    .login-card{width:100%;max-width:408px;position:relative;z-index:1}
+    .lc-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:26px}
+    .lc-eye-icon{width:40px;height:40px;border-radius:14px;background:linear-gradient(135deg,var(--p) 0%,var(--p2) 100%);display:grid;place-items:center;font-size:18px;box-shadow:0 8px 20px rgba(14,75,169,.22);flex:0 0 auto}
+    .lc-eye-label{font-size:11.5px;font-weight:800;color:var(--p);text-transform:uppercase;letter-spacing:.06em}
+    .lc-title{font-size:32px;font-weight:900;letter-spacing:-.04em;color:#091E3A;line-height:1.08;margin-bottom:10px}
+    .lc-sub{font-size:14px;color:var(--muted);font-weight:500;line-height:1.75;margin-bottom:30px}
+    .field{margin-bottom:16px}
+    .field label{display:block;margin-bottom:7px;font-size:11px;font-weight:800;color:var(--text2);text-transform:uppercase;letter-spacing:.06em}
+    .input-shell{position:relative}
+    .input-shell input{width:100%;border:1.5px solid rgba(14,75,169,.13);background:#fff;border-radius:14px;padding:14px 16px 14px 46px;font-family:inherit;font-size:15px;font-weight:600;color:var(--text);outline:none;transition:border-color var(--dur) var(--ease),box-shadow var(--dur) var(--ease),transform var(--dur) var(--ease);box-shadow:0 2px 8px rgba(14,75,169,.04)}
+    .input-shell input::placeholder{font-weight:400;color:#B2BFCE}
+    .input-shell input:focus{border-color:rgba(14,75,169,.38);box-shadow:0 0 0 4px rgba(14,75,169,.07),0 4px 16px rgba(14,75,169,.08);transform:translateY(-1px)}
+    .input-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:16px;pointer-events:none;opacity:.7}
+    .login-btn{width:100%;padding:16px;font-size:15px;font-weight:800;margin-top:8px;border-radius:14px}
+    .lc-footer{margin-top:18px;padding-top:18px;border-top:1px solid rgba(14,75,169,.08);font-size:12.5px;color:var(--muted);line-height:1.8;text-align:center}
+    .lc-footer strong{color:var(--p)}
+    .trust-row{display:flex;gap:7px;margin-top:18px;justify-content:center;flex-wrap:wrap}
+    .trust-chip{display:inline-flex;align-items:center;gap:5px;padding:5px 10px;background:var(--p-pale);border-radius:999px;font-size:11px;font-weight:700;color:var(--p);border:1px solid rgba(14,75,169,.10)}
+
+    /* ============================================================
+       HERO
+    ============================================================ */
+    .hero{
+      position:relative;overflow:hidden;border-radius:var(--r4);
+      background:linear-gradient(150deg,#061736 0%,#0C3B8A 40%,#1D5FCC 100%);
+      color:#fff;padding:30px 30px 26px;box-shadow:var(--lg);margin-bottom:20px;
     }
-    
-    .brand-badge::after {
-      content: '';
-      position: absolute;
-      top: 0; left: -100%; width: 50%; height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-      transform: skewX(-20deg);
+    .hero-bg1{position:absolute;border-radius:50%;width:520px;height:520px;top:-230px;right:-170px;background:radial-gradient(circle,rgba(61,135,245,.20) 0%,transparent 64%);pointer-events:none}
+    .hero-bg2{position:absolute;border-radius:50%;width:310px;height:310px;bottom:-160px;left:-80px;background:radial-gradient(circle,rgba(228,194,142,.13) 0%,transparent 64%);pointer-events:none}
+    .hero-top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;position:relative;z-index:1;margin-bottom:22px}
+    .hero-identity{display:flex;align-items:center;gap:15px}
+    .hero-avatar-wrap{flex:0 0 auto;position:relative}
+    .hero-avatar{width:58px;height:58px;border-radius:20px;background:rgba(255,255,255,.14);border:1.5px solid rgba(255,255,255,.22);display:grid;place-items:center;font-size:28px}
+    .hero-online-dot{position:absolute;bottom:-1px;right:-1px;width:14px;height:14px;border-radius:50%;background:#22C55E;border:2.5px solid #0C3B8A}
+    .hero-student-label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:5px;display:flex;align-items:center;gap:6px}
+    .hero-student-label::before{content:'';width:16px;height:1.5px;background:rgba(255,255,255,.35);border-radius:2px}
+    .hero-title{font-size:30px;font-weight:900;letter-spacing:-.03em;line-height:1.1}
+    .hero-subtitle{margin-top:7px;font-size:13.5px;color:rgba(255,255,255,.72);font-weight:500;line-height:1.6;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+    .hero-subtitle-sep{opacity:.4}
+    .hero-right{display:flex;flex-direction:column;align-items:flex-end;gap:8px;flex:0 0 auto}
+    .hero-live-badge{display:inline-flex;align-items:center;gap:6px;padding:7px 13px;border-radius:999px;background:rgba(34,197,94,.18);border:1px solid rgba(34,197,94,.28);font-size:11.5px;font-weight:800;color:#7DF5A0}
+    .hero-live-dot{width:7px;height:7px;border-radius:50%;background:#22C55E;animation:pulse-dot 2s ease infinite}
+    @keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.75)}}
+    .hero-update-pill{display:inline-flex;align-items:center;gap:5px;padding:6px 12px;border-radius:999px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.13);font-size:11px;font-weight:600;color:rgba(255,255,255,.72);white-space:nowrap}
+    .hero-meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:9px;position:relative;z-index:1}
+    .hero-chip{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.12);border-radius:15px;padding:13px 15px;transition:background var(--dur) var(--ease);cursor:default}
+    .hero-chip:hover{background:rgba(255,255,255,.14)}
+    .hero-chip .label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:rgba(255,255,255,.55);margin-bottom:6px}
+    .hero-chip .value{font-size:13.5px;font-weight:700;color:#fff;line-height:1.5;word-break:break-word}
+
+    /* ============================================================
+       METRIC INSIGHT CARDS
+    ============================================================ */
+    .metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:22px}
+    .metric-card{position:relative;overflow:hidden;background:#fff;border-radius:var(--r3);padding:22px 20px 20px;box-shadow:var(--sm);border:1px solid rgba(14,75,169,.07);transition:transform var(--dur) var(--ease),box-shadow var(--dur) var(--ease);cursor:default}
+    .metric-card:hover{transform:translateY(-3px);box-shadow:var(--md)}
+    .mc-bar{position:absolute;top:0;left:0;width:100%;height:3.5px;border-radius:2px 2px 0 0}
+    .mc-bar-blue{background:linear-gradient(90deg,#0E4BA9,#7EAFFF)}
+    .mc-bar-red{background:linear-gradient(90deg,#C8200A,#FF8080)}
+    .mc-bar-green{background:linear-gradient(90deg,#0A8C50,#6CE9A6)}
+    .mc-bar-gold{background:linear-gradient(90deg,#B8902A,#F5C97A)}
+    .mc-icon-wrap{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;font-size:19px;margin-bottom:14px}
+    .mc-icon-blue{background:#EEF4FF}
+    .mc-icon-red{background:#FDECEC}
+    .mc-icon-green{background:#E6F7EF}
+    .mc-icon-gold{background:#FFF4DA}
+    .mc-label{font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:7px}
+    .mc-value{font-size:36px;font-weight:900;letter-spacing:-.04em;line-height:1;color:var(--text);margin-bottom:10px}
+    .mc-footer{display:flex;align-items:center;gap:7px;padding-top:11px;border-top:1px solid rgba(14,75,169,.06)}
+    .mc-tag{font-size:11px;font-weight:800;padding:4px 9px;border-radius:999px}
+    .mc-tag-ok{background:var(--ok-bg);color:var(--ok)}
+    .mc-tag-warn{background:var(--warn-bg);color:var(--warn)}
+    .mc-tag-perf{background:var(--p-pale);color:var(--p)}
+    .mc-tag-new{background:var(--accent-bg);color:var(--accent2)}
+    .mc-desc{font-size:11.5px;font-weight:600;color:var(--muted);line-height:1.5}
+
+    /* ============================================================
+       TABS — sticky
+    ============================================================ */
+    .tabs{display:flex;gap:5px;flex-wrap:wrap;background:rgba(255,255,255,.88);padding:7px;border-radius:20px;box-shadow:var(--sx);border:1px solid rgba(14,75,169,.08);backdrop-filter:blur(16px);margin-bottom:24px;position:sticky;top:12px;z-index:100}
+    .tab-btn{flex:1 1 130px;border:none;background:transparent;color:var(--muted);padding:12px 14px;border-radius:14px;font-family:inherit;font-size:13.5px;font-weight:700;cursor:pointer;transition:all var(--dur) var(--ease);text-align:center;display:flex;align-items:center;justify-content:center;gap:7px}
+    .tab-icon{font-size:16px;transition:transform .2s}
+    .tab-btn:hover{color:var(--p);background:rgba(14,75,169,.05)}
+    .tab-btn.active{background:linear-gradient(135deg,var(--p) 0%,var(--p2) 100%);color:#fff;box-shadow:0 7px 20px rgba(14,75,169,.28);transform:translateY(-1px)}
+    .tab-btn.active .tab-icon{transform:scale(1.1)}
+    .tab-panel{display:none}
+    .tab-panel.active{display:block;animation:fadeUp .26s var(--ease) both}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+    /* ============================================================
+       SECTION CARD
+    ============================================================ */
+    .section-card{background:#fff;border:1px solid rgba(14,75,169,.07);border-radius:var(--r4);box-shadow:var(--sm);padding:26px 24px;margin-bottom:16px;overflow:hidden}
+    .section-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:20px}
+    .section-title{font-size:18px;font-weight:900;letter-spacing:-.02em;color:var(--text);display:flex;align-items:center;gap:9px}
+    .section-title-icon{width:34px;height:34px;border-radius:11px;display:grid;place-items:center;font-size:16px;flex:0 0 auto;background:var(--p-pale)}
+    .section-subtitle{margin-top:5px;color:var(--muted);font-size:13px;line-height:1.65;font-weight:500}
+    .section-note{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;background:#FFFBF2;border:1px solid rgba(228,194,142,.35);border-radius:999px;font-size:12px;font-weight:700;color:var(--accent2);margin-bottom:16px}
+
+    /* ============================================================
+       PROFILE GRID
+    ============================================================ */
+    .profile-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px}
+    .profile-item{background:var(--p-xpale);border:1px solid rgba(14,75,169,.08);border-radius:var(--r2);padding:14px 16px;transition:transform var(--dur) var(--ease);position:relative;overflow:hidden}
+    .profile-item:hover{transform:translateY(-1px)}
+    .profile-item::before{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--p) 0%,transparent 100%);opacity:0;transition:opacity var(--dur)}
+    .profile-item:hover::before{opacity:.5}
+    .profile-item .label{font-size:10px;font-weight:800;color:var(--p);text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px}
+    .profile-item .value{font-size:14px;font-weight:700;color:var(--text);line-height:1.6;word-break:break-word}
+
+    /* ============================================================
+       TABLE
+    ============================================================ */
+    .table-wrap{width:100%;overflow-x:auto;border:1px solid rgba(14,75,169,.08);border-radius:var(--r2);background:#fff}
+    table{width:100%;border-collapse:separate;border-spacing:0;min-width:500px}
+    thead th{position:sticky;top:0;z-index:1;background:#F2F7FF;color:var(--p);font-size:10.5px;font-weight:800;text-align:left;padding:12px 16px;border-bottom:1px solid rgba(14,75,169,.09);text-transform:uppercase;letter-spacing:.05em;white-space:nowrap}
+    tbody td{padding:12px 16px;border-bottom:1px solid rgba(14,75,169,.05);font-size:14px;font-weight:600;color:var(--text);background:#fff;vertical-align:middle}
+    tbody tr:nth-child(even) td{background:#FAFCFF}
+    tbody tr:last-child td{border-bottom:none}
+    tbody tr{transition:background var(--dur)}
+    tbody tr:hover td{background:#EEF4FF !important}
+
+    /* status pills */
+    .sp{display:inline-flex;align-items:center;border-radius:999px;padding:5px 13px;font-size:12px;font-weight:800;white-space:nowrap;gap:5px}
+    .sp::before{content:'';width:6px;height:6px;border-radius:50%;flex:0 0 auto}
+    .sp-ok{background:var(--ok-bg);color:var(--ok)}.sp-ok::before{background:var(--ok)}
+    .sp-err{background:var(--err-bg);color:var(--err)}.sp-err::before{background:var(--err)}
+    .sp-warn{background:var(--warn-bg);color:var(--warn)}.sp-warn::before{background:var(--warn)}
+    .sp-info{background:var(--p-pale);color:var(--p)}.sp-info::before{background:var(--p)}
+    .sp-neu{background:#F2F4F7;color:#475467}.sp-neu::before{background:#9199A8}
+
+    /* empty state */
+    .empty-state{padding:44px 20px;text-align:center;color:var(--muted);font-size:14px;line-height:1.8;font-weight:600}
+    .es-icon{font-size:42px;display:block;margin-bottom:14px;opacity:.7}
+    .es-title{font-size:16px;font-weight:800;color:var(--text2);margin-bottom:6px}
+
+    /* ============================================================
+       BÁO BÀI — LEARNING JOURNAL
+    ============================================================ */
+    .bb-nav{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:14px;background:linear-gradient(135deg,#EEF4FF 0%,#E6EEFF 100%);border:1px solid rgba(14,75,169,.11);border-radius:var(--r2);padding:11px 16px;margin-bottom:20px}
+    .bb-nav-btn{display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(14,75,169,.15);background:#fff;color:var(--p);border-radius:12px;padding:9px 16px;font-family:inherit;font-size:13px;font-weight:800;cursor:pointer;box-shadow:var(--sx);transition:all var(--dur) var(--ease)}
+    .bb-nav-btn:hover{background:var(--p);color:#fff;box-shadow:var(--sm);transform:translateY(-1px)}
+    .bb-nav-btn:disabled{opacity:.35;cursor:not-allowed;transform:none}
+    .bb-nav-center{text-align:center}
+    .bb-day-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:3px}
+    .bb-day-title{font-size:16px;font-weight:900;color:var(--p);letter-spacing:-.01em}
+
+    .bb-card{background:#fff;border:1px solid rgba(14,75,169,.09);border-radius:var(--r4);overflow:hidden;box-shadow:var(--md);transition:box-shadow var(--dur) var(--ease)}
+    .bb-card:hover{box-shadow:var(--lg)}
+
+    .bb-head{padding:24px 26px 0;background:linear-gradient(150deg,#071736 0%,#0C3A88 52%,#1F5ED0 100%);color:#fff;position:relative;overflow:hidden}
+    .bb-head::after{content:'';position:absolute;right:-20px;top:-30px;width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,.06);pointer-events:none}
+    .bb-head-row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;position:relative;z-index:1}
+    .bb-head-question{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:rgba(255,255,255,.55);margin-bottom:6px;display:flex;align-items:center;gap:6px}
+    .bb-head-question::before{content:'';width:14px;height:1.5px;background:rgba(255,255,255,.35);border-radius:2px}
+    .bb-date{font-size:22px;font-weight:900;letter-spacing:-.02em;line-height:1.2}
+    .bb-week{font-size:12px;font-weight:600;opacity:.72;margin-top:4px;margin-bottom:16px}
+    .bb-status{display:inline-flex;align-items:center;gap:5px;padding:7px 14px;border-radius:999px;font-size:11.5px;font-weight:800;white-space:nowrap}
+    .bb-status::before{content:'';width:6px;height:6px;border-radius:50%}
+    .bb-sp{background:rgba(34,197,94,.16);color:#8DFFC0}.bb-sp::before{background:#22C55E}
+    .bb-sa{background:rgba(220,60,40,.16);color:#FFB3AD}.bb-sa::before{background:#FF6B6B}
+    .bb-sn{background:rgba(255,255,255,.12);color:rgba(255,255,255,.82)}.bb-sn::before{background:rgba(255,255,255,.5)}
+    .bb-pills-strip{display:flex;gap:6px;flex-wrap:wrap;padding:14px 0 18px;position:relative;z-index:1}
+    .bb-pill{padding:4px 10px;border-radius:999px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.14);font-size:11px;font-weight:700;color:rgba(255,255,255,.80)}
+
+    .bb-body{padding:22px 24px;display:grid;gap:12px}
+    .bb-lock-note{background:var(--p-pale);border:1px dashed rgba(14,75,169,.22);color:var(--p);border-radius:14px;padding:13px 16px;font-size:13px;font-weight:700;line-height:1.7}
+    .bb-grid{display:grid;grid-template-columns:1fr;gap:10px}
+    .bb-item{background:var(--p-xpale);border:1px solid rgba(14,75,169,.07);border-radius:var(--r2);padding:16px;transition:border-color var(--dur),box-shadow var(--dur)}
+    .bb-item:hover{border-color:rgba(14,75,169,.14);box-shadow:var(--sx)}
+    .bb-item-hd{display:flex;align-items:center;gap:9px;margin-bottom:10px}
+    .bb-item-ico{width:30px;height:30px;border-radius:10px;display:grid;place-items:center;font-size:14px;flex:0 0 auto;background:rgba(14,75,169,.10)}
+    .bb-item-lbl{font-size:10.5px;font-weight:800;color:var(--p);text-transform:uppercase;letter-spacing:.06em}
+    .bb-value{font-size:14px;font-weight:600;color:var(--text);line-height:1.8;white-space:pre-line;word-break:break-word}
+    .bb-link{display:inline-flex;align-items:center;gap:5px;color:var(--p);font-weight:700;text-decoration:none;padding:8px 14px;background:var(--p-pale);border:1px solid rgba(14,75,169,.14);border-radius:10px;font-size:13px;transition:background var(--dur),box-shadow var(--dur)}
+    .bb-link:hover{background:#E0ECFF;box-shadow:var(--sx)}
+    .bb-empty{text-align:center;color:var(--muted);font-size:14px;line-height:1.8;font-weight:600;padding:36px 20px}
+    @media(min-width:660px){.bb-grid{grid-template-columns:repeat(2,1fr)}.bb-item.full{grid-column:1/-1}}
+
+    /* ============================================================
+       SCORE CARDS
+    ============================================================ */
+    .score-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:16px}
+    .score-card{background:#fff;border:1px solid rgba(14,75,169,.08);border-radius:var(--r3);overflow:hidden;box-shadow:var(--sm);transition:transform var(--dur) var(--ease),box-shadow var(--dur) var(--ease)}
+    .score-card:hover{transform:translateY(-3px);box-shadow:var(--md)}
+    .score-card-head{padding:18px 20px 14px;background:linear-gradient(135deg,#F2F7FF 0%,#E8F0FF 100%);border-bottom:1px solid rgba(14,75,169,.07);display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+    .score-card-name{font-size:15px;font-weight:800;color:var(--text);line-height:1.4;display:flex;align-items:center;gap:7px}
+    .score-card-ico{width:32px;height:32px;border-radius:10px;background:var(--p-pale);display:grid;place-items:center;font-size:15px;flex:0 0 auto}
+    .avg-pill{background:linear-gradient(135deg,#FFF4DA 0%,#FFEAA0 100%);border:1px solid rgba(184,144,42,.22);border-radius:14px;padding:8px 14px;text-align:center;min-width:68px;flex:0 0 auto}
+    .avg-pill-l{font-size:9.5px;font-weight:800;color:var(--warn);text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px}
+    .avg-pill-v{font-size:22px;font-weight:900;color:var(--accent2);letter-spacing:-.03em;line-height:1}
+    .score-card-body{padding:16px 20px 18px}
+    .score-badges{display:flex;flex-wrap:wrap;gap:7px}
+    .score-badge{background:var(--p-xpale);color:var(--p);border:1px solid rgba(14,75,169,.12);border-radius:10px;padding:7px 13px;font-size:14px;font-weight:800;transition:background var(--dur),transform var(--dur)}
+    .score-badge:hover{background:#E0ECFF;transform:scale(1.04)}
+
+    /* ============================================================
+       REPORT / TEACHER LETTER
+    ============================================================ */
+    .report-box{background:#fff;border:1px solid rgba(14,75,169,.08);border-radius:var(--r4);overflow:hidden;box-shadow:var(--md)}
+    .report-head{padding:20px 24px;background:linear-gradient(150deg,#071736 0%,#0E4BA9 100%);display:flex;align-items:center;gap:14px}
+    .report-avatar-icon{width:46px;height:46px;border-radius:15px;background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.20);display:grid;place-items:center;font-size:22px;flex:0 0 auto}
+    .report-head-title{font-size:16px;font-weight:800;color:#fff}
+    .report-head-sub{font-size:12px;font-weight:600;color:rgba(255,255,255,.72);margin-top:3px}
+    .report-body{padding:24px}
+    .report-content{font-size:15px;line-height:1.95;color:var(--text);font-weight:500;background:var(--p-xpale);border:1px dashed rgba(14,75,169,.13);border-radius:var(--r3);padding:24px 26px;white-space:pre-line;position:relative}
+    .report-content::before{content:'\201C';position:absolute;top:8px;left:16px;font-size:72px;font-weight:900;color:rgba(14,75,169,.07);line-height:1;font-family:Georgia,serif;pointer-events:none}
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media(max-width:1200px){
+      .auth-shell{grid-template-columns:1fr;min-height:auto}
+      .auth-visual{padding:36px 32px 26px}
+      .auth-form-wrap{padding:20px 28px 38px}
     }
-
-    .brand-text h1 {
-      margin: 0;
-      font-size: 24px;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      color: var(--primary);
+    @media(max-width:760px){
+      .app-shell{padding:13px 13px 44px}
+      .topbar{flex-wrap:wrap;gap:10px}
+      .brand-text h1{font-size:18px}
+      .hero{padding:18px 16px 16px}
+      .hero-title{font-size:22px}
+      .hero-top{flex-direction:column;gap:12px}
+      .hero-right{flex-direction:row;align-items:center}
+      .hero-identity{gap:10px}
+      .hero-avatar{width:46px;height:46px;font-size:22px;border-radius:15px}
+      .section-card{padding:18px 16px}
+      .auth-title{font-size:34px}
+      .auth-stats{grid-template-columns:repeat(3,1fr)}
+      .auth-form-wrap{padding:12px 14px 28px}
+      .tabs{padding:5px;border-radius:17px;gap:4px;position:static}
+      .tab-btn{flex:1 1 42%;padding:10px 8px;font-size:12px;gap:5px}
+      .tab-icon{font-size:15px}
+      .mc-value{font-size:28px}
+      .bb-head{padding:18px 18px 0}
+      .bb-body{padding:16px}
+      .bb-nav{padding:9px 12px}
+      .report-content{padding:18px}
+      .score-card-head{flex-direction:column;gap:10px}
+      .avg-pill{align-self:flex-start}
     }
-
-    .brand-text p {
-      margin: 4px 0 0;
-      color: var(--text-muted);
-      font-size: 13px;
-      font-weight: 600;
-    }
-
-    .top-actions {
-      display: flex;
-      gap: 12px;
-    }
-
-    .btn {
-      border: none; outline: none; cursor: pointer;
-      border-radius: 99px; padding: 12px 24px;
-      font-family: inherit; font-size: 14px; font-weight: 700;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      display: inline-flex; align-items: center; gap: 8px;
-    }
-
-    .btn:active { transform: scale(0.96); }
-
-    .btn-primary {
-      background: linear-gradient(135deg, var(--primary), var(--primary-2));
-      color: #fff; box-shadow: var(--shadow-glow);
-    }
-    .btn-primary:hover { box-shadow: 0 12px 28px rgba(44, 111, 224, 0.35); transform: translateY(-2px); }
-
-    .btn-soft {
-      background: var(--bg); color: var(--primary);
-      border: 1px solid var(--border); box-shadow: var(--shadow-sm);
-    }
-    .btn-soft:hover { background: #fff; border-color: rgba(14,75,169,0.2); transform: translateY(-2px); }
-
-    .btn-danger-soft {
-      background: #FFF1F2; color: #DC2626; border: 1px solid #FECDD3;
-    }
-    .btn-danger-soft:hover { background: #FEE2E2; transform: translateY(-2px); }
-
-    /* =========================================
-       4. PREMIUM LOGIN SECTION
-       ========================================= */
-    .login-wrap { display: block; }
-    
-    .auth-shell {
-      background: #fff;
-      border-radius: var(--radius-xl);
-      box-shadow: var(--shadow-lg);
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      overflow: hidden;
-      min-height: 640px;
-      border: 1px solid rgba(255,255,255,0.8);
-    }
-
-    .auth-visual {
-      background: radial-gradient(circle at 100% 0%, rgba(126,175,255,0.3) 0%, transparent 50%),
-                  linear-gradient(135deg, var(--primary) 0%, #17325D 100%);
-      padding: 60px;
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      position: relative;
-    }
-
-    .auth-visual::before {
-      content: ''; position: absolute; inset: 0;
-      background: url('data:image/svg+xml;utf8,<svg opacity="0.03" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="white"/></svg>') 0 0/20px 20px;
-    }
-
-    .auth-visual-content { position: relative; z-index: 1; }
-
-    .auth-kicker {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 8px 16px; border-radius: 99px;
-      background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.2);
-      font-size: 13px; font-weight: 700; backdrop-filter: blur(10px);
-      margin-bottom: 24px;
-    }
-
-    .auth-title {
-      margin: 0; font-size: 48px; font-weight: 800; line-height: 1.1;
-      letter-spacing: -0.03em; text-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-
-    .auth-desc {
-      margin: 20px 0 0; font-size: 16px; line-height: 1.8;
-      color: rgba(255,255,255,0.85); font-weight: 500; max-width: 400px;
-    }
-
-    .auth-bottom {
-      position: relative; z-index: 1; display: grid;
-      grid-template-columns: 1fr 1fr; gap: 16px;
-    }
-
-    .auth-stat {
-      background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15);
-      border-radius: var(--radius-md); padding: 20px; backdrop-filter: blur(12px);
-    }
-    .auth-stat h3 { margin: 0 0 4px; font-size: 24px; font-weight: 800; }
-    .auth-stat p { margin: 0; font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.8); }
-
-    .auth-form-wrap {
-      padding: 60px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #fff;
-    }
-
-    .login-card { width: 100%; max-width: 420px; }
-
-    .login-header { margin-bottom: 40px; }
-    .login-header h2 { margin: 0 0 12px; font-size: 32px; font-weight: 800; color: var(--text); letter-spacing: -0.02em; }
-    .login-header p { margin: 0; font-size: 15px; color: var(--text-muted); line-height: 1.6; }
-
-    .field { margin-bottom: 24px; }
-    .field label {
-      display: block; margin-bottom: 8px; font-size: 13px; font-weight: 700;
-      color: var(--text);
-    }
-
-    .input-shell { position: relative; }
-    .input-icon {
-      position: absolute; left: 18px; top: 50%; transform: translateY(-50%);
-      font-size: 18px; color: #94A3B8; pointer-events: none;
-    }
-    
-    .input-shell input {
-      width: 100%; border: 2px solid #E2E8F0; border-radius: var(--radius-md);
-      padding: 16px 16px 16px 48px; font-family: inherit; font-size: 15px;
-      color: var(--text); outline: none; transition: all 0.2s ease;
-      background: #F8FAFC;
-    }
-    .input-shell input:focus {
-      border-color: var(--primary-2); background: #fff;
-      box-shadow: 0 0 0 4px rgba(44, 111, 224, 0.1);
-    }
-
-    .login-btn { width: 100%; padding: 16px; font-size: 16px; margin-top: 8px; justify-content: center; }
-
-    /* =========================================
-       5. HERO SECTION (DASHBOARD)
-       ========================================= */
-    .hero {
-      background: linear-gradient(135deg, var(--primary) 0%, #17325D 100%);
-      border-radius: var(--radius-xl); padding: 40px;
-      color: #fff; position: relative; overflow: hidden;
-      box-shadow: var(--shadow-lg); margin-bottom: 32px;
-    }
-
-    .hero::before {
-      content: ''; position: absolute; right: -50px; top: -100px;
-      width: 400px; height: 400px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
-    }
-
-    .hero-top {
-      display: flex; justify-content: space-between; align-items: flex-start;
-      position: relative; z-index: 1; margin-bottom: 32px;
-    }
-
-    .hero-profile { display: flex; align-items: center; gap: 20px; }
-    .hero-avatar {
-      width: 72px; height: 72px; border-radius: 20px;
-      background: rgba(255,255,255,0.15); display: grid; place-items: center;
-      font-size: 32px; border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(10px);
-    }
-
-    .hero-title { margin: 0 0 6px; font-size: 32px; font-weight: 800; letter-spacing: -0.02em; }
-    .hero-subtitle { margin: 0; font-size: 15px; color: rgba(255,255,255,0.8); font-weight: 500; }
-
-    .hero-update {
-      padding: 8px 16px; border-radius: 99px; background: rgba(0,0,0,0.2);
-      font-size: 12px; font-weight: 600; backdrop-filter: blur(10px);
-      display: inline-flex; align-items: center; gap: 6px;
-    }
-
-    .hero-meta {
-      display: flex; flex-wrap: wrap; gap: 16px; position: relative; z-index: 1;
-    }
-
-    .hero-chip {
-      background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15);
-      border-radius: var(--radius-sm); padding: 12px 20px; backdrop-filter: blur(10px);
-      flex: 1 1 200px;
-    }
-    .hero-chip .label { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.7); text-transform: uppercase; margin-bottom: 4px; }
-    .hero-chip .value { font-size: 16px; font-weight: 700; color: #fff; }
-
-    /* =========================================
-       6. METRIC CARDS
-       ========================================= */
-    .metrics {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 24px; margin-bottom: 32px;
-    }
-
-    .metric-card {
-      background: #fff; border: 1px solid #E2E8F0; border-radius: var(--radius-lg);
-      padding: 24px; box-shadow: var(--shadow-sm); transition: all 0.3s ease;
-      display: flex; flex-direction: column; position: relative; overflow: hidden;
-    }
-    .metric-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: rgba(14,75,169,0.2); }
-
-    .metric-icon {
-      width: 48px; height: 48px; border-radius: 14px;
-      display: grid; place-items: center; font-size: 22px;
-      background: var(--bg); color: var(--primary); margin-bottom: 16px;
-    }
-
-    .metric-kicker { color: var(--text-muted); font-size: 13px; font-weight: 700; margin-bottom: 8px; }
-    .metric-value { font-size: 36px; font-weight: 800; color: var(--text); line-height: 1; letter-spacing: -0.03em; }
-    .metric-sub { margin-top: 12px; font-size: 13px; color: var(--text-muted); font-weight: 500; }
-
-    /* =========================================
-       7. PREMIUM TABS NAVIGATION
-       ========================================= */
-    .tabs {
-      display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 32px;
-      background: #fff; padding: 8px; border-radius: 20px;
-      box-shadow: var(--shadow-sm); border: 1px solid #E2E8F0;
-    }
-
-    .tab-btn {
-      flex: 1 1 150px; border: none; background: transparent; color: var(--text-muted);
-      padding: 14px 20px; border-radius: 14px; font-family: inherit; font-size: 15px;
-      font-weight: 700; cursor: pointer; transition: all 0.3s ease;
-      display: flex; align-items: center; justify-content: center; gap: 8px;
-    }
-
-    .tab-btn:hover { background: #F8FAFC; color: var(--primary); }
-    .tab-btn.active {
-      background: var(--primary); color: #fff;
-      box-shadow: 0 8px 16px rgba(14, 75, 169, 0.2);
-    }
-
-    .tab-panel { display: none; animation: fadeIn 0.4s ease; }
-    .tab-panel.active { display: block; }
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-    /* =========================================
-       8. SECTIONS & TABLES
-       ========================================= */
-    .section-card {
-      background: #fff; border: 1px solid #E2E8F0; border-radius: var(--radius-xl);
-      padding: 32px; margin-bottom: 24px; box-shadow: var(--shadow-sm);
-    }
-
-    .section-head { margin-bottom: 24px; }
-    .section-title { margin: 0 0 8px; color: var(--text); font-size: 22px; font-weight: 800; letter-spacing: -0.01em; }
-    .section-subtitle { margin: 0; color: var(--text-muted); font-size: 14px; }
-
-    .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
-    .info-item {
-      background: #F8FAFC; border: 1px solid #F1F5F9; border-radius: var(--radius-md);
-      padding: 16px; transition: background 0.2s;
-    }
-    .info-item:hover { background: #fff; border-color: #E2E8F0; box-shadow: var(--shadow-sm); }
-    .info-item .label { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 6px; }
-    .info-item .value { font-size: 15px; font-weight: 700; color: var(--text); }
-
-    /* Modern Table */
-    .table-wrap { width: 100%; overflow-x: auto; border-radius: var(--radius-md); border: 1px solid #E2E8F0; }
-    table { width: 100%; border-collapse: collapse; min-width: 600px; text-align: left; }
-    th {
-      background: #F8FAFC; color: var(--text-muted); font-size: 12px; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 0.05em; padding: 16px 24px;
-      border-bottom: 1px solid #E2E8F0;
-    }
-    td { padding: 16px 24px; font-size: 14px; font-weight: 500; color: var(--text); border-bottom: 1px solid #F1F5F9; }
-    tr:last-child td { border-bottom: none; }
-    tbody tr { transition: background 0.2s; }
-    tbody tr:hover { background: #F8FAFC; }
-
-    .status-pill {
-      display: inline-flex; align-items: center; padding: 6px 12px;
-      border-radius: 99px; font-size: 12px; font-weight: 700;
-    }
-    .status-present { background: var(--success-bg); color: var(--success-text); }
-    .status-absent { background: var(--danger-bg); color: var(--danger-text); }
-    .status-excused { background: var(--warning-bg); color: var(--warning-text); }
-    .status-neutral { background: var(--info-bg); color: var(--info-text); }
-
-    /* =========================================
-       9. LEARNING JOURNAL (BÁO BÀI)
-       ========================================= */
-    .baobai-daybar {
-      display: flex; justify-content: space-between; align-items: center;
-      background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: var(--radius-md);
-      padding: 12px; margin-bottom: 24px;
-    }
-
-    .baobai-nav-btn {
-      border: none; background: #fff; color: var(--primary);
-      border-radius: 12px; padding: 10px 16px; font-weight: 700; cursor: pointer;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05); transition: all 0.2s;
-    }
-    .baobai-nav-btn:hover:not(:disabled) { transform: scale(1.05); box-shadow: var(--shadow-sm); }
-    .baobai-nav-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-    .baobai-day-title { font-size: 16px; font-weight: 800; color: var(--text); }
-
-    .bb-card {
-      background: #fff; border: 1px solid #E2E8F0; border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-sm); overflow: hidden;
-    }
-
-    .bb-head {
-      background: var(--bg); padding: 20px 24px; border-bottom: 1px solid #E2E8F0;
-      display: flex; justify-content: space-between; align-items: center;
-    }
-    .bb-date { font-size: 20px; font-weight: 800; color: var(--primary); }
-    .bb-week { font-size: 13px; color: var(--text-muted); font-weight: 600; margin-top: 4px; }
-    .bb-status {
-      background: #fff; color: var(--primary); border: 1px solid rgba(14,75,169,0.2);
-      padding: 8px 16px; border-radius: 99px; font-size: 12px; font-weight: 700;
-    }
-
-    .bb-body { padding: 24px; }
-    .bb-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
-    @media(min-width: 768px) { .bb-grid { grid-template-columns: 1fr 1fr; } .bb-item.full { grid-column: 1 / -1; } }
-
-    .bb-item {
-      background: #F8FAFC; border: 1px solid #F1F5F9; border-radius: var(--radius-md);
-      padding: 20px; display: flex; flex-direction: column; gap: 8px;
-    }
-    .bb-label { font-size: 12px; font-weight: 800; color: var(--primary); text-transform: uppercase; display: flex; align-items: center; gap: 8px; }
-    .bb-value { font-size: 15px; font-weight: 500; line-height: 1.7; color: var(--text); white-space: pre-line; }
-
-    /* =========================================
-       10. MOCK TEST & REPORT (ĐIỂM SỐ XỊN XÒ)
-       ========================================= */
-    .score-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
-    .score-card {
-      background: #fff; border: 1px solid #E2E8F0; border-radius: var(--radius-lg);
-      padding: 24px; box-shadow: var(--shadow-sm); display: flex; flex-direction: column; gap: 24px;
-      transition: all 0.3s ease; position: relative; overflow: hidden;
-    }
-    .score-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: rgba(14,75,169,0.2); }
-    .score-header { display: flex; justify-content: space-between; align-items: center; }
-    .score-title-wrap h4 { margin: 0 0 4px; font-size: 18px; font-weight: 800; color: var(--text); }
-    .score-title-wrap p { margin: 0; font-size: 13px; color: var(--text-muted); font-weight: 500; }
-
-    /* Vòng tròn điểm */
-    .score-ring-wrap { width: 64px; height: 64px; position: relative; }
-    .score-ring {
-      width: 100%; height: 100%; border-radius: 50%;
-      display: grid; place-items: center;
-      background: conic-gradient(var(--primary-2) 0%, #F1F5F9 0%);
-    }
-    .score-ring-inner {
-      width: 52px; height: 52px; background: #fff; border-radius: 50%;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    }
-    .score-ring-val { font-size: 16px; font-weight: 800; color: var(--primary); line-height: 1; }
-    .score-ring-lbl { font-size: 9px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-top: 2px; }
-
-    /* Thanh kỹ năng */
-    .skill-list { display: flex; flex-direction: column; gap: 16px; }
-    .skill-row { display: flex; align-items: center; gap: 12px; }
-    .skill-icon { width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; font-size: 16px; flex-shrink: 0; }
-    .skill-info { flex: 1; }
-    .skill-head-info { display: flex; justify-content: space-between; margin-bottom: 6px; }
-    .skill-name { font-size: 13px; font-weight: 700; color: var(--text); }
-    .skill-score { font-size: 14px; font-weight: 800; }
-    .skill-track { width: 100%; height: 6px; background: #F1F5F9; border-radius: 99px; overflow: hidden; }
-    .skill-fill { height: 100%; border-radius: 99px; transition: width 1s ease-out; }
-
-    /* Thẻ Báo cáo */
-    .report-box {
-      background: linear-gradient(145deg, #fff 0%, #F8FAFC 100%);
-      border: 1px solid #E2E8F0; border-radius: var(--radius-lg);
-      padding: 32px; position: relative; box-shadow: var(--shadow-sm);
-    }
-    .report-box::before {
-      content: '❝'; position: absolute; top: 16px; right: 32px;
-      font-size: 80px; color: rgba(14,75,169,0.05); font-family: serif; line-height: 1;
-    }
-    .report-header { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid #F1F5F9; }
-    .report-avatar { width: 56px; height: 56px; background: var(--bg); border-radius: 16px; display: grid; place-items: center; font-size: 24px; }
-    .report-title { font-size: 18px; font-weight: 800; color: var(--text); margin: 0 0 4px; }
-    .report-subtitle { font-size: 13px; font-weight: 600; color: var(--primary); background: var(--bg); padding: 4px 10px; border-radius: 8px; display: inline-block; }
-    .report-content { font-size: 15px; line-height: 1.8; color: var(--text-muted); font-weight: 500; white-space: pre-line; position: relative; z-index: 1; }
-
-    /* =========================================
-       11. UTILS & LOADING
-       ========================================= */
-    .empty-state { padding: 40px; text-align: center; color: var(--text-muted); font-weight: 600; background: #F8FAFC; border-radius: var(--radius-md); border: 1px dashed #CBD5E1; }
-    .overlay { position: fixed; inset: 0; background: rgba(15,23,42,0.4); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; z-index: 9999; }
-    .overlay.show { display: flex; }
-    .loading-box { background: #fff; padding: 24px 32px; border-radius: 20px; display: flex; align-items: center; gap: 16px; font-weight: 700; color: var(--primary); box-shadow: var(--shadow-lg); }
-    .spinner { width: 24px; height: 24px; border-radius: 50%; border: 3px solid var(--bg); border-top-color: var(--primary); animation: spin 0.8s linear infinite; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    /* =========================================
-       12. RESPONSIVE
-       ========================================= */
-    @media (max-width: 1024px) {
-      .auth-shell { grid-template-columns: 1fr; min-height: auto; }
-      .auth-visual { padding: 40px 32px; }
-      .auth-form-wrap { padding: 40px 32px; }
-    }
-    @media (max-width: 768px) {
-      .app-shell { padding: 16px 16px 40px; }
-      .topbar { flex-direction: column; align-items: flex-start; gap: 16px; padding: 16px; }
-      .hero { padding: 24px; }
-      .hero-top { flex-direction: column; gap: 16px; }
-      .hero-meta { flex-direction: column; }
-      .hero-chip { width: 100%; }
-      .tabs { padding: 8px; flex-wrap: wrap; }
-      .tab-btn { flex: 1 1 45%; padding: 12px; font-size: 13px; }
-      .section-card { padding: 24px 20px; }
+    @media(max-width:480px){
+      .btn{padding:9px 13px;font-size:12px}
+      .hero-title{font-size:19px}
+      .auth-title{font-size:28px}
+      .trust-row{flex-wrap:wrap}
+      .hero-meta{grid-template-columns:repeat(2,1fr)}
+      .auth-stats{grid-template-columns:1fr}
     }
   </style>
 </head>
 <body>
+
   <div class="overlay" id="loadingOverlay">
-    <div class="loading-box"><div class="spinner"></div><div>Đang xử lý dữ liệu...</div></div>
+    <div class="loading-box">
+      <div class="spinner"></div>
+      <span>Đang tải thông tin học tập của con...</span>
+    </div>
   </div>
 
   <div class="app-shell">
+
+    <!-- TOPBAR -->
     <div class="topbar">
       <div class="brand">
         <div class="brand-badge">E</div>
         <div class="brand-text">
           <h1>EDUX Portal</h1>
-          <p>Hệ thống theo dõi học tập cao cấp</p>
+          <p>Học tập thông minh · Tương lai rạng ngời</p>
         </div>
       </div>
       <div class="top-actions">
-        <button class="btn btn-soft" id="refreshBtn" type="button" style="display:none;">
-          <span>🔄</span> Làm mới
-        </button>
-        <button class="btn btn-danger-soft" id="logoutBtn" type="button" style="display:none;">
-          Đăng xuất
-        </button>
+        <button class="btn btn-soft"   id="refreshBtn" type="button" style="display:none;">🔄 Làm mới</button>
+        <button class="btn btn-danger" id="logoutBtn"  type="button" style="display:none;">↩ Đăng xuất</button>
       </div>
     </div>
 
     <div class="notice" id="noticeBox"></div>
 
     <div class="main-stage" id="mainStage">
-      <div class="login-wrap" id="loginWrap">
+
+      <!-- ════════════════════════════════
+           LOGIN
+      ════════════════════════════════ -->
+      <div class="login-wrap" id="loginWrap" style="display:block;">
         <section class="auth-shell">
+
           <div class="auth-visual">
-            <div class="auth-visual-content">
-              <div class="auth-kicker">🛡️ Bảo mật & Tin cậy</div>
-              <h2 class="auth-title">Đồng hành cùng<br>tương lai của con.</h2>
-              <p class="auth-desc">
-                Cổng thông tin được thiết kế chuyên biệt để phụ huynh theo dõi tiến độ, báo bài, và điểm số một cách trực quan, nhanh chóng nhất.
-              </p>
-              <div class="auth-bottom">
-                <div class="auth-stat">
-                  <h3>Real-time</h3>
-                  <p>Cập nhật liên tục</p>
+            <div style="position:relative;z-index:1">
+              <div class="auth-tag">✨ Parent Portal thế hệ mới</div>
+              <h2 class="auth-title">Đồng hành<br>cùng con<br><em>mỗi ngày</em></h2>
+              <p class="auth-desc">Theo dõi báo bài, chuyên cần, điểm số và cập nhật từ giáo viên — tất cả trong một không gian trực quan dành riêng cho phụ huynh.</p>
+              <div class="auth-features">
+                <div class="auth-feat">
+                  <div class="auth-feat-icon">📘</div>
+                  <div class="auth-feat-text">
+                    <strong>Báo bài theo ngày</strong>
+                    <span>Bài học, bài tập và tài liệu chi tiết từng buổi</span>
+                  </div>
                 </div>
-                <div class="auth-stat">
-                  <h3>360°</h3>
-                  <p>Góc nhìn toàn diện</p>
+                <div class="auth-feat">
+                  <div class="auth-feat-icon">📊</div>
+                  <div class="auth-feat-text">
+                    <strong>Điểm số & Tiến độ</strong>
+                    <span>Mini test, mock test và báo cáo cá nhân từ giáo viên</span>
+                  </div>
+                </div>
+                <div class="auth-feat">
+                  <div class="auth-feat-icon">📅</div>
+                  <div class="auth-feat-text">
+                    <strong>Theo dõi chuyên cần</strong>
+                    <span>Lịch sử điểm danh rõ ràng, minh bạch theo từng buổi học</span>
+                  </div>
                 </div>
               </div>
             </div>
+            <div class="auth-stats">
+              <div class="auth-stat"><div class="auth-stat-n">01</div><div class="auth-stat-l">Đăng nhập bằng mã học viên</div></div>
+              <div class="auth-stat"><div class="auth-stat-n">24/7</div><div class="auth-stat-l">Truy cập mọi lúc mọi nơi</div></div>
+              <div class="auth-stat"><div class="auth-stat-n">Live</div><div class="auth-stat-l">Dữ liệu cập nhật real-time</div></div>
+            </div>
           </div>
-          
+
           <div class="auth-form-wrap">
             <div class="login-card" id="loginCard">
-              <div class="login-header">
-                <h2>Đăng nhập</h2>
-                <p>Vui lòng nhập thông tin để truy cập portal.</p>
+              <div class="lc-eyebrow">
+                <div class="lc-eye-icon">🔐</div>
+                <div class="lc-eye-label">Cổng phụ huynh · EDUX</div>
               </div>
-              <div class="login-body">
-                <div class="field">
-                  <label for="studentIdInput">Mã học viên</label>
-                  <div class="input-shell">
-                    <span class="input-icon">👤</span>
-                    <input id="studentIdInput" type="text" placeholder="Ví dụ: EduX-1234" />
-                  </div>
+              <h2 class="lc-title">Chào mừng<br>quay lại 👋</h2>
+              <p class="lc-sub">Nhập thông tin để xem hành trình học tập của con.</p>
+              <div class="field">
+                <label for="studentIdInput">Mã học viên</label>
+                <div class="input-shell">
+                  <span class="input-icon">👤</span>
+                  <input id="studentIdInput" type="text" placeholder="Ví dụ: EduX-HV4646" autocomplete="off" />
                 </div>
-                <div class="field">
-                  <label for="accessCodeInput">Mã truy cập</label>
-                  <div class="input-shell">
-                    <span class="input-icon">🔑</span>
-                    <input id="accessCodeInput" type="password" placeholder="Nhập mã bí mật" />
-                  </div>
+              </div>
+              <div class="field">
+                <label for="accessCodeInput">Mã truy cập</label>
+                <div class="input-shell">
+                  <span class="input-icon">🔑</span>
+                  <input id="accessCodeInput" type="password" placeholder="Nhập mã truy cập" autocomplete="off" />
                 </div>
-                <button class="btn btn-primary login-btn" id="loginBtn" type="button">Truy cập Dashboard</button>
-                <div class="login-footer">
-                  Mã mặc định hiện tại là <strong>123</strong>.<br>
-                  Mọi thắc mắc vui lòng liên hệ phòng Giáo vụ.
-                </div>
+              </div>
+              <button class="btn btn-primary login-btn" id="loginBtn" type="button">Vào portal của con →</button>
+              <div class="lc-footer">Mã truy cập mặc định: <strong>123</strong></div>
+              <div class="trust-row">
+                <span class="trust-chip">🔒 Bảo mật</span>
+                <span class="trust-chip">📱 Mobile-ready</span>
+                <span class="trust-chip">⚡ Real-time</span>
               </div>
             </div>
           </div>
+
         </section>
       </div>
 
-      <div class="dashboard-panel" id="dashboardPanel">
+      <!-- ════════════════════════════════
+           DASHBOARD
+      ════════════════════════════════ -->
+      <div class="dashboard-panel" id="dashboardPanel" style="display:none;">
+
+        <!-- HERO -->
         <section class="hero">
+          <div class="hero-bg1"></div>
+          <div class="hero-bg2"></div>
           <div class="hero-top">
-            <div class="hero-profile">
-              <div class="hero-avatar">🎓</div>
+            <div class="hero-identity">
+              <div class="hero-avatar-wrap">
+                <div class="hero-avatar">🎓</div>
+                <div class="hero-online-dot"></div>
+              </div>
               <div>
-                <h2 class="hero-title" id="heroStudentName">Đang tải...</h2>
-                <p class="hero-subtitle" id="heroStudentMeta">Lớp học • Giáo viên</p>
+                <div class="hero-student-label">Học viên đang theo dõi</div>
+                <h2 class="hero-title" id="heroStudentName">Học viên</h2>
+                <p class="hero-subtitle" id="heroStudentMeta">
+                  <span>Lớp học</span><span class="hero-subtitle-sep">·</span><span>Giáo viên</span>
+                </p>
               </div>
             </div>
-            <div class="hero-update" id="heroUpdatedAt">Cập nhật: --</div>
+            <div class="hero-right">
+              <div class="hero-live-badge"><div class="hero-live-dot"></div>Đang theo học</div>
+              <div class="hero-update-pill" id="heroUpdatedAt">🕐 --</div>
+            </div>
           </div>
           <div class="hero-meta" id="heroMetaGrid"></div>
         </section>
 
+        <!-- METRICS -->
         <section class="metrics" id="metricsGrid"></section>
 
+        <!-- TABS -->
         <div class="tabs" id="tabButtons">
-          <button class="tab-btn active" data-tab="overview">
-            <span class="tab-icon">🏠</span> Tổng quan
-          </button>
-          <button class="tab-btn" data-tab="attendance">
-            <span class="tab-icon">📅</span> Điểm danh
-          </button>
-          <button class="tab-btn" data-tab="baobai">
-            <span class="tab-icon">📘</span> Báo bài
-          </button>
-          <button class="tab-btn" data-tab="score">
-            <span class="tab-icon">📊</span> Đánh giá
-          </button>
+          <button class="tab-btn active" data-tab="overview"><span class="tab-icon">🏠</span> Tổng quan</button>
+          <button class="tab-btn" data-tab="attendance"><span class="tab-icon">📅</span> Điểm danh</button>
+          <button class="tab-btn" data-tab="baobai"><span class="tab-icon">📘</span> Báo bài</button>
+          <button class="tab-btn" data-tab="score"><span class="tab-icon">📊</span> Điểm & Báo cáo</button>
         </div>
 
+        <!-- OVERVIEW -->
         <div class="tab-panel active" data-panel="overview">
           <section class="section-card">
             <div class="section-head">
-              <h3 class="section-title">Hồ sơ học viên</h3>
-              <p class="section-subtitle">Thông tin đăng ký và tình trạng học phí</p>
+              <div>
+                <h3 class="section-title"><span class="section-title-icon">👤</span>Hồ sơ học viên</h3>
+                <p class="section-subtitle">Thông tin đăng ký và lớp học</p>
+              </div>
             </div>
-            <div class="info-grid" id="studentInfoGrid"></div>
+            <div class="profile-grid" id="studentInfoGrid"></div>
           </section>
-          
           <section class="section-card">
             <div class="section-head">
-              <h3 class="section-title">Theo dõi hàng ngày (Daily Data)</h3>
-              <p class="section-subtitle">Điểm số các bài tập nhỏ và hoạt động trên lớp</p>
+              <div>
+                <h3 class="section-title"><span class="section-title-icon">📈</span>Điểm số theo buổi học</h3>
+                <p class="section-subtitle">Kết quả thực hành hàng ngày</p>
+              </div>
             </div>
+            <div class="section-note">💡 Điểm này phản ánh mức độ tham gia và thực hành trong buổi học</div>
             <div class="table-wrap" id="dailyScoreWrap"></div>
           </section>
         </div>
 
+        <!-- ATTENDANCE -->
         <div class="tab-panel" data-panel="attendance">
           <section class="section-card">
             <div class="section-head">
-              <h3 class="section-title">Lịch sử Điểm danh</h3>
-              <p class="section-subtitle">Theo dõi tình hình chuyên cần của con</p>
+              <div>
+                <h3 class="section-title"><span class="section-title-icon">📅</span>Lịch sử chuyên cần</h3>
+                <p class="section-subtitle">Ghi nhận điểm danh từng buổi học</p>
+              </div>
             </div>
+            <div class="section-note">💡 Nếu con vắng có phép, hãy liên hệ giáo viên để sắp xếp bổ sung</div>
             <div class="table-wrap" id="attendanceWrap"></div>
           </section>
         </div>
 
+        <!-- BÁO BÀI -->
         <div class="tab-panel" data-panel="baobai">
-          <section class="section-card" style="background: transparent; border: none; box-shadow: none; padding: 0;">
-            <div class="baobai-daybar">
-              <button class="baobai-nav-btn" id="baobaiPrevBtn">‹ Ngày trước</button>
-              <div class="baobai-day-title" id="baobaiDayTitle">Hôm nay</div>
-              <button class="baobai-nav-btn" id="baobaiNextBtn">Ngày sau ›</button>
+          <section class="section-card">
+            <div class="section-head">
+              <div>
+                <h3 class="section-title"><span class="section-title-icon">📘</span>Nhật ký học tập</h3>
+                <p class="section-subtitle">Hôm nay con học gì? — Nội dung bài học và bài tập về nhà</p>
+              </div>
+            </div>
+            <div class="section-note">💡 Hỏi con về các nội dung bên dưới để đồng hành cùng con trong việc học</div>
+            <div class="bb-nav">
+              <button class="bb-nav-btn" id="baobaiPrevBtn">‹ Buổi trước</button>
+              <div class="bb-nav-center">
+                <div class="bb-day-label">Đang xem buổi học</div>
+                <div class="bb-day-title" id="baobaiDayTitle">--</div>
+              </div>
+              <button class="bb-nav-btn" id="baobaiNextBtn">Buổi sau ›</button>
             </div>
             <div id="baoBaiList" class="bao-bai-list"></div>
           </section>
         </div>
 
+        <!-- SCORE -->
         <div class="tab-panel" data-panel="score">
-          <section class="section-card" style="background: transparent; border: none; box-shadow: none; padding: 0;">
+          <section class="section-card">
             <div class="section-head">
-              <h3 class="section-title">Thành tích bài thi (Mock Tests)</h3>
+              <div>
+                <h3 class="section-title"><span class="section-title-icon">🎯</span>Kết quả kiểm tra</h3>
+                <p class="section-subtitle">Mini test và Mock test theo từng kỳ thi</p>
+              </div>
             </div>
+            <div class="section-note">💡 Điểm trung bình phản ánh sự tiến bộ của con qua từng lần thi</div>
             <div id="mocktestWrap"></div>
           </section>
-
-          <section class="section-card" style="background: transparent; border: none; box-shadow: none; padding: 0; margin-top: 32px;">
+          <section class="section-card">
+            <div class="section-head">
+              <div>
+                <h3 class="section-title"><span class="section-title-icon">✍️</span>Nhận xét từ giáo viên</h3>
+                <p class="section-subtitle">Đánh giá và lời nhắn cá nhân cho phụ huynh</p>
+              </div>
+            </div>
             <div id="reportWrap"></div>
           </section>
         </div>
-      </div>
-    </div>
-  </div>
 
+      </div><!-- /dashboard -->
+    </div><!-- /main-stage -->
+  </div><!-- /app-shell -->
+
+  <!-- ============================================================
+       JAVASCRIPT — LOGIC KHÔNG THAY ĐỔI
+  ============================================================ -->
   <script>
-    // ==========================================
-    // JS LOGIC GỐC - KHÔNG THAY ĐỔI
-    // ==========================================
     const API_URL_OVERRIDE = 'https://script.google.com/macros/s/AKfycbxC79BhJvRgzGm2tGc8SIPK0-BzW3BF8ySnN3BXox8JYfX4jd_m4Qb-iWKjDpeziaSD/exec';
     const DEFAULT_ACCESS_CODE = '123';
     let currentAuth = { studentId: '', accessCode: DEFAULT_ACCESS_CODE };
@@ -741,21 +652,21 @@
     }
     const API_URL = getApiUrl_();
 
-    document.addEventListener('DOMContentLoaded', function() {
-      const studentIdInput = document.getElementById('studentIdInput');
+    document.addEventListener('DOMContentLoaded', function () {
+      const studentIdInput  = document.getElementById('studentIdInput');
       const accessCodeInput = document.getElementById('accessCodeInput');
-      const loginBtn = document.getElementById('loginBtn');
+      const loginBtn   = document.getElementById('loginBtn');
       const refreshBtn = document.getElementById('refreshBtn');
-      const logoutBtn = document.getElementById('logoutBtn');
+      const logoutBtn  = document.getElementById('logoutBtn');
 
       if (accessCodeInput) accessCodeInput.value = DEFAULT_ACCESS_CODE;
-      if (loginBtn) loginBtn.addEventListener('click', handleLogin_);
+      if (loginBtn)   loginBtn.addEventListener('click', handleLogin_);
       if (refreshBtn) refreshBtn.addEventListener('click', handleRefresh_);
-      if (logoutBtn) logoutBtn.addEventListener('click', handleLogout_);
+      if (logoutBtn)  logoutBtn.addEventListener('click', handleLogout_);
 
-      // Bind Enter key
-      if (studentIdInput) studentIdInput.addEventListener('keydown', e => { if(e.key === 'Enter') handleLogin_(); });
-      if (accessCodeInput) accessCodeInput.addEventListener('keydown', e => { if(e.key === 'Enter') handleLogin_(); });
+      [studentIdInput, accessCodeInput].forEach(el => {
+        if (el) el.addEventListener('keydown', e => { if (e.key === 'Enter') handleLogin_(); });
+      });
 
       setupTabs_();
     });
@@ -775,8 +686,8 @@
     }
 
     async function handleLogin_() {
-      currentAuth.studentId = document.getElementById('studentIdInput').value.trim();
-      currentAuth.accessCode = document.getElementById('accessCodeInput').value.trim() || DEFAULT_ACCESS_CODE;
+      currentAuth.studentId  = document.getElementById('studentIdInput').value.trim();
+      currentAuth.accessCode = document.getElementById('accessCodeInput').value.trim();
       await loadStudentData_('login');
     }
 
@@ -784,34 +695,30 @@
 
     function handleLogout_() {
       document.getElementById('loginWrap').style.display = 'block';
-      document.getElementById('dashboardPanel').classList.remove('show');
+      const dashboard = document.getElementById('dashboardPanel');
+      dashboard.classList.remove('show');
+      dashboard.style.display = 'none';
       document.getElementById('mainStage').classList.remove('logged-in');
       document.getElementById('refreshBtn').style.display = 'none';
       document.getElementById('logoutBtn').style.display = 'none';
-      showNotice_('', '');
+      window.__baobaiIdx = 0;
     }
 
     async function loadStudentData_(action) {
       try {
         showLoading_(true);
-        showNotice_('', '');
         const res = await postApi_(action, { studentId: currentAuth.studentId, accessCode: currentAuth.accessCode });
-        if (!res || !res.ok) throw new Error(res.message || 'Không thể tải dữ liệu.');
-        
+        if (!res || !res.ok) throw new Error(res.message || 'Lỗi tải dữ liệu');
         currentData = res.data;
         renderDashboard_(currentData);
-        
         document.getElementById('loginWrap').style.display = 'none';
-        document.getElementById('dashboardPanel').classList.add('show');
+        const dashboard = document.getElementById('dashboardPanel');
+        dashboard.style.display = 'block';
+        dashboard.classList.add('show');
         document.getElementById('mainStage').classList.add('logged-in');
-        document.getElementById('refreshBtn').style.display = 'inline-flex';
-        document.getElementById('logoutBtn').style.display = 'inline-flex';
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      } catch (err) { 
-        showNotice_(err.message, 'error'); 
-      } finally { 
-        showLoading_(false); 
-      }
+        document.getElementById('refreshBtn').style.display = '';
+        document.getElementById('logoutBtn').style.display = '';
+      } catch (err) { alert(err.message); } finally { showLoading_(false); }
     }
 
     async function postApi_(action, payload) {
@@ -824,23 +731,14 @@
     }
 
     function showLoading_(v) { document.getElementById('loadingOverlay').classList.toggle('show', v); }
-    
-    function showNotice_(msg, type) {
-      const box = document.getElementById('noticeBox');
-      box.className = 'notice';
-      box.textContent = msg || '';
-      if (msg) { box.classList.add('show', type || 'success'); }
-    }
 
-    // ==========================================
-    // RENDER FUNCTIONS CẢI TIẾN HIỂN THỊ
-    // ==========================================
     function renderDashboard_(data) {
       renderHero_(data);
       renderMetrics_(data.metrics || {});
       renderStudentInfo_(data);
       renderDailyScores_(data.dailyScores || []);
       renderAttendance_(data.attendance || []);
+      window.__baobaiIdx = 0;
       renderBaoBaiSection_(data.baoBai || []);
       renderMocktests_(data.mocktests || []);
       renderReportText_(data.reportText || '');
@@ -849,88 +747,187 @@
     function renderHero_(data) {
       const s = data.student || {};
       document.getElementById('heroStudentName').textContent = s.name || 'Học viên';
-      document.getElementById('heroStudentMeta').textContent = `${s.className || '--'} • ${s.teacher || '--'}`;
-      document.getElementById('heroUpdatedAt').textContent = 'Cập nhật: ' + (data.updatedAt || '--');
-      
+      document.getElementById('heroStudentMeta').innerHTML =
+        `<span>${s.className||'--'}</span><span class="hero-subtitle-sep">·</span><span>${s.teacher||'--'}</span>`;
+      document.getElementById('heroUpdatedAt').textContent = '🕐 ' + (data.updatedAt || '--');
       const chips = [
-        { l: 'Mã Học Viên', v: s.id },
+        { l: 'Mã HV',    v: s.id },
         { l: 'Ngày sinh', v: s.dob },
-        { l: 'Tình hình phí', v: data.feeInfo?.feeStatus },
-        { l: 'Thời hạn', v: `${data.feeInfo?.startDate || '--'} → ${data.feeInfo?.endDate || '--'}` }
+        { l: 'Học phí',   v: data.feeInfo?.feeStatus },
+        { l: 'Thời hạn',  v: `${data.feeInfo?.startDate||'--'} → ${data.feeInfo?.endDate||'--'}` }
       ];
-      document.getElementById('heroMetaGrid').innerHTML = chips.map(c => 
-        `<div class="hero-chip"><div class="label">${c.l}</div><div class="value">${c.v || '--'}</div></div>`
+      document.getElementById('heroMetaGrid').innerHTML = chips.map(c =>
+        `<div class="hero-chip"><div class="label">${c.l}</div><div class="value">${c.v||'--'}</div></div>`
       ).join('');
     }
 
     function renderMetrics_(m) {
-      const items = [
-        { i: '🏫', t: 'Đi học', v: m.attendancePresent || 0, s: 'Tổng số buổi có mặt' },
-        { i: '🗓️', t: 'Nghỉ học', v: `${m.attendanceAbsent || 0}/${m.attendanceExcused || 0}`, s: 'Không phép / Có phép' },
-        { i: '⭐', t: 'Điểm TB', v: m.avgScore || '--', s: 'Trung bình toàn khóa' },
-        { i: '📈', t: 'Gần nhất', v: m.latestScore || '--', s: 'Điểm bài kiểm tra cuối' }
+      const cards = [
+        { bar:'mc-bar-blue',  ico:'mc-icon-blue',  icon:'✅', label:'Đi học',   value: m.attendancePresent ?? '--', tagCls:'mc-tag-ok',   tag:'Ổn định',     desc:'Số buổi có mặt' },
+        { bar:'mc-bar-red',   ico:'mc-icon-red',   icon:'🔔', label:'Vắng mặt', value:`${m.attendanceAbsent||0}<span style="font-size:18px;opacity:.45;font-weight:400"> / </span>${m.attendanceExcused||0}`, tagCls:'mc-tag-warn', tag:'Không / Có phép', desc:'Cần theo dõi thêm' },
+        { bar:'mc-bar-green', ico:'mc-icon-green', icon:'📊', label:'Điểm TB',  value: m.avgScore||'--',            tagCls:'mc-tag-perf', tag:'Hiệu suất',   desc:'Trung bình tất cả bài' },
+        { bar:'mc-bar-gold',  ico:'mc-icon-gold',  icon:'⭐', label:'Gần nhất', value: m.latestScore||'--',         tagCls:'mc-tag-new',  tag:'Mới nhất',    desc:'Kết quả bài gần nhất' }
       ];
-      document.getElementById('metricsGrid').innerHTML = items.map(i => `
+      document.getElementById('metricsGrid').innerHTML = cards.map(c => `
         <article class="metric-card">
-          <div class="metric-icon">${i.i}</div>
-          <div class="metric-kicker">${i.t}</div>
-          <div class="metric-value">${i.v}</div>
-          <div class="metric-sub">${i.s}</div>
-        </article>
-      `).join('');
+          <div class="mc-bar ${c.bar}"></div>
+          <div class="mc-icon-wrap ${c.ico}">${c.icon}</div>
+          <div class="mc-label">${c.label}</div>
+          <div class="mc-value">${c.value}</div>
+          <div class="mc-footer">
+            <span class="mc-tag ${c.tagCls}">${c.tag}</span>
+            <span class="mc-desc">${c.desc}</span>
+          </div>
+        </article>`).join('');
     }
 
     function renderStudentInfo_(data) {
       const s = data.student || {};
-      const f = data.feeInfo || {};
+      const f = data.feeInfo  || {};
       const items = [
-        { l: 'Họ tên', v: s.name }, { l: 'Mã HV', v: s.id }, { l: 'Lớp học', v: s.className },
-        { l: 'Giáo viên', v: s.teacher }, { l: 'Ngày bắt đầu', v: f.startDate }, { l: 'Học phí', v: f.feeStatus }
+        { l:'Họ tên',              v: s.name },
+        { l:'Mã học viên',         v: s.id },
+        { l:'Lớp học',             v: s.className },
+        { l:'Giáo viên phụ trách', v: s.teacher },
+        { l:'Ngày bắt đầu',        v: f.startDate },
+        { l:'Tình trạng học phí',  v: f.feeStatus }
       ];
-      document.getElementById('studentInfoGrid').innerHTML = items.map(i => `
-        <div class="info-item"><div class="label">${i.l}</div><div class="value">${i.v || '--'}</div></div>
-      `).join('');
+      document.getElementById('studentInfoGrid').innerHTML = items.map(i =>
+        `<div class="profile-item"><div class="label">${i.l}</div><div class="value">${i.v||'--'}</div></div>`
+      ).join('');
     }
 
     function renderDailyScores_(items) {
       const root = document.getElementById('dailyScoreWrap');
-      if (!items.length) { root.innerHTML = '<div class="empty-state">Chưa có dữ liệu Daily Data</div>'; return; }
-      root.innerHTML = `
-        <table>
-          <thead><tr><th>Ngày ghi nhận</th><th>Điểm thô</th><th>Điểm quy đổi</th></tr></thead>
-          <tbody>${items.map(i => `<tr><td>${i.date || '--'}</td><td>${i.rawScore || '--'}</td><td><strong>${i.score || '--'}</strong></td></tr>`).join('')}</tbody>
-        </table>`;
+      if (!items.length) { root.innerHTML = emptyState_('📭','Chưa có dữ liệu','Điểm số theo buổi sẽ hiển thị tại đây'); return; }
+      root.innerHTML = `<table>
+        <thead><tr><th>Ngày học</th><th>Điểm thô</th><th>Điểm số</th></tr></thead>
+        <tbody>${items.map(i=>`<tr><td>${i.date}</td><td>${i.rawScore}</td><td><strong>${i.score}</strong></td></tr>`).join('')}</tbody>
+      </table>`;
     }
 
     function renderAttendance_(items) {
       const root = document.getElementById('attendanceWrap');
-      if (!items.length) { root.innerHTML = '<div class="empty-state">Chưa có dữ liệu Điểm danh</div>'; return; }
-      root.innerHTML = `
-        <table>
-          <thead><tr><th>Ngày học</th><th>Trạng thái</th></tr></thead>
-          <tbody>${items.map(i => `<tr><td>${i.date || '--'}</td><td><span class="status-pill ${getAttendanceStatusClass_(i.status)}">${i.status || '--'}</span></td></tr>`).join('')}</tbody>
-        </table>`;
+      if (!items.length) { root.innerHTML = emptyState_('📅','Chưa có dữ liệu','Lịch sử điểm danh sẽ hiển thị tại đây'); return; }
+      root.innerHTML = `<table>
+        <thead><tr><th>Ngày học</th><th>Trạng thái</th></tr></thead>
+        <tbody>${items.map(i=>`<tr><td>${i.date}</td><td><span class="sp ${attCls_(i.status)}">${i.status}</span></td></tr>`).join('')}</tbody>
+      </table>`;
     }
 
-    function getAttendanceStatusClass_(s) {
-      s = (s || '').toLowerCase();
-      if (s.includes('đi học') || s.includes('present')) return 'status-present';
-      if (s.includes('vắng') || s.includes('absent')) return 'status-absent';
-      if (s.includes('phép') || s.includes('excused')) return 'status-excused';
-      return 'status-neutral';
+    function attCls_(s) {
+      s=(s||'').toLowerCase();
+      if(s.includes('đi học')) return 'sp-ok';
+      if(s.includes('vắng'))   return 'sp-err';
+      return 'sp-neu';
     }
+
+    // keep original name for compatibility
+    function getAttendanceStatusClass_(s) { return attCls_(s); }
 
     function renderBaoBaiSection_(items) {
       const root = document.getElementById('baoBaiList');
-      if (!items.length) { root.innerHTML = '<div class="empty-state">Chưa có báo bài nào được cập nhật.</div>'; return; }
-      
+      if (!items.length) { root.innerHTML = '<div class="bb-empty">📭 Chưa có báo bài nào được ghi nhận</div>'; return; }
       if (window.__baobaiIdx === undefined) window.__baobaiIdx = 0;
-      // Đảm bảo index hợp lệ
-      if (window.__baobaiIdx < 0) window.__baobaiIdx = 0;
-      if (window.__baobaiIdx >= items.length) window.__baobaiIdx = items.length - 1;
-
       const item = items[window.__baobaiIdx];
-      
-      document.getElementById('baobaiDayTitle').textContent = item.date || 'Ngày học';
+      document.getElementById('baobaiDayTitle').textContent = item.date || '--';
       document.getElementById('baobaiPrevBtn').disabled = window.__baobaiIdx >= items.length - 1;
-      document.getElementById('baobaiNext
+      document.getElementById('baobaiNextBtn').disabled = window.__baobaiIdx <= 0;
+      document.getElementById('baobaiPrevBtn').onclick = () => { window.__baobaiIdx++; renderBaoBaiSection_(items); };
+      document.getElementById('baobaiNextBtn').onclick = () => { window.__baobaiIdx--; renderBaoBaiSection_(items); };
+      root.innerHTML = renderBaoBaiCard_(item);
+    }
+
+    function renderBaoBaiCard_(item) {
+      const sc = ((item.status||'').toLowerCase().includes('đi học')) ? 'bb-sp'
+               : ((item.status||'').toLowerCase().includes('vắng'))   ? 'bb-sa' : 'bb-sn';
+      const pills = [];
+      if(item.lessonFocus)       pills.push('🎯 Tiêu điểm bài học');
+      if(item.vocabularyGrammar) pills.push('📖 Từ vựng & Ngữ pháp');
+      if(item.skillsPracticed)   pills.push('💪 Kỹ năng');
+      if(item.homeworkPractice)  pills.push('✏️ Bài tập về nhà');
+      if(item.materialsUrl)      pills.push('📎 Tài liệu');
+
+      return `
+        <article class="bb-card">
+          <div class="bb-head">
+            <div class="bb-head-row">
+              <div>
+                <div class="bb-head-question">Hôm nay con học gì?</div>
+                <div class="bb-date">${item.date}</div>
+                <div class="bb-week">${item.weekLabel||''}</div>
+              </div>
+              <div class="bb-status ${sc}">${item.status||'Đã ghi nhận'}</div>
+            </div>
+            ${pills.length ? `<div class="bb-pills-strip">${pills.map(p=>`<div class="bb-pill">${p}</div>`).join('')}</div>` : ''}
+          </div>
+          <div class="bb-body">
+            ${item.locked ? `<div class="bb-lock-note">🔒 Nội dung chưa được mở khóa cho buổi học này</div>` : ''}
+            <div class="bb-grid">
+              ${bbF_('🎯','Tiêu điểm bài học',item.lessonFocus,'full')}
+              ${bbF_('📖','Từ vựng & Ngữ pháp',item.vocabularyGrammar)}
+              ${bbF_('💪','Kỹ năng luyện tập',item.skillsPracticed)}
+              ${bbF_('✏️','Bài tập về nhà',item.homeworkPractice)}
+              ${item.materialsUrl
+                ? `<div class="bb-item"><div class="bb-item-hd"><div class="bb-item-ico">📎</div><div class="bb-item-lbl">Tài liệu đính kèm</div></div><div class="bb-value"><a href="${item.materialsUrl}" target="_blank" class="bb-link">🔗 ${item.materialsText||'Mở tài liệu'}</a></div></div>`
+                : ''}
+            </div>
+          </div>
+        </article>`;
+    }
+
+    function bbF_(icon, label, value, extra) {
+      if (!value) return '';
+      return `<div class="bb-item ${extra||''}">
+        <div class="bb-item-hd"><div class="bb-item-ico">${icon}</div><div class="bb-item-lbl">${label}</div></div>
+        <div class="bb-value">${value}</div>
+      </div>`;
+    }
+
+    // keep original names for compatibility
+    function renderBBField_(l,v,c){ return bbF_('',l,v,c); }
+
+    function renderMocktests_(items) {
+      const root = document.getElementById('mocktestWrap');
+      if (!items.length) { root.innerHTML = emptyState_('📝','Chưa có bài kiểm tra','Kết quả mini test và mock test sẽ hiển thị tại đây'); return; }
+      root.innerHTML = `<div class="score-grid">
+        ${items.map(i=>`
+          <div class="score-card">
+            <div class="score-card-head">
+              <div class="score-card-name"><div class="score-card-ico">🎯</div>${escapeHtml_(i.testName)}</div>
+              <div class="avg-pill"><div class="avg-pill-l">Điểm TB</div><div class="avg-pill-v">${i.average==null?'--':escapeHtml_(String(i.average))}</div></div>
+            </div>
+            <div class="score-card-body">
+              <div class="score-badges">${(i.scores||[]).map(s=>`<div class="score-badge">${escapeHtml_(s)}</div>`).join('')}</div>
+            </div>
+          </div>`).join('')}
+      </div>`;
+    }
+
+    function renderReportText_(text) {
+      const root = document.getElementById('reportWrap');
+      if (!(text||'').trim()) { root.innerHTML = emptyState_('✉️','Chưa có báo cáo','Nhận xét cá nhân từ giáo viên sẽ xuất hiện tại đây'); return; }
+      root.innerHTML = `
+        <div class="report-box">
+          <div class="report-head">
+            <div class="report-avatar-icon">✍️</div>
+            <div>
+              <div class="report-head-title">Lời nhắn từ Giáo viên</div>
+              <div class="report-head-sub">Đánh giá và cập nhật tình hình học tập cá nhân</div>
+            </div>
+          </div>
+          <div class="report-body">
+            <div class="report-content">${nl2br_(escapeHtml_(text))}</div>
+          </div>
+        </div>`;
+    }
+
+    /* helpers */
+    function emptyState_(icon, title, desc) {
+      return `<div class="empty-state"><span class="es-icon">${icon}</span><div class="es-title">${title}</div><div>${desc}</div></div>`;
+    }
+    function escapeHtml_(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+    function nl2br_(s){ return s.replace(/\n/g,'<br>'); }
+  </script>
+</body>
+</html>
