@@ -842,16 +842,15 @@
     }
 
     function renderBaoBaiCard_(item) {
-      const st = (item.status || '').trim();
-      const sc = st.toLowerCase().includes('đi học') ? 'bb-sp'
-               : st.toLowerCase().includes('vắng')   ? 'bb-sa' : 'bb-sn';
+      const sc = ((item.status||'').toLowerCase().includes('đi học')) ? 'bb-sp'
+               : ((item.status||'').toLowerCase().includes('vắng'))   ? 'bb-sa' : 'bb-sn';
       const pills = [];
       if(item.lessonFocus)       pills.push('🎯 Tiêu điểm bài học');
       if(item.vocabularyGrammar) pills.push('📖 Từ vựng & Ngữ pháp');
       if(item.skillsPracticed)   pills.push('💪 Kỹ năng');
       if(item.homeworkPractice)  pills.push('✏️ Bài tập về nhà');
       if(item.materialsUrl)      pills.push('📎 Tài liệu');
-      if(item.imageUrl)          pills.push('📷 Ảnh buổi học');
+      if(item.imageUrl)          pills.push('🖼️ Ảnh buổi học');
 
       return `
         <article class="bb-card">
@@ -860,19 +859,26 @@
               <div>
                 <div class="bb-head-question">Hôm nay con học gì?</div>
                 <div class="bb-date">${escapeHtml_(item.date || '--')}</div>
-                <div class="bb-week">${escapeHtml_(item.weekLabel || '')}</div>
+                <div class="bb-week">${escapeHtml_(item.weekLabel||'')}</div>
               </div>
-              <div class="bb-status ${sc}">${escapeHtml_(st || 'Đã ghi nhận')}</div>
+              <div class="bb-status ${sc}">${escapeHtml_(item.status||'Đã ghi nhận')}</div>
             </div>
             ${pills.length ? `<div class="bb-pills-strip">${pills.map(p=>`<div class="bb-pill">${escapeHtml_(p)}</div>`).join('')}</div>` : ''}
           </div>
           <div class="bb-body">
             ${item.locked ? `<div class="bb-lock-note">🔒 Nội dung chưa được mở khóa cho buổi học này</div>` : ''}
-            ${(!item.locked && item.imageUrl) ? `
+            ${!item.locked && item.imageUrl ? `
               <div class="bb-photo">
-                <img class="bb-photo-img" src="${escapeAttr_(item.imageUrl)}" alt="Ảnh buổi học ${escapeAttr_(item.date || '')}" loading="lazy" referrerpolicy="no-referrer">
+                <img
+                  class="bb-photo-img"
+                  src="${escapeAttr_(item.imageUrl)}"
+                  alt="Ảnh buổi học ${escapeAttr_(item.date || '')}"
+                  loading="lazy"
+                  referrerpolicy="no-referrer"
+                >
                 <div class="bb-photo-caption">Ảnh buổi học</div>
-              </div>` : ''}
+              </div>
+            ` : ''}
             <div class="bb-grid">
               ${bbF_('🎯','Tiêu điểm bài học',item.lessonFocus,'full')}
               ${bbF_('📖','Từ vựng & Ngữ pháp',item.vocabularyGrammar)}
@@ -881,6 +887,7 @@
               ${item.materialsUrl
                 ? `<div class="bb-item"><div class="bb-item-hd"><div class="bb-item-ico">📎</div><div class="bb-item-lbl">Tài liệu đính kèm</div></div><div class="bb-value"><a href="${escapeAttr_(item.materialsUrl)}" target="_blank" rel="noopener noreferrer" class="bb-link">🔗 ${escapeHtml_(item.materialsText||'Mở tài liệu')}</a></div></div>`
                 : ''}
+              ${bbF_('📝','Ghi chú giáo viên',item.teacherNote,'full')}
             </div>
           </div>
         </article>`;
@@ -889,8 +896,8 @@
     function bbF_(icon, label, value, extra) {
       if (!value) return '';
       return `<div class="bb-item ${extra||''}">
-        <div class="bb-item-hd"><div class="bb-item-ico">${icon}</div><div class="bb-item-lbl">${label}</div></div>
-        <div class="bb-value">${value}</div>
+        <div class="bb-item-hd"><div class="bb-item-ico">${escapeHtml_(icon)}</div><div class="bb-item-lbl">${escapeHtml_(label)}</div></div>
+        <div class="bb-value">${nl2br_(escapeHtml_(value))}</div>
       </div>`;
     }
 
@@ -936,9 +943,9 @@
     function emptyState_(icon, title, desc) {
       return `<div class="empty-state"><span class="es-icon">${icon}</span><div class="es-title">${title}</div><div>${desc}</div></div>`;
     }
-    function escapeAttr_(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
-    function escapeHtml_(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-    function nl2br_(s){ return s.replace(/\n/g,'<br>'); }
+    function escapeHtml_(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
+    function escapeAttr_(s){ return escapeHtml_(s); }
+    function nl2br_(s){ return String(s||'').replace(/\n/g,'<br>'); }
   </script>
 </body>
 </html>
