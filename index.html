@@ -326,9 +326,28 @@
     .bb-value{font-size:14px;font-weight:600;color:var(--text);line-height:1.8;white-space:pre-line;word-break:break-word}
     .bb-link{display:inline-flex;align-items:center;gap:5px;color:var(--p);font-weight:700;text-decoration:none;padding:8px 14px;background:var(--p-pale);border:1px solid rgba(14,75,169,.14);border-radius:10px;font-size:13px;transition:background var(--dur),box-shadow var(--dur)}
     .bb-link:hover{background:#E0ECFF;box-shadow:var(--sx)}
-    .bb-photo{background:#fff;border:1px solid rgba(14,75,169,.08);border-radius:var(--r2);padding:12px;box-shadow:var(--sx)}
-    .bb-photo-img{display:block;width:100%;height:auto;max-height:380px;object-fit:contain;object-position:center;border-radius:14px;background:#F3F6FB}
-    .bb-photo-caption{margin-top:10px;font-size:12px;font-weight:700;color:var(--muted);line-height:1.6}
+    /* --- bb-photo thumbnail --- */
+    .bb-photo{display:flex;align-items:center;gap:14px;background:var(--p-xpale);border:1px solid rgba(14,75,169,.09);border-radius:var(--r2);padding:12px 14px;box-shadow:var(--sx);transition:border-color var(--dur),box-shadow var(--dur)}
+    .bb-photo:hover{border-color:rgba(14,75,169,.18);box-shadow:var(--sm)}
+    .bb-photo-thumb-wrap{position:relative;flex:0 0 auto;cursor:pointer}
+    .bb-photo-img{display:block;width:96px;height:72px;object-fit:cover;object-position:center;border-radius:10px;background:#E8F0FD;transition:transform .18s var(--ease),box-shadow .18s var(--ease)}
+    .bb-photo-thumb-wrap:hover .bb-photo-img{transform:scale(1.03);box-shadow:0 6px 18px rgba(14,75,169,.18)}
+    .bb-photo-zoom-hint{position:absolute;inset:0;border-radius:10px;background:rgba(14,75,169,.0);display:flex;align-items:center;justify-content:center;transition:background .18s var(--ease)}
+    .bb-photo-thumb-wrap:hover .bb-photo-zoom-hint{background:rgba(14,75,169,.28)}
+    .bb-photo-zoom-icon{opacity:0;font-size:20px;transition:opacity .18s var(--ease);filter:drop-shadow(0 2px 4px rgba(0,0,0,.3))}
+    .bb-photo-thumb-wrap:hover .bb-photo-zoom-icon{opacity:1}
+    .bb-photo-meta{flex:1;min-width:0}
+    .bb-photo-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:var(--p);margin-bottom:4px}
+    .bb-photo-hint{font-size:12px;font-weight:600;color:var(--muted);line-height:1.6}
+    /* --- lightbox --- */
+    .bb-lightbox{position:fixed;inset:0;z-index:10000;display:none;align-items:center;justify-content:center;background:rgba(5,12,28,.72);backdrop-filter:blur(10px);padding:20px;cursor:zoom-out;animation:lb-in .2s var(--ease)}
+    .bb-lightbox.open{display:flex}
+    @keyframes lb-in{from{opacity:0}to{opacity:1}}
+    .bb-lightbox-inner{position:relative;max-width:min(900px,92vw);max-height:88vh;cursor:default;animation:lb-scale .22s var(--ease)}
+    @keyframes lb-scale{from{transform:scale(.93);opacity:0}to{transform:scale(1);opacity:1}}
+    .bb-lightbox-img{display:block;max-width:100%;max-height:86vh;border-radius:var(--r3);object-fit:contain;box-shadow:0 32px 80px rgba(0,0,0,.55)}
+    .bb-lightbox-close{position:absolute;top:-14px;right:-14px;width:36px;height:36px;border-radius:50%;background:#fff;border:none;cursor:pointer;display:grid;place-items:center;font-size:16px;box-shadow:0 4px 14px rgba(0,0,0,.22);transition:transform .15s,box-shadow .15s;z-index:1}
+    .bb-lightbox-close:hover{transform:scale(1.1);box-shadow:0 6px 20px rgba(0,0,0,.3)}
     .bb-empty{text-align:center;color:var(--muted);font-size:14px;line-height:1.8;font-weight:600;padding:36px 20px}
     @media(min-width:660px){.bb-grid{grid-template-columns:repeat(2,1fr)}.bb-item.full{grid-column:1/-1}}
 
@@ -869,14 +888,20 @@
             ${item.locked ? `<div class="bb-lock-note">🔒 Nội dung chưa được mở khóa cho buổi học này</div>` : ''}
             ${!item.locked && item.imageUrl ? `
               <div class="bb-photo">
-                <img
-                  class="bb-photo-img"
-                  src="${escapeAttr_(item.imageUrl)}"
-                  alt="Ảnh buổi học ${escapeAttr_(item.date || '')}"
-                  loading="lazy"
-                  referrerpolicy="no-referrer"
-                >
-                <div class="bb-photo-caption">Ảnh buổi học</div>
+                <div class="bb-photo-thumb-wrap" onclick="openBbLightbox_(${JSON.stringify(escapeAttr_(item.imageUrl))}, ${JSON.stringify(escapeAttr_(item.date || ''))})">
+                  <img
+                    class="bb-photo-img"
+                    src="${escapeAttr_(item.imageUrl)}"
+                    alt="Ảnh buổi học ${escapeAttr_(item.date || '')}"
+                    loading="lazy"
+                    referrerpolicy="no-referrer"
+                  >
+                  <div class="bb-photo-zoom-hint"><span class="bb-photo-zoom-icon">🔍</span></div>
+                </div>
+                <div class="bb-photo-meta">
+                  <div class="bb-photo-label">📷 Ảnh buổi học</div>
+                  <div class="bb-photo-hint">Nhấn vào ảnh để xem cỡ lớn</div>
+                </div>
               </div>
             ` : ''}
             <div class="bb-grid">
@@ -939,6 +964,21 @@
         </div>`;
     }
 
+    /* lightbox */
+    function openBbLightbox_(url, date) {
+      const lb = document.getElementById('bbLightbox');
+      const img = document.getElementById('bbLightboxImg');
+      img.src = url;
+      img.alt = 'Ảnh buổi học ' + (date || '');
+      lb.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeBbLightbox_() {
+      document.getElementById('bbLightbox').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeBbLightbox_(); });
+
     /* helpers */
     function emptyState_(icon, title, desc) {
       return `<div class="empty-state"><span class="es-icon">${icon}</span><div class="es-title">${title}</div><div>${desc}</div></div>`;
@@ -947,5 +987,13 @@
     function escapeAttr_(s){ return escapeHtml_(s); }
     function nl2br_(s){ return String(s||'').replace(/\n/g,'<br>'); }
   </script>
+  <!-- LIGHTBOX -->
+  <div class="bb-lightbox" id="bbLightbox" onclick="closeBbLightbox_()">
+    <div class="bb-lightbox-inner" onclick="event.stopPropagation()">
+      <button class="bb-lightbox-close" onclick="closeBbLightbox_()">✕</button>
+      <img class="bb-lightbox-img" id="bbLightboxImg" src="" alt="">
+    </div>
+  </div>
+
 </body>
 </html>
