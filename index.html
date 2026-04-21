@@ -326,6 +326,9 @@
     .bb-value{font-size:14px;font-weight:600;color:var(--text);line-height:1.8;white-space:pre-line;word-break:break-word}
     .bb-link{display:inline-flex;align-items:center;gap:5px;color:var(--p);font-weight:700;text-decoration:none;padding:8px 14px;background:var(--p-pale);border:1px solid rgba(14,75,169,.14);border-radius:10px;font-size:13px;transition:background var(--dur),box-shadow var(--dur)}
     .bb-link:hover{background:#E0ECFF;box-shadow:var(--sx)}
+    .bb-photo{background:#fff;border:1px solid rgba(14,75,169,.08);border-radius:var(--r2);padding:12px;box-shadow:var(--sx)}
+    .bb-photo-img{display:block;width:100%;max-height:420px;object-fit:cover;border-radius:14px;background:#F3F6FB}
+    .bb-photo-caption{margin-top:10px;font-size:12px;font-weight:700;color:var(--muted);line-height:1.6}
     .bb-empty{text-align:center;color:var(--muted);font-size:14px;line-height:1.8;font-weight:600;padding:36px 20px}
     @media(min-width:660px){.bb-grid{grid-template-columns:repeat(2,1fr)}.bb-item.full{grid-column:1/-1}}
 
@@ -839,14 +842,16 @@
     }
 
     function renderBaoBaiCard_(item) {
-      const sc = ((item.status||'').toLowerCase().includes('đi học')) ? 'bb-sp'
-               : ((item.status||'').toLowerCase().includes('vắng'))   ? 'bb-sa' : 'bb-sn';
+      const st = (item.status || '').trim();
+      const sc = st.toLowerCase().includes('đi học') ? 'bb-sp'
+               : st.toLowerCase().includes('vắng')   ? 'bb-sa' : 'bb-sn';
       const pills = [];
       if(item.lessonFocus)       pills.push('🎯 Tiêu điểm bài học');
       if(item.vocabularyGrammar) pills.push('📖 Từ vựng & Ngữ pháp');
       if(item.skillsPracticed)   pills.push('💪 Kỹ năng');
       if(item.homeworkPractice)  pills.push('✏️ Bài tập về nhà');
       if(item.materialsUrl)      pills.push('📎 Tài liệu');
+      if(item.imageUrl)          pills.push('📷 Ảnh buổi học');
 
       return `
         <article class="bb-card">
@@ -854,22 +859,27 @@
             <div class="bb-head-row">
               <div>
                 <div class="bb-head-question">Hôm nay con học gì?</div>
-                <div class="bb-date">${item.date}</div>
-                <div class="bb-week">${item.weekLabel||''}</div>
+                <div class="bb-date">${escapeHtml_(item.date || '--')}</div>
+                <div class="bb-week">${escapeHtml_(item.weekLabel || '')}</div>
               </div>
-              <div class="bb-status ${sc}">${item.status||'Đã ghi nhận'}</div>
+              <div class="bb-status ${sc}">${escapeHtml_(st || 'Đã ghi nhận')}</div>
             </div>
-            ${pills.length ? `<div class="bb-pills-strip">${pills.map(p=>`<div class="bb-pill">${p}</div>`).join('')}</div>` : ''}
+            ${pills.length ? `<div class="bb-pills-strip">${pills.map(p=>`<div class="bb-pill">${escapeHtml_(p)}</div>`).join('')}</div>` : ''}
           </div>
           <div class="bb-body">
             ${item.locked ? `<div class="bb-lock-note">🔒 Nội dung chưa được mở khóa cho buổi học này</div>` : ''}
+            ${(!item.locked && item.imageUrl) ? `
+              <div class="bb-photo">
+                <img class="bb-photo-img" src="${escapeAttr_(item.imageUrl)}" alt="Ảnh buổi học ${escapeAttr_(item.date || '')}" loading="lazy" referrerpolicy="no-referrer">
+                <div class="bb-photo-caption">Ảnh buổi học</div>
+              </div>` : ''}
             <div class="bb-grid">
               ${bbF_('🎯','Tiêu điểm bài học',item.lessonFocus,'full')}
               ${bbF_('📖','Từ vựng & Ngữ pháp',item.vocabularyGrammar)}
               ${bbF_('💪','Kỹ năng luyện tập',item.skillsPracticed)}
               ${bbF_('✏️','Bài tập về nhà',item.homeworkPractice)}
               ${item.materialsUrl
-                ? `<div class="bb-item"><div class="bb-item-hd"><div class="bb-item-ico">📎</div><div class="bb-item-lbl">Tài liệu đính kèm</div></div><div class="bb-value"><a href="${item.materialsUrl}" target="_blank" class="bb-link">🔗 ${item.materialsText||'Mở tài liệu'}</a></div></div>`
+                ? `<div class="bb-item"><div class="bb-item-hd"><div class="bb-item-ico">📎</div><div class="bb-item-lbl">Tài liệu đính kèm</div></div><div class="bb-value"><a href="${escapeAttr_(item.materialsUrl)}" target="_blank" rel="noopener noreferrer" class="bb-link">🔗 ${escapeHtml_(item.materialsText||'Mở tài liệu')}</a></div></div>`
                 : ''}
             </div>
           </div>
@@ -926,6 +936,7 @@
     function emptyState_(icon, title, desc) {
       return `<div class="empty-state"><span class="es-icon">${icon}</span><div class="es-title">${title}</div><div>${desc}</div></div>`;
     }
+    function escapeAttr_(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
     function escapeHtml_(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
     function nl2br_(s){ return s.replace(/\n/g,'<br>'); }
   </script>
