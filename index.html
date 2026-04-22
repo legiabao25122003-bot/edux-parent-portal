@@ -306,7 +306,6 @@
     .bb-head-question{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:rgba(255,255,255,.55);margin-bottom:6px;display:flex;align-items:center;gap:6px}
     .bb-head-question::before{content:'';width:14px;height:1.5px;background:rgba(255,255,255,.35);border-radius:2px}
     .bb-date{font-size:22px;font-weight:900;letter-spacing:-.02em;line-height:1.2}
-    .bb-week{font-size:12px;font-weight:600;opacity:.72;margin-top:4px;margin-bottom:16px}
     .bb-status{display:inline-flex;align-items:center;gap:5px;padding:7px 14px;border-radius:999px;font-size:11.5px;font-weight:800;white-space:nowrap}
     .bb-status::before{content:'';width:6px;height:6px;border-radius:50%}
     .bb-sp{background:rgba(34,197,94,.16);color:#8DFFC0}.bb-sp::before{background:#22C55E}
@@ -856,7 +855,6 @@
               <div>
                 <div class="bb-head-question">Hôm nay con học gì?</div>
                 <div class="bb-date">${escapeHtml_(item.date || '--')}</div>
-                <div class="bb-week">${escapeHtml_(item.weekLabel||'')}</div>
               </div>
               <div class="bb-status ${sc}">${escapeHtml_(item.status||'Đã ghi nhận')}</div>
             </div>
