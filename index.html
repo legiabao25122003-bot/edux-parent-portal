@@ -403,24 +403,62 @@
        TABS
     ============================================================ */
     .tabs {
-      display: flex; gap: 4px; background: rgba(255,255,255,.88);
-      padding: 5px; border-radius: 18px; box-shadow: var(--sx);
-      border: 1px solid var(--border); backdrop-filter: blur(16px);
-      margin-bottom: 20px; position: sticky; top: 10px; z-index: 100;
+      display: flex;
+      gap: 10px;
+      background: rgba(255,255,255,.94);
+      padding: 10px;
+      border-radius: 24px;
+      box-shadow: 0 10px 28px rgba(10,63,143,.08);
+      border: 1px solid rgba(10,63,143,.06);
+      backdrop-filter: blur(16px);
+      margin-bottom: 22px;
+      position: sticky;
+      top: 10px;
+      z-index: 100;
     }
     .tab-btn {
-      flex: 1; border: none; background: transparent; color: var(--muted);
-      padding: 11px 12px; border-radius: 13px;
-      font-family: inherit; font-size: 13px; font-weight: 600;
-      cursor: pointer; transition: all var(--dur) var(--ease);
-      display: flex; align-items: center; justify-content: center; gap: 6px;
+      position: relative;
+      flex: 1;
+      min-height: 54px;
+      border: none;
+      background: transparent;
+      color: #6D7D9D;
+      padding: 13px 16px;
+      border-radius: 20px;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: -.01em;
+      cursor: pointer;
+      transition: all var(--dur) var(--ease);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
     }
-    .tab-icon { font-size: 15px; }
-    .tab-btn:hover { color: var(--p); background: rgba(10,63,143,.05); }
+    .tab-btn:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      right: -5px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 1px;
+      height: 42%;
+      background: rgba(10,63,143,.10);
+      pointer-events: none;
+    }
+    .tab-btn:hover {
+      color: var(--p);
+      background: rgba(10,63,143,.03);
+    }
     .tab-btn.active {
-      background: linear-gradient(135deg, var(--p) 0%, var(--p2) 100%);
-      color: #fff; box-shadow: 0 6px 16px rgba(10,63,143,.26);
+      background: linear-gradient(135deg, #154DBA 0%, #1B57C9 100%);
+      color: #fff;
+      box-shadow: 0 8px 20px rgba(10,63,143,.22);
       transform: translateY(-1px);
+    }
+    .tab-btn.active::after {
+      display: none;
     }
     .tab-panel { display: none; }
     .tab-panel.active { display: block; animation: fadeUp .22s var(--ease) both; }
@@ -732,9 +770,9 @@
       .metrics { grid-template-columns: repeat(2, 1fr); gap: 10px; }
       .mc-value { font-size: 28px; }
       .section-card { padding: 16px 14px; }
-      .tabs { padding: 4px; gap: 3px; border-radius: 16px; position: static; }
-      .tab-btn { flex: 1 1 42%; padding: 10px 8px; font-size: 12px; gap: 4px; }
-      .tab-icon { font-size: 14px; }
+      .tabs { padding: 6px; gap: 6px; border-radius: 18px; position: static; }
+      .tab-btn { flex: 1 1 42%; min-height: 46px; padding: 10px 8px; font-size: 12px; border-radius: 14px; }
+      .tab-btn:not(:last-child)::after { right: -3px; height: 36%; }
       .score-card-head { flex-direction: column; gap: 10px; }
       .avg-pill { align-self: flex-start; }
       .bb-body { padding: 14px; }
@@ -899,10 +937,10 @@
 
       <!-- TABS -->
       <div class="tabs" id="tabButtons">
-        <button class="tab-btn active" data-tab="overview"><span class="tab-icon">🏠</span> Tổng quan</button>
-        <button class="tab-btn" data-tab="attendance"><span class="tab-icon">📅</span> Điểm danh</button>
-        <button class="tab-btn" data-tab="baobai"><span class="tab-icon">📘</span> Báo bài</button>
-        <button class="tab-btn" data-tab="score"><span class="tab-icon">📊</span> Điểm &amp; Báo cáo</button>
+        <button class="tab-btn active" data-tab="overview">Tổng quan</button>
+        <button class="tab-btn" data-tab="attendance">Điểm danh</button>
+        <button class="tab-btn" data-tab="baobai">Báo bài</button>
+        <button class="tab-btn" data-tab="score">Điểm &amp; Báo cáo</button>
       </div>
 
       <!-- OVERVIEW -->
