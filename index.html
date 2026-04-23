@@ -501,12 +501,14 @@
     .es-title { font-size: 15px; font-weight: 700; color: var(--text2); margin-bottom: 6px; }
 
     /* ============================================================
-       BÁO BÀI
+       BÁO BÀI — v2 (refactored layout)
     ============================================================ */
+
+    /* Nav bar */
     .bb-nav {
       display: grid; grid-template-columns: auto 1fr auto; align-items: center;
       gap: 14px; background: var(--p-xpale); border: 1px solid var(--border);
-      border-radius: var(--r2); padding: 10px 14px; margin-bottom: 18px;
+      border-radius: var(--r2); padding: 10px 14px; margin-bottom: 16px;
     }
     .bb-nav-btn {
       display: inline-flex; align-items: center; gap: 5px;
@@ -522,45 +524,154 @@
     .bb-day-label { font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); margin-bottom: 3px; }
     .bb-day-title { font-size: 15px; font-weight: 700; color: var(--p); }
 
-    /* BaoBai card */
+    /* Card shell */
     .bb-card {
       background: var(--surface); border: 1px solid var(--border2);
       border-radius: var(--r4); overflow: hidden; box-shadow: var(--md);
     }
+
+    /* ── Card header: compact dark band ─────────────────────── */
     .bb-head {
-      padding: 22px 24px 0;
-      background: linear-gradient(150deg, #060F22 0%, #0B3578 52%, #1751BE 100%);
+      padding: 16px 22px;
+      background: linear-gradient(155deg, #060F22 0%, #0C3070 50%, #1751BE 100%);
       color: #fff; position: relative; overflow: hidden;
+      display: flex; justify-content: space-between; align-items: center; gap: 14px;
     }
     .bb-head::after {
-      content: ''; position: absolute; right: -20px; top: -30px;
-      width: 140px; height: 140px; border-radius: 50%;
-      background: rgba(255,255,255,.05); pointer-events: none;
+      content: ''; position: absolute; right: -16px; top: -24px;
+      width: 110px; height: 110px; border-radius: 50%;
+      background: rgba(255,255,255,.04); pointer-events: none;
     }
-    .bb-head-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; position: relative; z-index: 1; }
-    .bb-head-question { font-size: 10.5px; font-weight: 600; text-transform: uppercase; letter-spacing: .07em; color: rgba(255,255,255,.50); margin-bottom: 5px; }
-    .bb-date { font-family: 'DM Serif Display', serif; font-size: 20px; font-weight: 400; letter-spacing: -.01em; }
-    .bb-status { display: inline-flex; align-items: center; gap: 5px; padding: 6px 13px; border-radius: 999px; font-size: 11px; font-weight: 700; white-space: nowrap; }
-    .bb-status::before { content: ''; width: 6px; height: 6px; border-radius: 50%; }
-    .bb-sp  { background: rgba(34,197,94,.16); color: #86EFAC; }  .bb-sp::before  { background: #22C55E; }
-    .bb-sa  { background: rgba(239,68,68,.16);  color: #FCA5A5; }  .bb-sa::before  { background: #EF4444; }
-    .bb-sn  { background: rgba(255,255,255,.10); color: rgba(255,255,255,.78); } .bb-sn::before { background: rgba(255,255,255,.45); }
-    .bb-pills-strip { display: flex; gap: 5px; flex-wrap: wrap; padding: 12px 0 16px; position: relative; z-index: 1; }
-    .bb-pill { padding: 3px 9px; border-radius: 999px; background: rgba(255,255,255,.10); border: 1px solid rgba(255,255,255,.12); font-size: 10.5px; font-weight: 600; color: rgba(255,255,255,.75); }
+    /* lesson headline shown in header */
+    .bb-head-main { flex: 1; min-width: 0; position: relative; z-index: 1; }
+    .bb-head-eyebrow {
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .08em; color: rgba(255,255,255,.45); margin-bottom: 4px;
+    }
+    .bb-head-lesson {
+      font-size: 14.5px; font-weight: 600; color: #fff; line-height: 1.45;
+      /* clamp to 2 lines */
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .bb-head-lesson.is-empty { color: rgba(255,255,255,.45); font-style: italic; font-weight: 400; }
 
-    .bb-body { padding: 20px 22px; display: grid; gap: 10px; }
-    .bb-lock-note { background: var(--p-pale); border: 1px dashed rgba(10,63,143,.22); color: var(--p); border-radius: 12px; padding: 12px 15px; font-size: 12.5px; font-weight: 600; line-height: 1.65; }
-    .bb-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
-    .bb-item { background: var(--p-xpale); border: 1px solid var(--border2); border-radius: var(--r2); padding: 14px; transition: border-color var(--dur), box-shadow var(--dur); }
-    .bb-item:hover { border-color: var(--border); box-shadow: var(--sx); }
-    .bb-item-hd { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
-    .bb-item-ico { width: 28px; height: 28px; border-radius: 9px; display: grid; place-items: center; font-size: 13px; flex: 0 0 auto; background: rgba(10,63,143,.08); }
-    .bb-item-lbl { font-size: 10px; font-weight: 700; color: var(--p); text-transform: uppercase; letter-spacing: .06em; }
-    .bb-value { font-size: 13.5px; font-weight: 500; color: var(--text); line-height: 1.8; white-space: pre-line; word-break: break-word; }
-    .bb-link { display: inline-flex; align-items: center; gap: 5px; color: var(--p); font-weight: 700; text-decoration: none; padding: 7px 13px; background: var(--p-pale); border: 1px solid rgba(10,63,143,.14); border-radius: 10px; font-size: 13px; transition: background var(--dur), box-shadow var(--dur); }
-    .bb-link:hover { background: #DCEAFF; box-shadow: var(--sx); }
+    /* status badge — reused in header */
+    .bb-status {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 6px 13px; border-radius: 999px; font-size: 11px; font-weight: 700;
+      white-space: nowrap; flex: 0 0 auto; position: relative; z-index: 1;
+    }
+    .bb-status::before { content: ''; width: 6px; height: 6px; border-radius: 50%; flex: 0 0 auto; }
+    .bb-sp  { background: rgba(34,197,94,.16);  color: #86EFAC; } .bb-sp::before  { background: #22C55E; }
+    .bb-sa  { background: rgba(239,68,68,.16);   color: #FCA5A5; } .bb-sa::before  { background: #EF4444; }
+    .bb-sn  { background: rgba(255,255,255,.10); color: rgba(255,255,255,.75); } .bb-sn::before { background: rgba(255,255,255,.40); }
+
+    /* ── Summary strip ───────────────────────────────────────── */
+    .bb-summary {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      border-bottom: 1px solid var(--border2);
+    }
+    .bb-sum-item {
+      padding: 13px 16px; border-right: 1px solid var(--border2);
+      transition: background var(--dur);
+    }
+    .bb-sum-item:last-child { border-right: none; }
+    .bb-sum-item:hover { background: var(--p-xpale); }
+    .bb-sum-label {
+      font-size: 9.5px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .07em; color: var(--muted); margin-bottom: 4px;
+      display: flex; align-items: center; gap: 4px;
+    }
+    .bb-sum-val {
+      font-size: 12.5px; font-weight: 600; color: var(--text); line-height: 1.5;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+      overflow: hidden; word-break: break-word;
+    }
+    .bb-sum-val.is-empty { color: var(--subtle); font-style: italic; font-weight: 400; }
+
+    /* ── Body ─────────────────────────────────────────────────── */
+    .bb-body { padding: 18px 20px; display: flex; flex-direction: column; gap: 12px; }
+
+    /* Lock state */
+    .bb-lock-box {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 10px; padding: 36px 20px; text-align: center;
+    }
+    .bb-lock-icon { font-size: 36px; opacity: .6; }
+    .bb-lock-title { font-size: 15px; font-weight: 700; color: var(--text2); }
+    .bb-lock-desc { font-size: 13px; color: var(--muted); line-height: 1.7; max-width: 320px; }
+
+    /* Section divider label */
+    .bb-sec-label {
+      font-size: 10px; font-weight: 800; text-transform: uppercase;
+      letter-spacing: .08em; color: var(--subtle);
+      display: flex; align-items: center; gap: 8px; margin-bottom: -4px;
+    }
+    .bb-sec-label::after { content: ''; flex: 1; height: 1px; background: var(--border2); }
+
+    /* Primary block: Lesson Focus */
+    .bb-primary {
+      background: var(--p-xpale); border: 1px solid rgba(10,63,143,.10);
+      border-left: 3px solid var(--p2);
+      border-radius: 0 var(--r2) var(--r2) 0; padding: 14px 16px;
+    }
+    .bb-primary .bb-item-lbl { font-size: 10px; font-weight: 800; color: var(--p2); text-transform: uppercase; letter-spacing: .07em; margin-bottom: 7px; display: flex; align-items: center; gap: 6px; }
+    .bb-primary .bb-value { font-size: 14px; font-weight: 500; color: var(--text); line-height: 1.85; white-space: pre-line; word-break: break-word; }
+
+    /* Secondary 2-col grid */
+    .bb-secondary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .bb-sec-item {
+      background: #fff; border: 1px solid var(--border2); border-radius: var(--r2);
+      padding: 13px 14px; transition: border-color var(--dur), box-shadow var(--dur);
+    }
+    .bb-sec-item:hover { border-color: var(--border); box-shadow: var(--sx); }
+    .bb-sec-item .bb-item-lbl { font-size: 9.5px; font-weight: 800; color: var(--p); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 6px; display: flex; align-items: center; gap: 5px; }
+    .bb-sec-item .bb-value { font-size: 13px; font-weight: 500; color: var(--text); line-height: 1.75; white-space: pre-line; word-break: break-word; }
+
+    /* Homework block — highlighted */
+    .bb-homework {
+      background: #FFFBF0; border: 1px solid rgba(201,151,42,.20);
+      border-left: 3px solid var(--gold);
+      border-radius: 0 var(--r2) var(--r2) 0; padding: 14px 16px;
+    }
+    .bb-homework .bb-item-lbl { font-size: 10px; font-weight: 800; color: var(--gold); text-transform: uppercase; letter-spacing: .07em; margin-bottom: 7px; display: flex; align-items: center; gap: 6px; }
+    .bb-homework .bb-value { font-size: 14px; font-weight: 500; color: var(--text); line-height: 1.85; white-space: pre-line; word-break: break-word; }
+
+    /* Materials link block */
+    .bb-materials { padding: 2px 0; }
+    .bb-link {
+      display: inline-flex; align-items: center; gap: 6px; color: var(--p);
+      font-weight: 700; text-decoration: none; padding: 9px 16px;
+      background: var(--p-pale); border: 1px solid rgba(10,63,143,.14);
+      border-radius: var(--r2); font-size: 13.5px;
+      transition: background var(--dur), box-shadow var(--dur), transform var(--dur);
+    }
+    .bb-link:hover { background: #DCEAFF; box-shadow: var(--sx); transform: translateY(-1px); }
+
+    /* Teacher note — soft card */
+    .bb-teacher-note {
+      background: #F8FAFF; border: 1px solid var(--border2);
+      border-radius: var(--r3); padding: 16px 18px; position: relative;
+    }
+    .bb-teacher-note::before {
+      content: '\201C'; position: absolute; top: 6px; left: 14px;
+      font-size: 48px; line-height: 1; font-family: 'DM Serif Display', serif;
+      color: rgba(10,63,143,.08); pointer-events: none;
+    }
+    .bb-tn-label { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .07em; color: var(--p2); margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+    .bb-tn-text { font-size: 13.5px; font-weight: 400; color: var(--text2); line-height: 1.9; font-style: italic; white-space: pre-line; word-break: break-word; padding-left: 4px; }
+
     .bb-empty { text-align: center; color: var(--muted); font-size: 13.5px; line-height: 1.8; padding: 36px 20px; }
-    @media (min-width: 640px) { .bb-grid { grid-template-columns: repeat(2, 1fr); } .bb-item.full { grid-column: 1 / -1; } }
+
+    /* Responsive */
+    @media (max-width: 560px) {
+      .bb-summary { grid-template-columns: 1fr; }
+      .bb-sum-item { border-right: none; border-bottom: 1px solid var(--border2); }
+      .bb-sum-item:last-child { border-bottom: none; }
+      .bb-secondary-grid { grid-template-columns: 1fr; }
+      .bb-head { flex-direction: column; align-items: flex-start; gap: 10px; }
+    }
 
     /* ============================================================
        SCORE CARDS
@@ -1066,10 +1177,24 @@
 
     function getAttendanceStatusClass_(s) { return attCls_(s); }
 
+    /* ── BÁO BÀI JS (v2) ──────────────────────────────────────
+       - Không lặp ngày trong card (ngày đã ở nav bar)
+       - Không có pills strip lặp tên section
+       - locked = true → chỉ hiện lock box, không render nội dung
+       - Thứ bậc: lessonFocus → vocab+skills → homework → materials → teacherNote
+    ─────────────────────────────────────────────────────────── */
+
     function renderBaoBaiSection_(items) {
       const root = document.getElementById('baoBaiList');
-      if (!items.length) { root.innerHTML = '<div class="bb-empty">📭 Chưa có báo bài nào được ghi nhận</div>'; return; }
+      if (!items.length) {
+        document.getElementById('baobaiDayTitle').textContent = '--';
+        root.innerHTML = '<div class="bb-empty">📭 Chưa có báo bài nào được ghi nhận</div>';
+        return;
+      }
       if (window.__baobaiIdx === undefined) window.__baobaiIdx = 0;
+      // guard bounds
+      window.__baobaiIdx = Math.max(0, Math.min(window.__baobaiIdx, items.length - 1));
+
       const item = items[window.__baobaiIdx];
       document.getElementById('baobaiDayTitle').textContent = item.date || '--';
       document.getElementById('baobaiPrevBtn').disabled = window.__baobaiIdx >= items.length - 1;
@@ -1080,62 +1205,146 @@
     }
 
     function renderBaoBaiCard_(item) {
-      const sc = ((item.status||'').toLowerCase().includes('đi học')) ? 'bb-sp'
-               : ((item.status||'').toLowerCase().includes('vắng'))   ? 'bb-sa' : 'bb-sn';
-      const pills = [];
-      if (item.lessonFocus)       pills.push('🎯 Nội dung buổi học');
-      if (item.vocabularyGrammar) pills.push('📖 Từ vựng & Ngữ pháp');
-      if (item.skillsPracticed)   pills.push('💪 Kỹ năng luyện tập');
-      if (item.homeworkPractice)  pills.push('✏️ Bài tập về nhà');
-      if (item.materialsUrl || item.materialsText) pills.push('📎 Tài liệu / Link');
-      if (item.teacherNote)       pills.push('📝 Ghi chú giáo viên');
+      // ── 1. Attendance status class ──
+      const sNorm = (item.status||'').toLowerCase();
+      const sc = sNorm.includes('đi học') ? 'bb-sp' : sNorm.includes('vắng') ? 'bb-sa' : 'bb-sn';
+      const statusLabel = escapeHtml_(item.status || 'Đã ghi nhận');
+
+      // ── 2. Header: lesson headline (2-line clamp) ──
+      const lessonForHead = item.lessonFocus
+        ? `<span class="bb-head-lesson">${escapeHtml_(item.lessonFocus)}</span>`
+        : `<span class="bb-head-lesson is-empty">Chưa có tiêu đề buổi học</span>`;
+
+      const header = `
+        <div class="bb-head">
+          <div class="bb-head-main">
+            <div class="bb-head-eyebrow">Nội dung buổi học</div>
+            ${lessonForHead}
+          </div>
+          <div class="bb-status ${sc}">${statusLabel}</div>
+        </div>`;
+
+      // ── 3. Summary strip (3 ô: Chủ đề · Bài tập · Ghi chú) ──
+      const sumLesson   = item.lessonFocus     ? truncate_(item.lessonFocus, 80)    : null;
+      const sumHomework = item.homeworkPractice ? truncate_(item.homeworkPractice, 80) : null;
+      const sumNote     = item.teacherNote      ? truncate_(item.teacherNote, 80)   : null;
+
+      const summaryStrip = `
+        <div class="bb-summary">
+          <div class="bb-sum-item">
+            <div class="bb-sum-label">📚 Chủ đề</div>
+            <div class="bb-sum-val ${sumLesson?'':'is-empty'}">${sumLesson ? escapeHtml_(sumLesson) : 'Chưa có'}</div>
+          </div>
+          <div class="bb-sum-item">
+            <div class="bb-sum-label">✏️ Bài tập</div>
+            <div class="bb-sum-val ${sumHomework?'':'is-empty'}">${sumHomework ? escapeHtml_(sumHomework) : 'Không có'}</div>
+          </div>
+          <div class="bb-sum-item">
+            <div class="bb-sum-label">💬 Ghi chú GV</div>
+            <div class="bb-sum-val ${sumNote?'':'is-empty'}">${sumNote ? escapeHtml_(sumNote) : '--'}</div>
+          </div>
+        </div>`;
+
+      // ── 4. Body content ──
+      let bodyContent;
+
+      if (item.locked) {
+        // Locked: chỉ hiện lock box, tuyệt đối không render field nào
+        bodyContent = `
+          <div class="bb-lock-box">
+            <div class="bb-lock-icon">🔒</div>
+            <div class="bb-lock-title">Nội dung chưa được mở khóa</div>
+            <div class="bb-lock-desc">Giáo viên sẽ cập nhật nội dung buổi học này sau khi buổi học diễn ra.</div>
+          </div>`;
+      } else {
+        // Tier 1: Lesson Focus (full)
+        const t1 = item.lessonFocus ? `
+          <div class="bb-primary">
+            <div class="bb-item-lbl">🎯 Nội dung buổi học</div>
+            <div class="bb-value">${nl2br_(escapeHtml_(item.lessonFocus))}</div>
+          </div>` : '';
+
+        // Tier 2: Vocab + Skills (2-col grid, only if at least one exists)
+        const hasVocab  = Boolean(item.vocabularyGrammar);
+        const hasSkills = Boolean(item.skillsPracticed);
+        let t2 = '';
+        if (hasVocab || hasSkills) {
+          const vocabBlock = hasVocab ? `
+            <div class="bb-sec-item">
+              <div class="bb-item-lbl">📖 Từ vựng &amp; Ngữ pháp</div>
+              <div class="bb-value">${nl2br_(escapeHtml_(item.vocabularyGrammar))}</div>
+            </div>` : '';
+          const skillsBlock = hasSkills ? `
+            <div class="bb-sec-item">
+              <div class="bb-item-lbl">💪 Kỹ năng luyện tập</div>
+              <div class="bb-value">${nl2br_(escapeHtml_(item.skillsPracticed))}</div>
+            </div>` : '';
+          // If only one exists, use single-col naturally; grid handles it
+          t2 = `<div class="bb-secondary-grid">${vocabBlock}${skillsBlock}</div>`;
+        }
+
+        // Tier 3: Homework (highlighted)
+        const t3 = item.homeworkPractice ? `
+          <div>
+            <div class="bb-sec-label">Bài tập về nhà</div>
+            <div style="margin-top:8px;" class="bb-homework">
+              <div class="bb-item-lbl">✏️ Bài tập về nhà</div>
+              <div class="bb-value">${nl2br_(escapeHtml_(item.homeworkPractice))}</div>
+            </div>
+          </div>` : '';
+
+        // Tier 4: Materials
+        const t4 = bbMaterials_(item);
+
+        // Tier 5: Teacher note
+        const t5 = item.teacherNote ? `
+          <div class="bb-teacher-note">
+            <div class="bb-tn-label">💬 Ghi chú từ giáo viên</div>
+            <div class="bb-tn-text">${nl2br_(escapeHtml_(item.teacherNote))}</div>
+          </div>` : '';
+
+        const hasContent = t1 || t2 || t3 || t4 || t5;
+        bodyContent = hasContent
+          ? [t1, t2, t3, t4, t5].filter(Boolean).join('\n')
+          : `<div class="bb-empty" style="padding:24px 0;">📋 Chưa có nội dung chi tiết cho buổi học này</div>`;
+      }
 
       return `
         <article class="bb-card">
-          <div class="bb-head">
-            <div class="bb-head-row">
-              <div>
-                <div class="bb-head-question">Hôm nay con học gì?</div>
-                <div class="bb-date">${escapeHtml_(item.date || '--')}</div>
-              </div>
-              <div class="bb-status ${sc}">${escapeHtml_(item.status||'Đã ghi nhận')}</div>
-            </div>
-            ${pills.length ? `<div class="bb-pills-strip">${pills.map(p=>`<div class="bb-pill">${escapeHtml_(p)}</div>`).join('')}</div>` : ''}
-          </div>
-          <div class="bb-body">
-            ${item.locked ? `<div class="bb-lock-note">🔒 Nội dung chưa được mở khóa cho buổi học này</div>` : ''}
-            <div class="bb-grid">
-              ${bbF_('🎯','Nội dung buổi học',item.lessonFocus,'full')}
-              ${bbF_('📖','Từ vựng & Ngữ pháp',item.vocabularyGrammar)}
-              ${bbF_('💪','Kỹ năng luyện tập',item.skillsPracticed)}
-              ${bbF_('✏️','Bài tập về nhà',item.homeworkPractice)}
-              ${renderMaterialsField_(item)}
-              ${bbF_('📝','Ghi chú giáo viên',item.teacherNote,'full')}
-            </div>
-          </div>
+          ${header}
+          ${summaryStrip}
+          <div class="bb-body">${bodyContent}</div>
         </article>`;
     }
 
-    function renderMaterialsField_(item) {
+    // Helper: materials block (kept for compatibility alias below)
+    function bbMaterials_(item) {
       const text = (item && item.materialsText ? String(item.materialsText) : '').trim();
       const url  = (item && item.materialsUrl  ? String(item.materialsUrl)  : '').trim();
       if (!text && !url) return '';
       const label = text || 'Mở tài liệu';
-      const body = url
+      const inner = url
         ? `<a href="${escapeAttr_(url)}" target="_blank" rel="noopener noreferrer" class="bb-link">🔗 ${escapeHtml_(label)}</a>`
-        : nl2br_(escapeHtml_(label));
-      return `<div class="bb-item full"><div class="bb-item-hd"><div class="bb-item-ico">📎</div><div class="bb-item-lbl">Tài liệu / Link</div></div><div class="bb-value">${body}</div></div>`;
+        : `<span style="font-size:13.5px;font-weight:500;color:var(--text);">${nl2br_(escapeHtml_(label))}</span>`;
+      return `<div class="bb-materials">${inner}</div>`;
     }
 
+    // Kept for backward compat (not called internally anymore)
+    function renderMaterialsField_(item) { return bbMaterials_(item); }
     function bbF_(icon, label, value, extra) {
       if (!value) return '';
-      return `<div class="bb-item ${extra||''}">
-        <div class="bb-item-hd"><div class="bb-item-ico">${escapeHtml_(icon)}</div><div class="bb-item-lbl">${escapeHtml_(label)}</div></div>
+      return `<div class="bb-sec-item ${extra||''}">
+        <div class="bb-item-lbl">${escapeHtml_(icon)} ${escapeHtml_(label)}</div>
         <div class="bb-value">${nl2br_(escapeHtml_(value))}</div>
       </div>`;
     }
-
     function renderBBField_(l, v, c) { return bbF_('', l, v, c); }
+
+    // Helper: truncate text for summary strip
+    function truncate_(str, max) {
+      const s = (str || '').trim().replace(/\n+/g, ' ');
+      return s.length > max ? s.slice(0, max).trimEnd() + '…' : s;
+    }
 
     function renderMocktests_(items) {
       const root = document.getElementById('mocktestWrap');
